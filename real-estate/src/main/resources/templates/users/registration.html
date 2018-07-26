@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/css/registration.css}" href="../../static/css/registration.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body>
+    <div class="registration_wrapper">
+
+        <div class="registration_box-1">
+            
+             <h1 th:text="#{sign.up}">Sign Up</h1>
+   
+        <form th:action="@{/users}" th:object="${user}" method="post">
+            
+                <label th:text="#{first.name}">First name:</label> <input th:field="*{firstName}" />
+                <p th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
+            
+                <label>Last name:</label> <input th:field="*{lastName}" />
+                <p th:each="error: ${#fields.errors('lastName')}" th:text="${error}">Validation error
+                </p>
+           
+                <label>Email:</label> <input th:field="*{email}" />
+                <p th:each="error: ${#fields.errors('email')}" th:text="${error}">Validation error
+                </p>
+           
+                <label>Phone:</label> <input th:field="*{phone}" />
+                <p th:each="error: ${#fields.errors('phone')}" th:text="${error}">Validation error
+                </p>
+          
+                <label>Username:</label> <input th:field="*{username}" />
+                <p th:each="error: ${#fields.errors('username')}" th:text="${error}">Validation error
+                </p>
+          
+                <label>Password:</label> <input th:field="*{password}" />
+                <p th:each="error: ${#fields.errors('password')}" th:text="${error}">Validation error
+                </p>
+           
+                <label>Repeat password:</label> <input type="password" th:field="*{matchingPassword}" />
+                <br /><br />
+            
+            <button class="button-1" type="submit" th:text="#{submit}">Submit</button>
+            <button class="button-2" type="submit" th:text="#{sign.in}">Sign In</button>
+            
+        </form>
+            
+               
+        </div>
+        <!-- Nasao sam resenje za ovaj nas problem sa linkovima. 
+        Dovoljno je dodati samo dva razlicita atributa th:src(za moj deo) i src(za tvoj deo).
+        Ne moramo vise jedan drugom da zakomentarisemo linkove nego samo dodamo jedan 
+        pored drugog. Isto tako uradimo i za th:href i za href. To sam na 5. liniji odradio.
+        
+        -->
+        <div class="registration_box-2">
+            <img th:src="@{/images/Zgrada.jpeg}" src="../../static/images/Zgrada.jpeg" />
+        </div>
+
+</div>
+
+
+
+  
+</body>
+</html>

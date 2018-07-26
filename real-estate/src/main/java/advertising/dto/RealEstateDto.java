@@ -1,0 +1,86 @@
+package advertising.dto;
+
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
+
+import advertising.enums.HeatType;
+import advertising.model.Equipment;
+import advertising.model.Location;
+
+public abstract class RealEstateDto {
+	
+	private Long id;
+	
+	@NotNull
+	private Location location;
+	
+	@NotNull
+	private double area;
+	
+	@NotNull
+	private double roomsNumber;
+	
+	private Set<EquipmentDto> equipment;
+	
+	private HeatType heatType;
+	
+	private boolean booked;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public double getArea() {
+		return area;
+	}
+
+	public void setArea(double area) {
+		this.area = area;
+	}
+
+	public double getRoomsNumber() {
+		return roomsNumber;
+	}
+
+	public void setRoomsNumber(double roomsNumber) {
+		this.roomsNumber = roomsNumber;
+	}
+
+	public Set<EquipmentDto> getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Set<EquipmentDto> equipment) {
+		this.equipment = equipment;
+	}
+
+	public HeatType getHeatType() {
+		return heatType;
+	}
+
+	public void setHeatType(HeatType heatType) {
+		this.heatType = heatType;
+	}
+
+	public boolean isBooked() {
+		return booked;
+	}
+
+	public void setBooked(boolean booked) {
+		this.booked = booked;
+	}
+	
+}

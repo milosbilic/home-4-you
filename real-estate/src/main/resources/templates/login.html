@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Log In</title>
+
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<!--  <link rel="stylesheet" href="../static/css/login.css" /> -->
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="box-1">
+
+			<h3>Log in:</h3>
+			<p th:if="${param.error}" class="error">Bad Credentials</p>
+			<form th:action="@{/app-login}" method="POST">
+				Username : <input type="text" name="username" /> <br />
+				<br /> Password: <input type="password" name="password" /> <br />
+				<br />
+				<button class="btn_log_in" type="submit" value="Login">Submit</button>
+					<a th:href="@{/users/registration}">
+						<button class="btn_sign_up" type="submit" th:text="#{sign.up}">
+							Sign up
+						</button>
+					</a>
+				
+
+			</form>
+		</div>
+		<div class="box-2">
+			<!--  
+          Ovi tagovi (link, img) moraju biti zatvoreni, jer kad se ne zatvore, aplikacija puca.
+          Takodje, i atributi (href, src) treba da se pisu sa ovim "th:" pre naziva atributa
+          i stavi se "@{/}" na lokaciju (trebace nam obojici malo vremena dok se naviknemo).
+          Kad navodimo linkove ka fajlovima ne moramo da stavimo "/static",
+          Spring vec zna gde da trazi te fajlove (samo navedes koje fajlove hoces ("/css",
+          "/images", "/js"..)
+          <img src="../image/apartment-architecture-buildings-425047.jpg">
+           -->
+			<img th:src="@{/images/apartment-architecture-buildings-425047.jpg}" />
+			<!-- <img src="../static/images/apartment-architecture-buildings-425047.jpg" /> -->
+		</div>
+	</div>
+
+</body>
+
+</html>

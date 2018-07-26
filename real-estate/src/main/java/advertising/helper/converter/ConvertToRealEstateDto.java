@@ -1,0 +1,46 @@
+package advertising.helper.converter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+
+import advertising.dto.AppartmentDto;
+import advertising.dto.HouseDto;
+import advertising.dto.RealEstateDto;
+import advertising.model.Appartment;
+import advertising.model.House;
+import advertising.model.RealEstate;
+
+@Component
+public class ConvertToRealEstateDto implements Converter<RealEstate, RealEstateDto>{
+
+	@Autowired
+	private ConvertToEquipmentDto toEquipmentDto;
+	
+	@Override
+	public RealEstateDto convert(RealEstate realEstate) {
+		RealEstateDto dto = null;
+		if (realEstate instanceof House) {
+			dto = new HouseDto();
+			dto = (HouseDto) setCommonFiels(realEstate, dto);
+			((HouseDto) dto).setFloorsNumber(((House) realEstate).getFloorsNumber());
+		} else if (realEstate instanceof Appartment) {
+			dto = new AppartmentDto();
+			dto = (AppartmentDto) setCommonFiels(realEstate, dto);
+			((AppartmentDto) dto).setFloor(((Appartment) realEstate).getFloor());
+		}
+		return dto;
+	}
+
+	private RealEstateDto setCommonFiels(RealEstate realEstate, RealEstateDto dto) {
+		dto.setArea(realEstate.getArea());
+		dto.setBooked(realEstate.isBooked());
+		dto.setEquipment(toEquipmentDto.convert(realEstate.getEquipment()));
+		dto.setHeatType(realEstate.getHeatType());
+		dto.setRoomsNumber(realEstate.getRoomsNumber());
+		dto.setId(realEstate.getId());
+		dto.setLocation(realEstate.getLocation());
+		return dto;
+	}
+	
+}

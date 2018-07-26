@@ -1,0 +1,81 @@
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+}
+
+.registration_wrapper {
+    display: grid;
+    grid-template-areas: "registration_box-1 registration_box-2";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100%;
+
+
+
+}
+
+.registration_box-1 {
+    grid-area: registration_box-1;
+    padding: 5%;
+    background: #F9F9F9;
+
+}
+
+.registration_box-2 {
+    grid-area: registration_box-2;
+}
+
+.registration_box-2 img {
+    height: 100vh;
+    width: 100%;
+}
+
+h1 {
+    font-size: 42px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: 400;
+}
+
+label {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 22px;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+    font-size: 22px;
+
+}
+
+p {
+    margin: 0;
+}
+
+/*button*/
+
+.button-1 {
+    border: none;
+    padding: 10px 40px;
+    font-size: 20px;
+    text-align: center;
+    background-color: black;
+    color: #fff;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.button-2 {
+    border: none;
+    padding: 10px 40px;
+    font-size: 20px;
+    text-align: center;
+    background-color: black;
+    color: #fff;
+    font-family: Verdana, Geneva, sans-serif;
+    margin-left: 20px;
+
+}
