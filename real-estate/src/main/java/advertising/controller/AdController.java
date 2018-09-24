@@ -83,7 +83,7 @@ public class AdController {
 	}
 	
 	@GetMapping("/{id}")
-	public ModelAndView findOne(Long id) {
+	public ModelAndView findOne(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("ads/show");
 		mav.addObject("ad", toDto.convert(adService.findOne(id)));
 		return mav;

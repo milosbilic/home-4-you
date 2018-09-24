@@ -21,16 +21,15 @@
 			<form th:action="@{/app-login}" method="POST">
 				Username : <input type="text" name="username" /> <br />
 				<br /> Password: <input type="password" name="password" /> <br />
-				<br />
 				<button class="btn_log_in" type="submit" value="Login">Submit</button>
+			</form>
+			<br />
 					<a th:href="@{/users/registration}">
 						<button class="btn_sign_up" type="submit" th:text="#{sign.up}">
 							Sign up
 						</button>
 					</a>
 				
-
-			</form>
 		</div>
 		<div class="box-2">
 			<!--  
@@ -42,8 +41,8 @@
           "/images", "/js"..)
           <img src="../image/apartment-architecture-buildings-425047.jpg">
            -->
-			<img th:src="@{/images/apartment-architecture-buildings-425047.jpg}" />
-			<!-- <img src="../static/images/apartment-architecture-buildings-425047.jpg" /> -->
+			<img th:src="@{/images/apartment-architecture-buildings-425047.jpg}" 
+			src="../static/images/apartment-architecture-buildings-425047.jpg" /> 
 		</div>
 	</div>
 
