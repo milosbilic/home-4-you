@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/")
 public class HomeController {
 
+	//TODO Fix authentication-checking bugs and find a better way to implement it	
+	
 	@GetMapping
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("index");

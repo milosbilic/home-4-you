@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="${ad.title}"></title>
-        <link rel="stylesheet" href="/css/styles.css"/>
-    </head>
-    <body>
-        <h1>Access Denied</h1> 
-    </body>
+
+<head>
+<title th:text="${ad.title}">${ad.title}</title>
+<th:block th:include="fragments/general :: head"></th:block>
+</head>
+
+
+<body>
+
+	<th:block th:replace="fragments/general :: nav"></th:block>
+
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 mx-auto text-center">
+				<h1 th:text="${ad.title}" class="mb-5">${ad.title}</h1>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<div>
+			<ul>
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+				<li th:text="'Expiration date: ' + ${ad.expirationDate}"></li>
+				<li th:text="'Price: ' + ${ad.price.amount} + ' ' + ${ad.price.currency}"></li>
+				<li th:text="${ad.user.firstName} + ' ' + ${ad.user.lastName}"></li>
+				<li th:text="${ad.user.phone}"></li>
+				
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+			</ul>
+		</div>
+	</div>
+	
+	<th:block th:replace="fragments/general :: footer"></th:block>
+</body>
 </html>

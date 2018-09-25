@@ -4,15 +4,17 @@
 
 <head>
 <title>Log In</title>
-
-<link rel="stylesheet" th:href="@{/css/login.css}" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<!--  <link rel="stylesheet" href="../static/css/login.css" /> -->
-
+<th:block th:include="fragments/general :: head"></th:block>
 </head>
 
 <body>
+
+	<nav class="navbar navbar-light bg-light static-top" th:fragment="nav">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/}">Real Estate Ads</a>
+		</div>
+	</nav>
+	
 	<div class="wrapper">
 		<div class="box-1">
 
