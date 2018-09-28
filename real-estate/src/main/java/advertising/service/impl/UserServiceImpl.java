@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -58,6 +62,7 @@ public class UserServiceImpl implements UserService {
 					+ user.getEmail());
 		}
 		User registered = toEntity.convertMinimum(user);
+		registered.setPassword(passwordEncoder.encode(user.getPassword()));
 		Set<Role> roles = new HashSet<>();
 		roles.add(roleRepository.findOne(2L));
 		registered.setRoles(roles);
