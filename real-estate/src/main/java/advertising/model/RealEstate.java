@@ -16,7 +16,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import advertising.enums.HeatType;
@@ -29,7 +29,7 @@ public abstract class RealEstate {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Location location;
 	
 	@NotNull
@@ -39,7 +39,7 @@ public abstract class RealEstate {
 	@NotNull
 	private double roomsNumber;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
         name = "real_estate_equipment", 
         joinColumns = @JoinColumn(
@@ -49,7 +49,7 @@ public abstract class RealEstate {
 	private Set<Equipment> equipment;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "heat_type")
+	@Column(name = "heat_type")//TODO think about not allowing null values
 	private HeatType heatType;
 	
 	private boolean booked;

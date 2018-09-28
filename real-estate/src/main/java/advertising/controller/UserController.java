@@ -23,7 +23,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import advertising.dto.UserDto;
-import advertising.exception.EmailExistsException;
 import advertising.helper.converter.ConvertToUserDto;
 import advertising.helper.converter.ConvertToUserEntity;
 import advertising.model.User;

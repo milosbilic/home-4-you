@@ -1,5 +1,7 @@
 package advertising.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -31,12 +33,22 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public Ad save(Ad ad) {
+		ad.setExpirationDate(calculateExpirationDate());
 		return adRepository.save(ad);
 	}
 
 	@Override
 	public void delete(Ad ad) {
 		adRepository.delete(ad);
+	}
+	
+	private Date calculateExpirationDate() {
+		Date now = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(now);
+		c.add(Calendar.MONTH, 3);
+		Date expirationDate = c.getTime();
+		return expirationDate;
 	}
 
 }
