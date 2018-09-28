@@ -19,19 +19,15 @@ import advertising.service.UserService;
 public class MyUserPrincipal implements UserDetails {
 
 	private User user;
-	
 
-	
 	public MyUserPrincipal(User user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> list = user.getRoles()
-		.stream()
-		.map(role -> new SimpleGrantedAuthority(role.getRole()))
-		.collect(Collectors.toList());
+		List<GrantedAuthority> list = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRole()))
+				.collect(Collectors.toList());
 		return list;
 	}
 

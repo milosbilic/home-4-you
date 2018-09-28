@@ -30,13 +30,13 @@
 	<nav class="navbar navbar-light bg-light static-top" th:fragment="nav">
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/}">Real Estate Ads</a>
-			<div th:if="${auth == true}">
+			 <div sec:authorize="isAuthenticated()">
 				<a class="btn btn-primary" th:href="@{/logout}">Log Out</a>
 			</div>
-			<div th:unless="${auth == true}">
+			<div sec:authorize="isAnonymous()">
 				<a class="btn btn-primary" th:href="@{/login}">Log In</a> <a
 					class="btn btn-primary" th:href="@{/users/registration}">Register</a>
-			</div>
+			</div> 
 		</div>
 	</nav>
 	
