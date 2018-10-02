@@ -1,20 +1,43 @@
 package advertising.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import advertising.dto.AdDto;
+import advertising.helper.converter.ConvertToAdDto;
+import advertising.service.AdService;
 
 @Controller
 @RequestMapping(value = "/")
 public class HomeController {	
 	
+	@Autowired
+	private AdService adService;
+	
+	@Autowired
+	private ConvertToAdDto toDto;
+	
 	@GetMapping
-	public String index() {
-		return "index";
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("newestAds", toDto.convert(adService.findNewest()));
+		return mav;
 	}
+	
+/*	@GetMapping("/tet")
+	@ResponseBody
+	public List<AdDto> tet() {
+		return toDto.convert(adService.findNewest());
+	} */
 
 	@GetMapping("login")
 	public String login() {

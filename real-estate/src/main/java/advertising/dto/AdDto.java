@@ -1,5 +1,6 @@
 package advertising.dto;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import advertising.model.Price;
@@ -17,7 +18,7 @@ public class AdDto {
 	private Date expirationDate;
 	private UserDto user;
 	
-	private Price price;
+	private PriceDto price;
 	private RealEstateDto realEstate;
 	
 	
@@ -36,7 +37,7 @@ public class AdDto {
 		return id;
 	}
 
-	public Price getPrice() {
+	public PriceDto getPrice() {
 		return price;
 	}
 
@@ -69,7 +70,11 @@ public class AdDto {
 	}
 
 	public void setPrice(Price price) {
-		this.price = price;
+		String pattern = "###,###.00";
+		DecimalFormat format = new DecimalFormat(pattern);
+		this.price = new PriceDto(price.getId(), price.getCurrency());
+		//setting amount String value from a BigDecimal
+		this.price.setAmount(format.format(price.getAmount()));
 	}
 
 	public void setRealEstate(RealEstateDto realEstate) {

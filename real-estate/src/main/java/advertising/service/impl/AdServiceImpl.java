@@ -27,8 +27,7 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public Ad findOne(Long id) {
-		Ad ad = adRepository.findOne(id);
-		return ad;
+		return adRepository.findOne(id);
 	}
 
 	@Override
@@ -51,4 +50,8 @@ public class AdServiceImpl implements AdService {
 		return expirationDate;
 	}
 
+	@Override
+	public List<Ad> findNewest() {
+		return adRepository.findTop3ByOrderByDateCreatedDesc();
+	}
 }

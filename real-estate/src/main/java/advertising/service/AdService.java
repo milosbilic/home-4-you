@@ -14,4 +14,6 @@ public interface AdService {
 	
 	void delete(Ad ad);
 	
+	List<Ad> findNewest();
+	
 }
