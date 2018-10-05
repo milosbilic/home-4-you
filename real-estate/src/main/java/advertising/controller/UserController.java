@@ -91,9 +91,8 @@ public class UserController {
 	
 	@GetMapping("/registration")
 	public ModelAndView register(WebRequest request, Model model) {
-		UserDto userDto = new UserDto();
 		ModelAndView mav = new ModelAndView("users/registration");
-		mav.addObject("user", userDto);
+		mav.addObject("user", new UserDto());
 		return mav;
 	}
 	

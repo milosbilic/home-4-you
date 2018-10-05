@@ -19,16 +19,22 @@
           <div class="col-xl-9 mx-auto">
             <h1 class="mb-5">Bringing a home to you</h1>
           </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form>
-              <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
-                  <input type="email" class="form-control form-control-lg" placeholder="Enter your email..." />
-                </div>
-                <div class="col-12 col-md-3">
-                  <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-                </div>
-              </div>
+          <div class="col-md-10 col-lg-8 col-xl-12 mx-auto">
+            <form th:action="@{/search}" th:object="${search}" method="post">
+            	<div class="input-group">
+  					<select class="form-control" th:value="${adType}" th:field="*{adType}">
+  						<option th:each="adType: ${adTypes}" th:text="${adType.toString()}" th:value="${adType.toString()}"></option>
+  					</select>
+  					<select class="form-control" th:field="*{realEstateType}">
+  						<option th:each="realEstate: ${realEstates}" th:value="${realEstate.toString()}" th:text="${realEstate.toString()}"></option>
+  					</select>
+  					<input type="text" class="form-control" placeholder="Location" th:field="*{location}" />
+  					<input type="text" class="form-control" placeholder="min price" th:field="*{minPrice}" />
+  					<input type="text" class="form-control" placeholder="max price" th:field="*{maxPrice}" />
+  					<input type="text" class="form-control" placeholder="min area" th:field="*{minArea}" />
+  					<input type="text" class="form-control" placeholder="max area" th:field="*{maxArea}" />
+  					<button class="btn btn-primary" type="submit" th:text="Search">Search</button>
+				</div>
             </form>
           </div>
         </div>
@@ -44,7 +50,9 @@
               		<div class="features-icons-icon d-flex">
                			<i class="icon-check m-auto text-primary"></i>
               		</div>
-              		<h3 th:text="${ad.title}">Easy to Use</h3>
+              		<a th:href="@{'/ads/' + ${ad.id}}">
+              			<h3 th:text="${ad.title}">Easy to Use</h3>
+              		</a>
               		<p class="lead mb-0" th:text="${ad.price.amount} + ' ' + ${ad.price.currency}">
               			400 EUR
               		</p>

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import advertising.dto.SearchDto;
 import advertising.model.Ad;
 import advertising.repository.AdRepository;
 import advertising.service.AdService;
@@ -41,6 +42,7 @@ public class AdServiceImpl implements AdService {
 		adRepository.delete(ad);
 	}
 	
+	//set expiration date to 3 months from creation date
 	private Date calculateExpirationDate() {
 		Date now = new Date();
 		Calendar c = Calendar.getInstance();
@@ -53,5 +55,11 @@ public class AdServiceImpl implements AdService {
 	@Override
 	public List<Ad> findNewest() {
 		return adRepository.findTop3ByOrderByDateCreatedDesc();
+	}
+	
+	@Override
+	public List<Ad> search(SearchDto searchDto) {
+		
+		return null;
 	}
 }

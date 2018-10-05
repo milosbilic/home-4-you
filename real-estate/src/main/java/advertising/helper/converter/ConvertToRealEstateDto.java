@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import advertising.dto.AppartmentDto;
 import advertising.dto.HouseDto;
 import advertising.dto.RealEstateDto;
-import advertising.model.Appartment;
+import advertising.model.Apartment;
 import advertising.model.House;
 import advertising.model.RealEstate;
 
@@ -24,10 +24,10 @@ public class ConvertToRealEstateDto implements Converter<RealEstate, RealEstateD
 			dto = new HouseDto();
 			dto = (HouseDto) setCommonFiels(realEstate, dto);
 			((HouseDto) dto).setFloorsNumber(((House) realEstate).getFloorsNumber());
-		} else if (realEstate instanceof Appartment) {
+		} else if (realEstate instanceof Apartment) {
 			dto = new AppartmentDto();
 			dto = (AppartmentDto) setCommonFiels(realEstate, dto);
-			((AppartmentDto) dto).setFloor(((Appartment) realEstate).getFloor());
+			((AppartmentDto) dto).setFloor(((Apartment) realEstate).getFloor());
 		}
 		return dto;
 	}

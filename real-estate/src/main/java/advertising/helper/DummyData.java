@@ -13,18 +13,16 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import advertising.enums.AdOwnerType;
+import advertising.enums.AdType;
 import advertising.enums.HeatType;
 import advertising.model.Ad;
-import advertising.model.Appartment;
+import advertising.model.Apartment;
 import advertising.model.Equipment;
 import advertising.model.House;
 import advertising.model.Location;
 import advertising.model.Price;
 import advertising.model.RealEstate;
 import advertising.model.User;
-import advertising.repository.AppartmentRepository;
-import advertising.repository.HouseRepository;
 import advertising.repository.UserRepository;
 import advertising.service.AdService;
 import advertising.service.EquipmentService;
@@ -50,7 +48,7 @@ public class DummyData {
 	
 	@PostConstruct
 	public void createAds() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 15; i++) {
 			createDummyAd();
 		}
 	}
@@ -70,16 +68,16 @@ public class DummyData {
 			house.setFloorsNumber(random.nextInt(4) + 1);
 		//	houseRepository.save((House) realEstate);
 		} else {
-			Appartment appartment = (Appartment) realEstate;
+			Apartment appartment = (Apartment) realEstate;
 			appartment.setFloor(random.nextInt(11) + 1);
 		//	appartmentRepository.save((Appartment) realEstate);
 		}
 
-		AdOwnerType type = getAdOwnerType();
+		AdType type = getAdType();
 		Price price = getPriceInstance(type);
 
 		Ad ad = new Ad();
-		ad.setAdOwnerType(type);
+		ad.setAdType(type);
 		ad.setTitle("Dummy Ad");
 		ad.setUser(getUserInstance());
 		ad.setPrice(price);
@@ -94,7 +92,7 @@ public class DummyData {
 			retVal = new House();
 			break;
 		case 2:
-			retVal = new Appartment();
+			retVal = new Apartment();
 			break;
 		}
 		return retVal;
@@ -128,10 +126,10 @@ public class DummyData {
 	private Set<Equipment> getEquipmentSet() {
 		Set<Equipment> retVal = new HashSet<>();
 		int iterations = random.nextInt(6) + 1;
-	//	for (int i = 0; i < iterations; i++) {
+//		for (int i = 0; i < iterations; i++) {
 			Equipment e = getEquipmentInstance();
 			retVal.add(e);
-	//	}
+//		}
 		return retVal;
 	}
 
@@ -192,36 +190,36 @@ public class DummyData {
 		return null;
 	}
 
-	private Price getPriceInstance(AdOwnerType type) {
+	private Price getPriceInstance(AdType type) {
 		Price retVal = new Price();
 		retVal.setCurrency(Currency.getInstance("EUR"));
 		switch (type) {
-		case SELLER:
+		case SALE:
 			retVal.setAmount(new BigDecimal(random.nextInt(200000) + 10000));
 			break;
-		case BUYER:
+		case PURCHASE:
 			retVal.setAmount(new BigDecimal(random.nextInt(200000) + 10000));
 			break;
-		case RENTER:
+		case RENT:
 			retVal.setAmount(new BigDecimal(random.nextInt(1500) + 100));
 			break;
-		case TENANT:
+		case LEASE:
 			retVal.setAmount(new BigDecimal(random.nextInt(1500) + 100));
 			break;
 		}
 		return retVal;
 	}
 
-	private AdOwnerType getAdOwnerType() {
+	private AdType getAdType() {
 		switch (random.nextInt(4) + 1) {
 		case 1:
-			return AdOwnerType.BUYER;
+			return AdType.SALE;
 		case 2:
-			return AdOwnerType.SELLER;
+			return AdType.PURCHASE;
 		case 3:
-			return AdOwnerType.RENTER;
+			return AdType.RENT;
 		case 4:
-			return AdOwnerType.TENANT;
+			return AdType.LEASE;
 		}
 		return null;
 	}

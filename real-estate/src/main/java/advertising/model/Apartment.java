@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class Appartment extends RealEstate {
+public class Apartment extends RealEstate {
 
 	@Column(nullable = false)
 	private int floor;

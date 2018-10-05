@@ -20,7 +20,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import advertising.enums.AdOwnerType;
+import advertising.enums.AdType;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -57,7 +57,7 @@ public class Ad {
 	private Price price;
 	
 	@Enumerated(EnumType.STRING)
-	private AdOwnerType adOwnerType; 
+	private AdType adType; 
 
 	public Long getId() {
 		return id;
@@ -122,12 +122,12 @@ public class Ad {
 		this.price = price;
 	}
 
-	public AdOwnerType getAdOwnerType() {
-		return adOwnerType;
+	public AdType getAdType() {
+		return adType;
 	}
 
-	public void setAdOwnerType(AdOwnerType adOwnerType) {
-		this.adOwnerType = adOwnerType;
+	public void setAdType(AdType adType) {
+		this.adType = adType;
 	}
 
 	public boolean isExpired() {

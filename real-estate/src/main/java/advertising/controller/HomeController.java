@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import advertising.dto.AdDto;
+import advertising.dto.SearchDto;
+import advertising.enums.AdType;
+import advertising.enums.RealEstateType;
 import advertising.helper.converter.ConvertToAdDto;
 import advertising.service.AdService;
 
@@ -30,6 +33,9 @@ public class HomeController {
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("newestAds", toDto.convert(adService.findNewest()));
+		mav.addObject("adTypes", AdType.values());
+		mav.addObject("realEstates", RealEstateType.values());
+		mav.addObject("search", new SearchDto());
 		return mav;
 	}
 	
