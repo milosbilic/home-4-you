@@ -8,5 +8,7 @@ import advertising.model.Ad;
 public interface SearchService {
 
 	List<Ad> search(SearchDto searchDto);
+
+	List<Ad> test();
 	
 }

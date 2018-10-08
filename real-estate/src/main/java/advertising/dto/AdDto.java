@@ -3,24 +3,20 @@ package advertising.dto;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import advertising.enums.AdType;
 import advertising.model.Price;
 
 public class AdDto {
 
 	private Long id;
-
 	private String title;
-
 	private String description;
-
 	private Date dateCreated;
-
 	private Date expirationDate;
 	private UserDto user;
-	
 	private PriceDto price;
 	private RealEstateDto realEstate;
-	
+	private AdType adType;
 	
 	public Date getDateCreated() {
 		return dateCreated;
@@ -87,5 +83,11 @@ public class AdDto {
 
 	public void setUser(UserDto user) {
 		this.user = user;
+	}
+	public AdType getAdType() {
+		return adType;
+	}
+	public void setAdType(AdType adType) {
+		this.adType = adType;
 	}
 }

@@ -2,6 +2,8 @@ package advertising.enums;
 
 import java.util.Arrays;
 
+import org.springframework.util.StringUtils;
+
 public enum AdType {
 
 	SALE("sale"), PURCHASE("purchase"), RENT("rent"), LEASE("lease");
@@ -17,10 +19,13 @@ public enum AdType {
 			if (type.value.equalsIgnoreCase(value)) {
 				return type;
 			}
-			throw new IllegalArgumentException(
-					"Unknown enum type " + value + ", Allowed values are " + Arrays.toString(values()));
 		}
-		return null;
+		throw new IllegalArgumentException(
+				"Unknown enum type " + value + ", Allowed values are " + Arrays.toString(values()));
+	}
+	
+	public String toString() {
+		return StringUtils.capitalize(value);
 	}
 
 }

@@ -28,11 +28,11 @@
   					<select class="form-control" th:field="*{realEstateType}">
   						<option th:each="realEstate: ${realEstates}" th:value="${realEstate.toString()}" th:text="${realEstate.toString()}"></option>
   					</select>
-  					<input type="text" class="form-control" placeholder="Location" th:field="*{location}" />
-  					<input type="text" class="form-control" placeholder="min price" th:field="*{minPrice}" />
-  					<input type="text" class="form-control" placeholder="max price" th:field="*{maxPrice}" />
-  					<input type="text" class="form-control" placeholder="min area" th:field="*{minArea}" />
-  					<input type="text" class="form-control" placeholder="max area" th:field="*{maxArea}" />
+  					<input type="text" class="form-control" th:placeholder="Location" th:field="*{location}" />
+  					<input type="text" class="form-control search" placeholder="Min price" th:field="*{minPrice}" />
+  					<input type="text" class="form-control search" placeholder="Max price" th:field="*{maxPrice}" />
+  					<input type="text" class="form-control search" placeholder="Min area" th:field="*{minArea}" />
+  					<input type="text" class="form-control search" placeholder="Max area" th:field="*{maxArea}" />
   					<button class="btn btn-primary" type="submit" th:text="Search">Search</button>
 				</div>
             </form>
@@ -145,7 +145,14 @@
     </section>
 
    <th:block th:replace="fragments/general :: footer"></th:block>
-
+  <script type="text/javascript">
+  	 $(document).ready(function() {
+  		var fields =  $('.search');
+  		$.each(fields, function() {
+  			$(this).attr("value", "");
+  		});
+  	 });
+  </script>
   </body>
 
 </html>

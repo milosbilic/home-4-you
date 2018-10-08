@@ -2,6 +2,10 @@ package advertising.enums;
 
 import java.util.Arrays;
 
+import org.springframework.util.StringUtils;
+
+import org.springframework.util.StringUtils;
+
 public enum RealEstateType {
 
 	HOUSE("house"), APARTMENT("apartment");
@@ -12,15 +16,18 @@ public enum RealEstateType {
 		this.value = value;
 	}
 
-	public static Object fromValue(String value) {
+	public static RealEstateType fromValue(String value) {
 		for (RealEstateType type : values()) {
 			if (type.value.equalsIgnoreCase(value)) {
 				return type;
 			}
-			throw new IllegalArgumentException(
-					"Unknown enum type " + value + ", Allowed values are " + Arrays.toString(values()));
 		}
-		return null;
+		throw new IllegalArgumentException(
+				"Unknown enum type " + value + ", Allowed values are " + Arrays.toString(values()));
+	}
+	
+	public String toString() {
+		return StringUtils.capitalize(value);
 	}
 	
 }

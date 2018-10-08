@@ -28,11 +28,15 @@ import advertising.helper.converter.ConvertToAdDto;
 import advertising.helper.converter.enums.AdTypeConverter;
 import advertising.helper.converter.enums.RealEstateTypeConverter;
 import advertising.service.AdService;
+import advertising.service.SearchService;
 
 @Controller
 @RequestMapping(value = "/search")
 public class SearchController {
 
+	@Autowired
+	private SearchService searchService;
+	
 	@Autowired
 	private AdService adService;
 	
@@ -44,7 +48,7 @@ public class SearchController {
 		webdataBinder.registerCustomEditor(AdType.class, new AdTypeConverter());
 		webdataBinder.registerCustomEditor(RealEstateType.class, new RealEstateTypeConverter());
 	}
-	//TODO add adType and re type properties to the search dto class
+
 	@PostMapping
 	@ResponseBody
 	public List<AdDto> search(@ModelAttribute("search") @Valid SearchDto searchDto,
@@ -52,8 +56,14 @@ public class SearchController {
 		if (bindingResult.hasErrors()) {
 			throw new BindException(bindingResult);
 		}
-		System.out.println(searchDto);
-		return new ArrayList<>();
+//		System.out.println(searchDto);
+		return toAdDto.convertNoUser(searchService.search(searchDto));
+	}
+	
+	@GetMapping
+	@ResponseBody
+	public List<AdDto> test() {
+		return toAdDto.convertNoUser(searchService.test());
 	}
 }
 

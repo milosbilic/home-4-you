@@ -1,5 +1,6 @@
 package advertising.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import advertising.dto.SearchDto;
 import advertising.model.Ad;
+import advertising.model.Apartment;
+import advertising.model.House;
 import advertising.repository.AdRepository;
 import advertising.service.AdService;
 
@@ -59,7 +62,19 @@ public class AdServiceImpl implements AdService {
 	
 	@Override
 	public List<Ad> search(SearchDto searchDto) {
-		
-		return null;
+		System.out.println(searchDto);
+		List<Ad> retVal = null;
+		if (searchDto.getRealEstateClass().getSimpleName().equalsIgnoreCase("House")) {
+			retVal = adRepository.search(searchDto.getAdTypeEnum(),
+					searchDto.getLocation(), House.class, new BigDecimal(searchDto.getMinPrice()), 
+					new BigDecimal(searchDto.getMaxPrice()), searchDto.getMinArea(), 
+					searchDto.getMaxArea());
+		} else {
+			retVal = adRepository.search(searchDto.getAdTypeEnum(),
+					searchDto.getLocation(), Apartment.class, new BigDecimal(searchDto.getMinPrice()), 
+					new BigDecimal(searchDto.getMaxPrice()), searchDto.getMinArea(), 
+					searchDto.getMaxArea());
+		}
+		return retVal;
 	}
 }
