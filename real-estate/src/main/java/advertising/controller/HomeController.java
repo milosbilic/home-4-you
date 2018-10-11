@@ -2,6 +2,8 @@ package advertising.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +32,8 @@ public class HomeController {
 	private ConvertToAdDto toDto;
 	
 	@GetMapping
-	public ModelAndView index() {
+	public ModelAndView index(HttpSession httpSession) {
+		httpSession.removeAttribute("searchCritirea");
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("newestAds", toDto.convert(adService.findNewest()));
 		mav.addObject("adTypes", AdType.values());

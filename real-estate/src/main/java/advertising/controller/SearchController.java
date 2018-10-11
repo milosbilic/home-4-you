@@ -1,24 +1,28 @@
 package advertising.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import advertising.dto.AdDto;
 import advertising.dto.SearchDto;
@@ -27,18 +31,16 @@ import advertising.enums.RealEstateType;
 import advertising.helper.converter.ConvertToAdDto;
 import advertising.helper.converter.enums.AdTypeConverter;
 import advertising.helper.converter.enums.RealEstateTypeConverter;
-import advertising.service.AdService;
+import advertising.model.Ad;
 import advertising.service.SearchService;
 
 @Controller
 @RequestMapping(value = "/search")
+@SessionAttributes("searchCritirea")
 public class SearchController {
 
 	@Autowired
 	private SearchService searchService;
-	
-	@Autowired
-	private AdService adService;
 	
 	@Autowired
 	private ConvertToAdDto toAdDto;
@@ -50,14 +52,25 @@ public class SearchController {
 	}
 
 	@PostMapping
-	@ResponseBody
-	public List<AdDto> search(@ModelAttribute("search") @Valid SearchDto searchDto,
-			BindingResult bindingResult) throws BindException {
+	public String search(@ModelAttribute("search") @Valid SearchDto searchDto,
+			BindingResult bindingResult, HttpSession httpSession)throws BindException {
 		if (bindingResult.hasErrors()) {
 			throw new BindException(bindingResult);
 		}
-//		System.out.println(searchDto);
-		return toAdDto.convertNoUser(searchService.search(searchDto));
+		httpSession.setAttribute("searchCritirea", searchDto);
+		return "redirect:/search/show";
+	}
+	
+	@GetMapping("/show")
+	public ModelAndView pagination(@ModelAttribute("searchCritirea") SearchDto searchDto,
+			@PageableDefault(page = 0, size = 10) Pageable pageable) {
+		ModelAndView mav = new ModelAndView("/ads/search_results");
+		Page<Ad> ads = searchService.search(searchDto, pageable);
+		Page<AdDto> page = new PageImpl<>(toAdDto.convertNoUser(ads.getContent()),
+				pageable, ads.getTotalElements());
+		mav.addObject("page", page);
+//		System.out.println("prosleeedjen" + search?);
+		return mav;
 	}
 	
 	@GetMapping

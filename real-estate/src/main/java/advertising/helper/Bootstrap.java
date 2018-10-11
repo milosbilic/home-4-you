@@ -30,7 +30,7 @@ import advertising.service.LocationService;
 
 @Component
 @Profile("test")
-public class DummyData {
+public class Bootstrap {
 
 	private static Random random = new Random();
 
@@ -48,9 +48,33 @@ public class DummyData {
 	
 	@PostConstruct
 	public void createAds() {
-		for (int i = 0; i < 15; i++) {
-			createDummyAd();
+		for (int i = 0; i < 115; i++) {
+//			createDummyAd();
+			createHouseAds();
 		}
+	}
+	
+	@Transactional
+	void createHouseAds() {
+		House h = new House();
+		h.setArea(random.nextInt(200) + 10);
+		h.setRoomsNumber(random.nextInt(5) + 0.5);
+		h.setBooked(booked());
+		h.setHeatType(getHeatType());
+		h.setEquipment(getEquipmentSet());
+		Location location = locationService.findOne(3L);
+		h.setLocation(location);
+		h.setFloorsNumber(random.nextInt(4) + 1);
+		AdType type = AdType.SALE;
+		Price price = getPriceInstance(type);
+
+		Ad ad = new Ad();
+		ad.setAdType(type);
+		ad.setTitle("Kucica");
+		ad.setUser(getUserInstance());
+		ad.setPrice(price);
+		ad.setRealEstate(h);
+		adService.save(ad);
 	}
 	
 	@Transactional

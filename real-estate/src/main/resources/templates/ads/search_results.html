@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title th:text="${ad.title}">${ad.title}</title>
+<title>Real Estate Ads</title>
 <th:block th:include="fragments/general :: head"></th:block>
 </head>
 
@@ -13,32 +13,40 @@
 
 	<div class="overlay"></div>
 	<div class="container">
-		<div class="row">
-			<div class="col-xl-9 mx-auto text-center">
-				<h1 th:text="${ad.title}" class="mb-5">${ad.title}</h1>
-			</div>
-		</div>
+		<table class="table table-striped">
+			<tr>
+				<th th:text="Title">Title</th>
+				<th th:text="Decription">Name</th>
+				<th th:text="Price">Department</th>
+				<th th:text="Area">Salary</th>
+			</tr>
+			<tr th:each="ad : ${page.content}">
+				<td th:text="${ad.title}"></td>
+				<td th:text="${ad.description}"></td>
+				<td th:text="${ad.price.amount}"></td>
+				<td th:text="${ad.realEstate.area}"></td>
+			</tr>
+		</table>
 	</div>
-	
-	<div>
-		<div>
-			<ul>
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-				<li th:text="'Expiration date: ' + ${ad.expirationDate}"></li>
-				<li th:text="'Price: ' + ${ad.price.amount} + ' ' + ${ad.price.currency}"></li>
-				<li th:text="${ad.user.firstName} + ' ' + ${ad.user.lastName}"></li>
-				<li th:text="${ad.user.phone}"></li>
-				
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-			</ul>
-		</div>
+	<div class="containter-fluid">
+		<nav aria-label="..." >
+		<ul class="pagination">
+			<li th:if="${page.hasPrevious()}" class="page-item">
+				<a class="page-link" th:href="@{/search/show(page=${page.number-1},size=${page.size})}">Previous</a>
+			</li>
+			<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+				<li th:if="${page.number == i}" class="page-item active">
+					<a class="page-link" th:href="@{/search/show(page=${page.number},size=${page.size})}" th:text="${i}+1">this</a>
+				</li>	
+				<li th:unless="${page.number == i}" class="page-item">
+					<a class="page-link" th:href="@{/search/show(page=${i},size=${page.size})}" th:text="${i}+1">a</a>
+				</li>
+			</th:block>
+			<li class="page-item" th:if="${page.hasNext()}">
+				<a class="page-link" th:href="@{/search/show(page=${page.number+1},size=${page.size})}">Next</a>
+			</li>
+		</ul>
+	</nav>
 	</div>
 	
 	<th:block th:replace="fragments/general :: footer"></th:block>

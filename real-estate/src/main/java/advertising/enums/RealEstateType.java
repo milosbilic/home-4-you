@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
-import org.springframework.util.StringUtils;
-
 public enum RealEstateType {
 
 	HOUSE("house"), APARTMENT("apartment");
