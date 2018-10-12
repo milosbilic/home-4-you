@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import advertising.enums.HeatType;
-import advertising.model.Equipment;
 import advertising.model.Location;
 
 public abstract class RealEstateDto {
@@ -26,6 +25,8 @@ public abstract class RealEstateDto {
 	private HeatType heatType;
 	
 	private boolean booked;
+	
+	private byte[] image;
 
 	public Long getId() {
 		return id;
@@ -81,6 +82,14 @@ public abstract class RealEstateDto {
 
 	public void setBooked(boolean booked) {
 		this.booked = booked;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 }

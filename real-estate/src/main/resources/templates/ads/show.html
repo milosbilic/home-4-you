@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title th:text="${ad.title}">${ad.title}</title>
+<title th:text="${ad.title}">Ad</title>
 <th:block th:include="fragments/general :: head"></th:block>
 </head>
 
@@ -24,6 +24,10 @@
 		<div>
 			<ul>
 				<li th:text="${ad.title}"></li>
+				<li>
+					<img th:src="@{'/ads/' + ${ad.realEstate.id} + '/image'}" 
+						width="200" height="200"/>
+				</li>
 				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
 				<li th:text="${ad.description}"></li>
 				<li th:text="'Expiration date: ' + ${ad.expirationDate}"></li>

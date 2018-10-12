@@ -1,5 +1,6 @@
 package advertising.helper;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.HashSet;
@@ -8,8 +9,10 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,7 @@ import advertising.repository.UserRepository;
 import advertising.service.AdService;
 import advertising.service.EquipmentService;
 import advertising.service.LocationService;
+import advertising.service.RealEstateService;
 
 @Component
 @Profile("test")
@@ -46,11 +50,33 @@ public class Bootstrap {
 	@Autowired
 	private AdService adService;
 	
-	@PostConstruct
+	@Autowired
+	private RealEstateService realEstateService;
+	
+	Logger logger = Logger.getLogger(Bootstrap.class);
+	
+/*	@PostConstruct
 	public void createAds() {
 		for (int i = 0; i < 115; i++) {
 //			createDummyAd();
 			createHouseAds();
+		}
+	}*/
+	
+	@PostConstruct
+	void testImageSaving() throws IOException {
+		ClassPathResource pic = new ClassPathResource("static/images/Zgrada.jpeg");
+		
+		RealEstate re = realEstateService.findOne(4L);
+		logger.debug(re);
+		if (re != null) {
+			logger.debug("--- usao u if");
+			byte[] image = new byte[(int) pic.contentLength()];
+			pic.getInputStream().read(image);
+			re.setImage(image);
+			realEstateService.save(re);
+			logger.debug("--- odradio");
+			System.out.println("completed successfully");
 		}
 	}
 	

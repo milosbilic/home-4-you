@@ -22,17 +22,17 @@ public class ConvertToRealEstateDto implements Converter<RealEstate, RealEstateD
 		RealEstateDto dto = null;
 		if (realEstate instanceof House) {
 			dto = new HouseDto();
-			dto = (HouseDto) setCommonFiels(realEstate, dto);
+			dto = (HouseDto) setCommonFields(realEstate, dto);
 			((HouseDto) dto).setFloorsNumber(((House) realEstate).getFloorsNumber());
 		} else if (realEstate instanceof Apartment) {
 			dto = new AppartmentDto();
-			dto = (AppartmentDto) setCommonFiels(realEstate, dto);
+			dto = (AppartmentDto) setCommonFields(realEstate, dto);
 			((AppartmentDto) dto).setFloor(((Apartment) realEstate).getFloor());
 		}
 		return dto;
 	}
 
-	private RealEstateDto setCommonFiels(RealEstate realEstate, RealEstateDto dto) {
+	private RealEstateDto setCommonFields(RealEstate realEstate, RealEstateDto dto) {
 		dto.setArea(realEstate.getArea());
 		dto.setBooked(realEstate.isBooked());
 		dto.setEquipment(toEquipmentDto.convert(realEstate.getEquipment()));

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>New Ad</title>
+<th:block th:include="fragments/general :: head"></th:block>
+</head>
+
+
+<body>
+
+	<th:block th:replace="fragments/general :: nav"></th:block>
+
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 mx-auto text-center">
+				<h1 class="mb-5">New Ad</h1>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">New Ad</div>
+					<div class="panel-body">
+						<form>
+							<div class="row">
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="number" class="form-control" th:placeholder="Price"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="number" class="form-control" th:placeholder="Price"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+								<div class="col-sm-3 form-group">
+									<input type="text" class="form-control" th:placeholder="Title"/>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		
+		<!-- 	<ul>
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+				<li th:text="'Expiration date: ' + ${ad.expirationDate}"></li>
+				<li th:text="'Price: ' + ${ad.price.amount} + ' ' + ${ad.price.currency}"></li>
+				<li th:text="${ad.user.firstName} + ' ' + ${ad.user.lastName}"></li>
+				<li th:text="${ad.user.phone}"></li>
+				
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+				<li th:text="${ad.title}"></li>
+				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
+				<li th:text="${ad.description}"></li>
+			</ul> -->
+		</div>
+	</div>
+		
+	<th:block th:replace="fragments/general :: footer"></th:block>
+</body>
+</html>
