@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="404 + ' ' + 'Not Found'"></title>
+<th:block th:include="fragments/general :: head"></th:block>
+</head>
+
+
+<body>
+
+	<th:block th:replace="fragments/general :: nav"></th:block>
+
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 mx-auto text-center">
+				<h1 th:text="404 + ' ' + 'Not Found'" class="mb-5"></h1>
+				<h4 th:text="${exception.getMessage()}"></h4>
+			</div>
+		</div>
+	</div>
+	
+
+	<th:block th:replace="fragments/general :: footer"></th:block>
+</body>
+</html>

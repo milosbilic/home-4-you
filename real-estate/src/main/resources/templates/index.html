@@ -29,10 +29,10 @@
   						<option th:each="realEstate: ${realEstates}" th:value="${realEstate.toString()}" th:text="${realEstate.toString()}"></option>
   					</select>
   					<input type="text" class="form-control" th:placeholder="Location" th:field="*{location}" />
-  					<input type="text" class="form-control search" placeholder="Min price" th:field="*{minPrice}" />
-  					<input type="text" class="form-control search" placeholder="Max price" th:field="*{maxPrice}" />
-  					<input type="text" class="form-control search" placeholder="Min area" th:field="*{minArea}" />
-  					<input type="text" class="form-control search" placeholder="Max area" th:field="*{maxArea}" />
+  					<input type="number" class="form-control search" placeholder="Min price" th:field="*{minPrice}" />
+  					<input type="number" class="form-control search" placeholder="Max price" th:field="*{maxPrice}" />
+  					<input type="number" class="form-control search" placeholder="Min area" th:field="*{minArea}" />
+  					<input type="number" class="form-control search" placeholder="Max area" th:field="*{maxArea}" />
   					<button class="btn btn-primary" type="submit" th:text="Search">Search</button>
 				</div>
             </form>

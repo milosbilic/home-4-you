@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import advertising.dto.SearchDto;
+import advertising.exception.NotFoundException;
 import advertising.helper.Helper;
 import advertising.model.Ad;
 import advertising.repository.AdRepository;
@@ -32,7 +33,10 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public Ad findOne(Long id) {
-		return adRepository.findOne(id);
+		Ad ad = adRepository.findOne(id);
+		if (ad == null)
+			throw new NotFoundException("Ad with the ID of " + id + " not found.");
+		return ad;
 	}
 
 	@Override
