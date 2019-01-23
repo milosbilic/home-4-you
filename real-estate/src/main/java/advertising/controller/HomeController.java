@@ -37,12 +37,6 @@ public class HomeController {
 		mav.addObject("search", new SearchDto());
 		return mav;
 	}
-	
-/*	@GetMapping("/tet")
-	@ResponseBody
-	public List<AdDto> tet() {
-		return toDto.convert(adService.findNewest());
-	} */
 
 	@GetMapping("login")
 	public String login() {
@@ -56,6 +50,11 @@ public class HomeController {
 	public String accessDenied() {
 		return "access_denied";
 	}
+	
+/*	@GetMapping("error")
+	public String error() {
+		return "errors/default";
+	}*/
 
 	private boolean authenticated() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

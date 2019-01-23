@@ -1,5 +1,7 @@
 package advertising.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,16 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public Location findOne(Long id) {
 		return repository.findOne(id);
+	}
+
+	@Override
+	public Location findByName(String name) {
+		return repository.findByName(name);
+	}
+	
+	@Override
+	public List<Location> findByNameStartingWith(String name) {
+		return repository.findByNameStartingWith(name);
 	}
 
 }

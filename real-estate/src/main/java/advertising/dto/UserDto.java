@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import advertising.helper.validation.PasswordMatches;
+import advertising.helper.validation.annotation.PasswordMatches;
 
 @PasswordMatches
 public class UserDto {

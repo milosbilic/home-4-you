@@ -1,6 +1,6 @@
 package advertising.dto;
 
-public class AppartmentDto extends RealEstateDto{
+public class ApartmentDto extends RealEstateDto{
 
 	private int floor;
 

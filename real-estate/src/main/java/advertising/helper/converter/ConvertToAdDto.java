@@ -33,7 +33,7 @@ public class ConvertToAdDto implements Converter<Ad, AdDto>{
 		dto.setDescription(ad.getDescription());
 		dto.setDateCreated(ad.getDateCreated());
 		dto.setExpirationDate(ad.getExpirationDate());
-		dto.setPrice(ad.getPrice());
+		dto.setFormattedPrice(ad.getPrice());
 		dto.setRealEstate(toRealEstateDto.convert(ad.getRealEstate()));
 		dto.setAdType(ad.getAdType());
 		return dto;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import advertising.dto.AppartmentDto;
+import advertising.dto.ApartmentDto;
 import advertising.dto.HouseDto;
 import advertising.dto.RealEstateDto;
 import advertising.model.Apartment;
@@ -25,9 +25,9 @@ public class ConvertToRealEstateDto implements Converter<RealEstate, RealEstateD
 			dto = (HouseDto) setCommonFields(realEstate, dto);
 			((HouseDto) dto).setFloorsNumber(((House) realEstate).getFloorsNumber());
 		} else if (realEstate instanceof Apartment) {
-			dto = new AppartmentDto();
-			dto = (AppartmentDto) setCommonFields(realEstate, dto);
-			((AppartmentDto) dto).setFloor(((Apartment) realEstate).getFloor());
+			dto = new ApartmentDto();
+			dto = (ApartmentDto) setCommonFields(realEstate, dto);
+			((ApartmentDto) dto).setFloor(((Apartment) realEstate).getFloor());
 		}
 		return dto;
 	}

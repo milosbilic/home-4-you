@@ -54,10 +54,9 @@ public class UserController {
 	}
 	
 	@PostMapping()
-	public ModelAndView createUser(@ModelAttribute("user") @Valid UserDto userDto,
-			   				 BindingResult result,
-			   				 WebRequest request, 
-			   				 Errors errors) {
+	public ModelAndView createUser(
+			@ModelAttribute("user") @Valid UserDto userDto, BindingResult result,
+			WebRequest request, Errors errors) {
 		User registered = null;
 		if (!result.hasErrors())
 			registered = userService.createUserAccount(userDto, result);

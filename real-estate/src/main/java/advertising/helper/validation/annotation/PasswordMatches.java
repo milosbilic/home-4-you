@@ -1,4 +1,4 @@
-package advertising.helper.validation;
+package advertising.helper.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import advertising.helper.validation.PasswordMatchesValidator;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE}) 
 @Retention(RetentionPolicy.RUNTIME)

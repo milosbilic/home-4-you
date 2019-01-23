@@ -1,11 +1,19 @@
 package advertising.dto;
 
+import java.math.BigDecimal;
 import java.util.Currency;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class PriceDto {
 
 	private Long id;
-	private String amount;
+	
+	@Min(0)
+	@NotNull
+	private BigDecimal amount;
+	private String amountOutput;
 	private Currency currency;
 
 	public PriceDto() {
@@ -24,12 +32,12 @@ public class PriceDto {
 		this.id = id;
 	}
 
-	public String getAmount() {
-		return amount;
+	public String getAmountOutput() {
+		return amountOutput;
 	}
 
-	public void setAmount(String amount) {
-		this.amount = amount;
+	public void setAmountOutput(String amount) {
+		this.amountOutput = amount;
 	}
 
 	public Currency getCurrency() {
@@ -38,6 +46,14 @@ public class PriceDto {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 }

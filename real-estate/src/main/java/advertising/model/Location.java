@@ -65,4 +65,9 @@ public class Location {
 		this.zipCode = zipCode;
 	}
 
+	@Override
+	public String toString() {
+		return "Location [id=" + id + ", name=" + name + ", zipCode=" + zipCode + ", realEstates=" + realEstates + "]";
+	}
+
 }

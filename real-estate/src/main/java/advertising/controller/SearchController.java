@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +34,9 @@ import advertising.helper.converter.ConvertToAdDto;
 import advertising.helper.converter.enums.AdTypeConverter;
 import advertising.helper.converter.enums.RealEstateTypeConverter;
 import advertising.model.Ad;
+import advertising.model.Equipment;
+import advertising.model.Location;
+import advertising.service.LocationService;
 import advertising.service.SearchService;
 
 @Controller
@@ -44,6 +49,9 @@ public class SearchController {
 	
 	@Autowired
 	private ConvertToAdDto toAdDto;
+	
+	@Autowired
+	private LocationService locationService;
 	
 	@InitBinder
 	public void initBinder(final WebDataBinder webdataBinder) {
@@ -69,7 +77,7 @@ public class SearchController {
 		Page<AdDto> page = new PageImpl<>(toAdDto.convertNoUser(ads.getContent()),
 				pageable, ads.getTotalElements());
 		mav.addObject("page", page);
-//		System.out.println("prosleeedjen" + search?);
+
 		return mav;
 	}
 	
@@ -77,6 +85,11 @@ public class SearchController {
 	@ResponseBody
 	public List<AdDto> test() {
 		return toAdDto.convertNoUser(searchService.test());
+	}
+	
+	@GetMapping("/locations")
+	public @ResponseBody List<Location> getLocations(@RequestParam String q) {
+		return locationService.findByNameStartingWith(q);
 	}
 }
 

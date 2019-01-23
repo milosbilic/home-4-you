@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -12,12 +13,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import advertising.dto.AdDto;
 import advertising.dto.SearchDto;
 import advertising.exception.NotFoundException;
 import advertising.helper.Helper;
+import advertising.helper.converter.ConvertToAdEntity;
 import advertising.model.Ad;
+import advertising.model.Equipment;
+import advertising.model.User;
 import advertising.repository.AdRepository;
 import advertising.service.AdService;
+import advertising.service.EquipmentService;
+import advertising.service.UserService;
 
 @Service
 @Transactional
@@ -25,6 +32,15 @@ public class AdServiceImpl implements AdService {
 
 	@Autowired
 	private AdRepository adRepository;
+	
+	@Autowired
+	private EquipmentService equipmentService;
+	
+	@Autowired
+	private ConvertToAdEntity toEntity;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public List<Ad> findAll() {
@@ -43,6 +59,20 @@ public class AdServiceImpl implements AdService {
 	public Ad save(Ad ad) {
 		ad.setExpirationDate(calculateExpirationDate());
 		return adRepository.save(ad);
+	}
+	
+	@Override
+	public void save(AdDto adDto, List<Long> equipmentIds, String username) {
+		User user = userService.findByUsername(username);
+		Set<Equipment> equipment = equipmentService.findByIds(equipmentIds);
+		Ad newAd = toEntity.convert(adDto);
+		newAd.setUser(user);
+		if (newAd.getRealEstate() != null) {
+			System.out.println(newAd.getRealEstate());
+			System.out.println("nije nal");
+		}
+		newAd.getRealEstate().setEquipment(equipment);
+		adRepository.save(newAd);
 	}
 
 	@Override

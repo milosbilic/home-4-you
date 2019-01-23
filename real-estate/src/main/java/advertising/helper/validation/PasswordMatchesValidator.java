@@ -4,6 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import advertising.dto.UserDto;
+import advertising.helper.validation.annotation.PasswordMatches;
 
 public class PasswordMatchesValidator implements 
 	ConstraintValidator<PasswordMatches, Object> { 

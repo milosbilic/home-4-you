@@ -16,16 +16,23 @@ public class ConvertToAdEntity implements Converter<AdDto, Ad> {
 	@Autowired
 	private ConvertToUserEntity toUser;
 	
+	@Autowired
+	private ConvertToRealEstateEntity toRealEstateEntity;
+	
 	@Override
 	public Ad convert(AdDto dto) {
 		Ad ad = new Ad();
-		ad.setId(dto.getId());
 		ad.setTitle(dto.getTitle());
 		ad.setDescription(dto.getDescription());
 		ad.setDateCreated(dto.getDateCreated());
-		ad.setExpirationDate(dto.getExpirationDate());
-		ad.setUser(toUser.convert(dto.getUser()));
-	//	ad.setCategory(toCategory.convert(dto.getCategory()));
+		ad.setRealEstate(toRealEstateEntity.convert(dto.getRealEstate()));
+		
+		if (dto.getUser() != null)
+			ad.setUser(toUser.convert(dto.getUser()));
+		if (dto.getId() != null)
+			ad.setId(dto.getId());
+		if (dto.getExpirationDate() != null)
+			ad.setExpirationDate(dto.getExpirationDate());
 		return ad;
 	}
 

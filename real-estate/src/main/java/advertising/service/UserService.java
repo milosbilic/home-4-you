@@ -21,6 +21,8 @@ public interface UserService {
 	User findOne(Long id);
 	
 	User createUserAccount(UserDto userDto, BindingResult result);
+
+	User findByUsername(String username);
 	
 		
 }

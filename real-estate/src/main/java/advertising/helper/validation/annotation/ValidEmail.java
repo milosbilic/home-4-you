@@ -1,4 +1,4 @@
-package advertising.helper.validation;
+package advertising.helper.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

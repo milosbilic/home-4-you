@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
 		return registered;
 	}
 
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 }

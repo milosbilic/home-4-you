@@ -4,8 +4,12 @@
 <head>
 <title>New Ad</title>
 <th:block th:include="fragments/general :: head"></th:block>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 </head>
-
 
 <body>
 
@@ -26,59 +30,194 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">New Ad</div>
 					<div class="panel-body">
-						<form>
+						<form th:action="@{/ads}" th:object="${newAd}" method="post" enctype="multipart/form-data">
+							<!-- TITLE -->
+							<div class="row">
+								<div class="col-sm-12 form-group">
+									<input type="text" class="form-control" th:placeholder="Title" th:field="*{title}"/>
+								</div>
+							</div>
+							<!-- DESCRIPTION -->
+							<div class="row">	
+								<div class="col-sm-12 form-group">
+									<label class="label">Description</label>
+									<textarea id="desc" class="form-control" th:field="*{description}"></textarea>
+								</div>
+							</div>
+							<!-- AD TYPE -->
 							<div class="row">
 								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+									<select class="form-control" th:field="*{adType}">
+										<option th:each="adType: ${adTypes}" th:value="${adType}" th:text="${adType.toString()}"></option>
+									</select>
 								</div>
+								<!-- LOCATION -->
 								<div class="col-sm-3 form-group">
-									<input type="number" class="form-control" th:placeholder="Price"/>
+									<select class="form-control selectpicker" th:field="*{realEstate.location.name}" id="location" data-live-search="true">
+										<!-- <option>Location</option>
+										<option>beograd</option>
+										<option>novi sad</option>
+										<option>novi grad</option> -->
+									</select>
 								</div>
+								<!-- PRICE -->
 								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+									<input class="form-control" th:placeholder="Price" th:field="*{price.amount}"/>
 								</div>
+								<!-- AREA -->
 								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+									<input type="number" class="form-control" th:placeholder="Area" th:field="*{realEstate.area}"/>
+								</div>
+								<!-- NUMBER OF ROOMS -->
+								<div class="col-sm-3 form-group">
+									<input type="number" class="form-control" th:placeholder="'Number ' + 'of ' + 'Rooms'"/>
+								</div>
+								<!-- HEAT TYPE -->
+								<div class="col-sm-3 form-group">
+									<select th:field="*{realEstate.heatType}" class="form-control">
+										<option th:each="heatType: ${heatTypes}" th:value="${heatType}" th:text="${heatType}"></option>
+									</select>
+								</div>
+								<!-- EQUIPMENT -->
+								<div class="col-sm-3 form-group">
+									<select id="multi" name="equipment" class="selectpicker form-control" multiple="multiple" data-live-search="true">
+										<option th:each="item : ${equipment}"  th:value="${item.id}" th:text="${item.name}">
+										</option>
+									</select>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+								<!-- HOUSE FIELDS -->
+								<div th:if="${realEstateType.toString().equalsIgnoreCase('house')}" class="col-sm-3 form-group">
+									<input type="number" class="form-control" th:placeholder="'Number ' + 'of ' + 'floors'" th:field="*{realEstate.floorsNumber}"/>
 								</div>
-								<div class="col-sm-3 form-group">
-									<input type="number" class="form-control" th:placeholder="Price"/>
+								<!-- APARTMENT FIELDS -->
+								<div th:if="${realEstateType.toString().equalsIgnoreCase('apartment')}" class="col-sm-3 form-group">
+									<input type="number" class="form-control" th:placeholder="Floor" th:field="*{realEstate.floor}"/>
 								</div>
-								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+								<!-- BOOKED -->
+								<div class="col-sm-3 form-checked">			
+									<input type="checkbox" class="form-check-input" id="booked"/>
+									<label class="form-check-label" for="booked">Booked</label>
 								</div>
-								<div class="col-sm-3 form-group">
-									<input type="text" class="form-control" th:placeholder="Title"/>
+								<!-- IMAGE -->
+								<div class="col-sm-3 custom-file">
+    									<input type="file" class="custom-file-input" id="customFile" th:field="*{file.file}"/>
+ 									<label class="custom-file-label" style="font-size: 15px;" for="customFile">Add Image</label>
+								</div>
+								<div class="form-group col-sm-3">
+									<button class="btn btn-primary" style="margin-left: 15px" type="submit">Submit</button>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
-		
-		<!-- 	<ul>
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-				<li th:text="'Expiration date: ' + ${ad.expirationDate}"></li>
-				<li th:text="'Price: ' + ${ad.price.amount} + ' ' + ${ad.price.currency}"></li>
-				<li th:text="${ad.user.firstName} + ' ' + ${ad.user.lastName}"></li>
-				<li th:text="${ad.user.phone}"></li>
-				
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-				<li th:text="${ad.title}"></li>
-				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>
-				<li th:text="${ad.description}"></li>
-			</ul> -->
 		</div>
 	</div>
 		
-	<th:block th:replace="fragments/general :: footer"></th:block>
+	<!-- <th:block th:replace="fragments/general :: footer"></th:block> -->
+	
+	 <!-- Footer -->
+    <footer class="footer bg-light" th:fragment="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Milos Bilic 2018. All Rights Reserved.</p>
+          </div>
+          <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-facebook fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fab fa-instagram fa-2x fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script th:src="@{/js/ajaxSelectPicker.js}"></script>
+    <script th:src="@{/js/ajax-bootstrap-select.js}"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		$(document).ready(function() {
+			$('#multi').selectpicker();
+			
+			var locationName = $('#location').val();
+			$("#location").keyup(function(){
+			    $.get(/*[[@{/search/locations}]]*/,{name: locationName}, function(returnedData){
+			        console.log(returnedData);
+			    });
+			});
+			$('#location')
+		    .selectpicker({
+		        liveSearch: true
+		    })
+		    .ajaxSelectPicker({
+		        ajax: {
+		            url:/*[[@{/search/locations}]]*/,
+		            method: 'GET',
+		            data: function () {
+		                var params = {
+		                    q: '{{{q}}}'
+		                };
+		            }
+		        },
+		        locale: {
+		            emptyTitle: 'Location'
+		        },
+		        preprocessData: function(data){
+		        	console.log(data);
+		            var locations = [];
+					  if(data.length > 0) {
+		            		var len = data.length;
+		                for(var i = 0; i < len; i++){
+		                    var curr = data[i];
+		                    locations.push(
+		                        {
+		                            'value': curr.name,
+		                            'text': curr.name,
+		                            'disabled': false
+		                        }
+		                    );
+		                }
+		            }
+		            return locations;
+		        },
+		        preserveSelected: false
+		    });
+		
+		});
+		/*]]>*/
+	</script>
+	
 </body>
 </html>

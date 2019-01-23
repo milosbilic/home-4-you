@@ -1,5 +1,6 @@
 package advertising.dto;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
@@ -91,5 +92,13 @@ public abstract class RealEstateDto {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
+
+	@Override
+	public String toString() {
+		return "RealEstateDto [id=" + id + ", location=" + location + ", area=" + area + ", roomsNumber=" + roomsNumber
+				+ ", equipment=" + equipment + ", heatType=" + heatType + ", booked=" + booked;
+	}
+	
+	
 	
 }
