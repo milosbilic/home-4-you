@@ -1,6 +1,7 @@
 package advertising.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,18 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	@Override
-	public Location findByName(String name) {
+	public Optional<Location> findByName(String name) {
 		return repository.findByName(name);
 	}
 	
 	@Override
 	public List<Location> findByNameStartingWith(String name) {
 		return repository.findByNameStartingWith(name);
+	}
+
+	@Override
+	public Location save(Location location) {
+		return repository.save(location);
 	}
 
 }

@@ -1,14 +1,16 @@
 package advertising.helper.converter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import static java.util.stream.Collectors.*;
+
 import advertising.dto.AdDto;
 import advertising.model.Ad;
+import advertising.model.Price;
 
 @Component
 public class ConvertToAdEntity implements Converter<AdDto, Ad> {
@@ -22,10 +24,12 @@ public class ConvertToAdEntity implements Converter<AdDto, Ad> {
 	@Override
 	public Ad convert(AdDto dto) {
 		Ad ad = new Ad();
+		ad.setAdType(dto.getAdType());
 		ad.setTitle(dto.getTitle());
 		ad.setDescription(dto.getDescription());
 		ad.setDateCreated(dto.getDateCreated());
 		ad.setRealEstate(toRealEstateEntity.convert(dto.getRealEstate()));
+		ad.setPrice(new Price(dto.getPrice().getAmount()));
 		
 		if (dto.getUser() != null)
 			ad.setUser(toUser.convert(dto.getUser()));
@@ -37,11 +41,7 @@ public class ConvertToAdEntity implements Converter<AdDto, Ad> {
 	}
 
 	public List<Ad> convert(List<AdDto> dtos) {
-		List<Ad> ads = new ArrayList<>();
-		for (AdDto dto : dtos) {
-			ads.add(convert(dto));
-		}
-		return ads;
+		return dtos.stream().map(x -> convert(x)).collect(toList());
 	}
 
 }

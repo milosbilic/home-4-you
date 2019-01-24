@@ -30,7 +30,6 @@ import advertising.repository.UserRepository;
 import advertising.service.AdService;
 import advertising.service.EquipmentService;
 import advertising.service.LocationService;
-import advertising.service.RealEstateService;
 
 @Component
 @Profile("test")
@@ -50,8 +49,8 @@ public class Bootstrap {
 	@Autowired
 	private AdService adService;
 	
-	@Autowired
-	private RealEstateService realEstateService;
+//	@Autowired
+//	private RealEstateService realEstateService;
 	
 	Logger logger = Logger.getLogger(Bootstrap.class);
 	
@@ -63,22 +62,19 @@ public class Bootstrap {
 		}
 	}*/
 	
-	@PostConstruct
+/*	@PostConstruct
 	void testImageSaving() throws IOException {
 		ClassPathResource pic = new ClassPathResource("static/images/Zgrada.jpeg");
 		
 		RealEstate re = realEstateService.findOne(4L);
 		logger.debug(re);
 		if (re != null) {
-			logger.debug("--- usao u if");
 			byte[] image = new byte[(int) pic.contentLength()];
 			pic.getInputStream().read(image);
 			re.setImage(image);
 			realEstateService.save(re);
-			logger.debug("--- odradio");
-			System.out.println("completed successfully");
 		}
-	}
+	}*/
 	
 	@Transactional
 	void createHouseAds() {

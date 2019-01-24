@@ -26,7 +26,7 @@ public class Location {
 	private String name;
 
 	@Column(name = "zip_code", unique = true)
-	@NotNull
+	//leave it nullable for now
 	private String zipCode;
 	
 	@OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -39,6 +39,10 @@ public class Location {
 		super();
 		this.name = name;
 		this.zipCode = zipCode;
+	}
+
+	public Location(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {

@@ -1,5 +1,6 @@
 package advertising.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -17,7 +18,7 @@ public interface AdService {
 	
 	Ad save(Ad ad);
 	
-	void save(AdDto adDto, List<Long> equipmentIds, String username);
+	void save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException;
 	
 	void delete(Ad ad);
 	

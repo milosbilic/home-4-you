@@ -2,11 +2,11 @@ package advertising.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -31,19 +31,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import advertising.dto.AdDto;
+import advertising.dto.ApartmentAdDto;
+import advertising.dto.HouseAdDto;
 import advertising.enums.AdType;
 import advertising.enums.HeatType;
 import advertising.enums.RealEstateType;
+import advertising.exception.NotFoundException;
+import advertising.exception.UnsupportedTypeException;
+import advertising.factory.AdDtoFactory;
 import advertising.helper.converter.ConvertToAdDto;
-import advertising.helper.converter.ConvertToAdEntity;
 import advertising.helper.converter.ConvertToEquipmentDto;
 import advertising.helper.converter.enums.AdTypeConverter;
 import advertising.helper.converter.enums.HeatTypeConverter;
 import advertising.helper.converter.enums.RealEstateTypeConverter;
 import advertising.model.Ad;
+import advertising.model.RealEstate;
 import advertising.service.AdService;
+import advertising.service.ApartmentService;
 import advertising.service.EquipmentService;
-import advertising.service.RealEstateService;
+import advertising.service.HouseService;
 
 @Controller
 @RequestMapping(value = "/ads")
@@ -51,9 +57,12 @@ public class AdController {
 
 	@Autowired
 	private AdService adService;
-
+	
 	@Autowired
-	private RealEstateService realEstateService;
+	private HouseService houseService;
+	
+	@Autowired
+	private ApartmentService apartmentService;
 	
 	@Autowired
 	private EquipmentService equipmentService;
@@ -61,8 +70,6 @@ public class AdController {
 	@Autowired
 	private ConvertToAdDto toDto;
 
-	@Autowired
-	private ConvertToAdEntity toEntity;
 	
 	@Autowired
 	private ConvertToEquipmentDto toEquipmentDto;
@@ -92,7 +99,15 @@ public class AdController {
 
 	@GetMapping("/{realEstateId}/image")
 	public void renderImage(@PathVariable Long realEstateId, HttpServletResponse response) throws IOException {
-		byte[] image = realEstateService.findOne(realEstateId).getImage();
+		RealEstate re = houseService.findOne(realEstateId);
+		if (re == null) {
+			re = apartmentService.findOne(realEstateId);
+		} 
+		if (re == null) {
+			throw new NotFoundException("No real estate with id of " + realEstateId);
+		}
+		
+		byte[] image = re.getImage();
 		response.setContentType("image/jpeg");
 		InputStream is = new ByteArrayInputStream(image);
 		IOUtils.copy(is, response.getOutputStream());
@@ -101,7 +116,7 @@ public class AdController {
 	@GetMapping("/new")
 	public ModelAndView newAdd(@RequestParam RealEstateType realEstateType) {
 		ModelAndView mav = new ModelAndView("ads/new");
-		mav.addObject("newAd", new AdDto(realEstateType));
+		mav.addObject("newAd", AdDtoFactory.getInstance(realEstateType));
 		mav.addObject("adTypes", AdType.values());
 		mav.addObject("realEstateType", realEstateType);
 		mav.addObject("heatTypes", HeatType.values());
@@ -111,23 +126,22 @@ public class AdController {
 	}
 
 	@PostMapping
-	//@PreAuthorize(HAS_ANY_ROLE)
+	@PreAuthorize(HAS_ANY_ROLE)
 	public ResponseEntity<AdDto> create(@ModelAttribute("newAd") @Valid AdDto adDto,
 			@RequestParam(name="equipment", required = false) List<Long> equipmentIds,
-			Authentication auth, BindingResult result){
+			Authentication auth, BindingResult result) throws IOException{
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 		} else {
 			try {
-				FileCopyUtils.copy(adDto.getFile().getFile().getBytes(), new File(UPLOAD_LOCATION + adDto.getFile().getFile().getOriginalFilename()));
+				FileCopyUtils.copy(adDto.getFile().getFile().getBytes(),
+				new File(UPLOAD_LOCATION + adDto.getFile().getFile().getOriginalFilename()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			adService.save(adDto, equipmentIds, auth.getName());
 		}
-		System.out.println(adDto);
-		
-		return new ResponseEntity<>(new AdDto(), HttpStatus.CREATED);
+		return null;
 	}
 
 	@DeleteMapping("/{id}")
@@ -138,5 +152,20 @@ public class AdController {
 		return new ResponseEntity<>(toDto.convert(ad), HttpStatus.NO_CONTENT);
 	}
 
+	@ModelAttribute("newAd")
+	public AdDto getInstance(final HttpServletRequest request) {
+		AdDto adDto = null;
+		String type = request.getParameter("realEstateType");
+		if (type != null) {
+			if (type.equalsIgnoreCase("house")) {
+				adDto = new HouseAdDto();
+			} else if (type.equalsIgnoreCase("apartment")) {
+				adDto = new ApartmentAdDto();
+			} else {
+				throw new UnsupportedTypeException("The passed type doesn't exist!");
+			}
+		}
+		return adDto;
+	}
 
 }

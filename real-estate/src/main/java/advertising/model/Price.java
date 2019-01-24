@@ -20,6 +20,13 @@ public class Price {
 	private BigDecimal amount;
 	
 	private Currency currency;
+	
+	public Price() {}
+	
+	public Price(BigDecimal amount) {
+		this.amount = amount;
+		this.currency = Currency.getInstance("EUR");
+	}
 
 	public Long getId() {
 		return id;

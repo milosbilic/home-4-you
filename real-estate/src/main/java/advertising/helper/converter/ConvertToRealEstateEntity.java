@@ -36,11 +36,13 @@ public class ConvertToRealEstateEntity implements Converter<RealEstateDto, RealE
 	private RealEstate setCommonFields(RealEstateDto dto, RealEstate re) {
 		re.setArea(dto.getArea());
 		re.setBooked(dto.isBooked());
-		re.setEquipment(toEquipment.convert(dto.getEquipment()));
 		re.setHeatType(dto.getHeatType());
 		re.setImage(dto.getImage());
 		re.setLocation(dto.getLocation());
 		re.setRoomsNumber(dto.getRoomsNumber());
+		if (dto.getEquipment() != null) {
+			re.setEquipment(toEquipment.convert(dto.getEquipment()));
+		}
 		return re;
 	}
 

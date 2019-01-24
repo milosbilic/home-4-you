@@ -1,9 +1,11 @@
 package advertising.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -20,10 +22,12 @@ import advertising.helper.Helper;
 import advertising.helper.converter.ConvertToAdEntity;
 import advertising.model.Ad;
 import advertising.model.Equipment;
+import advertising.model.Location;
 import advertising.model.User;
 import advertising.repository.AdRepository;
 import advertising.service.AdService;
 import advertising.service.EquipmentService;
+import advertising.service.LocationService;
 import advertising.service.UserService;
 
 @Service
@@ -41,6 +45,9 @@ public class AdServiceImpl implements AdService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LocationService locationService;
 
 	@Override
 	public List<Ad> findAll() {
@@ -62,16 +69,33 @@ public class AdServiceImpl implements AdService {
 	}
 	
 	@Override
-	public void save(AdDto adDto, List<Long> equipmentIds, String username) {
+	public void save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException {
 		User user = userService.findByUsername(username);
-		Set<Equipment> equipment = equipmentService.findByIds(equipmentIds);
+		Set<Equipment> equipment = null;
+		Location location = null;
 		Ad newAd = toEntity.convert(adDto);
+		
+		if (equipmentIds != null)
+			equipment = equipmentService.findByIds(equipmentIds);
+		
+		String locationName =  newAd.getRealEstate().getLocation().getName();
+		//retrieve location entity or create a new one
+		Optional<Location> locationOptional = locationService.findByName(locationName);
+		if (!locationOptional.isPresent()) 
+			location = new Location(locationName); 
+		else 
+			location = locationOptional.get();
 		newAd.setUser(user);
-		if (newAd.getRealEstate() != null) {
-			System.out.println(newAd.getRealEstate());
-			System.out.println("nije nal");
-		}
 		newAd.getRealEstate().setEquipment(equipment);
+		newAd.getRealEstate().setLocation(location);
+		newAd.setExpirationDate(calculateExpirationDate());
+		newAd.getRealEstate().setImage(adDto.getFile().getFile().getBytes());
+		
+//		byte[] pic = new byte[(int) adDto.getFile().getFile().getSize()];
+//		adDto.getFile().getFile().getInputStream().read(pic);
+//		newAd.getRealEstate().setImage(pic);
+		
+		
 		adRepository.save(newAd);
 	}
 

@@ -7,11 +7,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import advertising.enums.AdType;
-import advertising.enums.RealEstateType;
 import advertising.helper.validation.annotation.Image;
 import advertising.model.Price;
 
-public class AdDto {
+public abstract class AdDto {
 
 	private Long id;
 	
@@ -26,7 +25,7 @@ public class AdDto {
 	private PriceDto price;
 	
 	//@Valid
-	private RealEstateDto realEstate;
+	//private RealEstateDto realEstate;
 	private AdType adType;
 	
 	@Image
@@ -35,20 +34,6 @@ public class AdDto {
 	public AdDto() {
 	}
 	
-
-	public AdDto(RealEstateType realEstateType) {
-		switch(realEstateType) {
-		case HOUSE:
-			realEstate = new HouseDto();
-			break;
-		case APARTMENT:
-			realEstate = new ApartmentDto();
-			break;
-			default:
-				throw new RuntimeException();
-		}
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -57,9 +42,7 @@ public class AdDto {
 		return price;
 	}
 
-	public RealEstateDto getRealEstate() {
-		return realEstate;
-	}
+	public abstract RealEstateDto getRealEstate();
 
 	public String getTitle() {
 		return title;
@@ -97,9 +80,7 @@ public class AdDto {
 		this.price = price;
 	}
 
-	public void setRealEstate(RealEstateDto realEstate) {
-		this.realEstate = realEstate;
-	}
+	public abstract void setRealEstate(RealEstateDto realEstate);
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -140,7 +121,6 @@ public class AdDto {
 	@Override
 	public String toString() {
 		return "AdDto [id=" + id + ", title=" + title + ", description=" + description + ", dateCreated=" + dateCreated
-				+ ", expirationDate=" + expirationDate + ", user=" + user + ", price=" + price + ", realEstate="
-				+ realEstate + ", adType=" + adType;
+				+ ", expirationDate=" + expirationDate + ", user=" + user + ", price=" + price + ", adType=" + adType;
 	}
 }
