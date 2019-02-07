@@ -1,24 +1,18 @@
 package advertising.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +22,7 @@ import advertising.helper.converter.ConvertToUserEntity;
 import advertising.model.User;
 import advertising.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping(value = "/users")
 public class UserController {
 
@@ -43,23 +37,23 @@ public class UserController {
 	
 	private static final String HAS_ANY_ROLE = "hasAnyRole('USER', 'ADMIN')";
 	
-	@GetMapping
-	public List<UserDto> getUsers() {
-		return toDto.convert(userService.findAll());
-	}
+//	@GetMapping
+//	public List<UserDto> getUsers() {
+//		return toDto.convert(userService.findAll());
+//	}
+//	
+//	@GetMapping("/{id}")
+//	public UserDto findOne(@PathVariable Long id) {
+//		return toDto.convert(userService.findOne(id));
+//	}
 	
-	@GetMapping("/{id}")
-	public UserDto findOne(@PathVariable Long id) {
-		return toDto.convert(userService.findOne(id));
-	}
-	
-	@PostMapping()
+	@PostMapping
 	public ModelAndView createUser(
 			@ModelAttribute("user") @Valid UserDto userDto, BindingResult result,
 			WebRequest request, Errors errors) {
 		User registered = null;
 		if (!result.hasErrors())
-			registered = userService.createUserAccount(userDto, result);
+			registered = userService.createUserAccount(userDto);
 		if (registered == null)
 			result.rejectValue("email", "message.regError");
 		
@@ -80,16 +74,16 @@ public class UserController {
 		return "redirect:/users/{id}";
 	}
 	
-	@DeleteMapping("/{id}")
-	@PreAuthorize(HAS_ANY_ROLE)
-	public ResponseEntity<UserDto> delete(@PathVariable Long id) {
-		UserDto user = toDto.convert(userService.findOne(id));
-		userService.delete(userService.findOne(id));
-		return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
-	}
+//	@DeleteMapping("/{id}")
+//	@PreAuthorize(HAS_ANY_ROLE)
+//	public ResponseEntity<UserDto> delete(@PathVariable Long id) {
+//		UserDto user = toDto.convert(userService.findOne(id));
+//		userService.delete(userService.findOne(id));
+//		return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
+//	}
 	
 	@GetMapping("/registration")
-	public ModelAndView register(WebRequest request, Model model) {
+	public ModelAndView register() {
 		ModelAndView mav = new ModelAndView("users/registration");
 		mav.addObject("user", new UserDto());
 		return mav;

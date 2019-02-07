@@ -63,7 +63,7 @@ public class SearchController {
 	public String search(@ModelAttribute("search") @Valid SearchDto searchDto,
 			BindingResult bindingResult, HttpSession httpSession)throws BindException {
 		if (bindingResult.hasErrors()) {
-			throw new BindException(bindingResult);
+			return "index";
 		}
 		httpSession.setAttribute("searchCritirea", searchDto);
 		return "redirect:/search/show";
@@ -79,17 +79,6 @@ public class SearchController {
 		mav.addObject("page", page);
 
 		return mav;
-	}
-	
-	@GetMapping
-	@ResponseBody
-	public List<AdDto> test() {
-		return toAdDto.convertNoUser(searchService.test());
-	}
-	
-	@GetMapping("/locations")
-	public @ResponseBody List<Location> getLocations(@RequestParam String q) {
-		return locationService.findByNameStartingWith(q);
 	}
 }
 

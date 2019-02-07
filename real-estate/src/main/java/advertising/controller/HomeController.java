@@ -29,6 +29,7 @@ public class HomeController {
 	
 	@GetMapping
 	public ModelAndView index(HttpSession httpSession) {
+		//remove previous search if exists
 		httpSession.removeAttribute("searchCritirea");
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("newestAds", toDto.convert(adService.findNewest()));

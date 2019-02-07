@@ -92,7 +92,7 @@ public class Bootstrap {
 
 		Ad ad = new Ad();
 		ad.setAdType(type);
-		ad.setTitle("Kucica");
+		ad.setTitle("Kuca na prodaju");
 		ad.setUser(getUserInstance());
 		ad.setPrice(price);
 		ad.setRealEstate(h);
@@ -130,6 +130,7 @@ public class Bootstrap {
 		ad.setRealEstate(realEstate);
 		adService.save(ad);
 	}
+	
 
 	private RealEstate getRealEstateInstance() {
 		RealEstate retVal = null;

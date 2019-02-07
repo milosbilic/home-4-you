@@ -122,6 +122,5 @@ public class SearchDto {
 				+ minArea + ", maxArea=" + maxArea + ", adType=" + adType + ", realEstateType=" + realEstateType
 				+ ", adTypeEnum=" + adTypeEnum + ", realEstateClass=" + realEstateClass + "]";
 	}
-	
-	
+
 }

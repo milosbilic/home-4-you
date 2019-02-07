@@ -145,7 +145,7 @@ public class AdController {
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize(HAS_ANY_ROLE)
+	@PreAuthorize(HAS_ANY_ROLE)//TODO user should be allowed to delete his ads only
 	public ResponseEntity<AdDto> delete(@PathVariable Long id) {
 		Ad ad = adService.findOne(id);
 		adService.delete(ad);

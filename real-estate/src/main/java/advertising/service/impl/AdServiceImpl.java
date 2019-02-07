@@ -90,12 +90,7 @@ public class AdServiceImpl implements AdService {
 		newAd.getRealEstate().setLocation(location);
 		newAd.setExpirationDate(calculateExpirationDate());
 		newAd.getRealEstate().setImage(adDto.getFile().getFile().getBytes());
-		
-//		byte[] pic = new byte[(int) adDto.getFile().getFile().getSize()];
-//		adDto.getFile().getFile().getInputStream().read(pic);
-//		newAd.getRealEstate().setImage(pic);
-		
-		
+
 		adRepository.save(newAd);
 	}
 

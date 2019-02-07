@@ -20,7 +20,7 @@ public interface UserService {
 
 	User findOne(Long id);
 	
-	User createUserAccount(UserDto userDto, BindingResult result);
+	User createUserAccount(UserDto userDto);
 
 	User findByUsername(String username);
 	

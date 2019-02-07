@@ -37,12 +37,12 @@ public class User {
 
 	@Column(name = "first_name")
 	@NotNull
-	@Size(min = 3, message = "First name should have at least 3 chars")
+	@Size(min = 2, message = "First name should have at least 2 chars")
 	private String firstName;
 
 	@Column(name = "last_name")
 	@NotNull
-	@Size(min = 3, message = "Last name should have at least 3 chars")
+	@Size(min = 2, message = "Last name should have at least 2 chars")
 	private String lastName;
 
 	@Column(unique = true)

@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User createUserAccount(UserDto userDto, BindingResult result) {
+	public User createUserAccount(UserDto userDto) {
 		User registered = null;	
 		try {
 			registered = save(userDto);

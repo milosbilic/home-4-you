@@ -3,6 +3,7 @@ package advertising.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -11,32 +12,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import advertising.helper.validation.annotation.PasswordMatches;
 
+
+//TODO perhaps create a separate UserRegistration class for that purpose
 @PasswordMatches
 public class UserDto {
 
 	private Long id;
 	
 	@NotNull
-	@NotEmpty
+	@Size(min = 3, message = "Username should have at least 3 chars")
 	private String username;
 	
 	@JsonIgnore
 	@NotNull
-	@NotEmpty
+	@Size(min = 5, message = "Password shoud have at least 5 chars")
 	private String password;
 	
 	@JsonIgnore
 	private String matchingPassword;
 	
 	@NotNull
-	@NotEmpty
+	@Size(min = 2, message = "First name should have at least 2 chars")
 	private String firstName;
 	
 	@NotNull
-	@NotEmpty
+	@Size(min = 2, message = "First name should have at least 2 chars")
 	private String lastName;
 	
-	@NotEmpty
 	@NotNull
 	@Email
 	private String email;
