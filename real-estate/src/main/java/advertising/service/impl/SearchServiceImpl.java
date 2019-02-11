@@ -50,9 +50,4 @@ public class SearchServiceImpl implements SearchService {
 		searchDto.setAdTypeEnum(searchDto.getAdType());
 		searchDto.setRealEstateClass(searchDto.getRealEstateType());
 	}
-
-	@Override
-	public List<Ad> test() {
-		return adRepo.test(House.class);
-	}
 }

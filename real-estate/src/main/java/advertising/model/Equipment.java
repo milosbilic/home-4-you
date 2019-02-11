@@ -25,6 +25,13 @@ public class Equipment {
 	@ManyToMany(mappedBy = "equipment")
 	private List<RealEstate> realEstates;
 
+	public Equipment() {
+	}
+	
+	public Equipment(String name) {
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}

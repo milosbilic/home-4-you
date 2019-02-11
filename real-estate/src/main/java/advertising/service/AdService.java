@@ -18,7 +18,7 @@ public interface AdService {
 	
 	Ad save(Ad ad);
 	
-	void save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException;
+	Ad save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException;
 	
 	void delete(Ad ad);
 	

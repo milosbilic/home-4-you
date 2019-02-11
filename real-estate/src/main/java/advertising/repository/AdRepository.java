@@ -41,7 +41,4 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 			@Param("maxPrice") BigDecimal maxPrice, 
 			@Param("minArea") double minArea,
 			@Param("maxArea") double maxArea, Pageable pageable);
-	
-	@Query("SELECT a FROM Ad a JOIN a.realEstate re WHERE TYPE(re) IN (:name)")
-	List<Ad> test(@Param("name") Class<?> re);
 }

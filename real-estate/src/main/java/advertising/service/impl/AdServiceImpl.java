@@ -69,7 +69,7 @@ public class AdServiceImpl implements AdService {
 	}
 	
 	@Override
-	public void save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException {
+	public Ad save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException {
 		User user = userService.findByUsername(username);
 		Set<Equipment> equipment = null;
 		Location location = null;
@@ -91,7 +91,7 @@ public class AdServiceImpl implements AdService {
 		newAd.setExpirationDate(calculateExpirationDate());
 		newAd.getRealEstate().setImage(adDto.getFile().getFile().getBytes());
 
-		adRepository.save(newAd);
+		return adRepository.save(newAd);
 	}
 
 	@Override
