@@ -1,6 +1,6 @@
 package home.four.you.dto;
 
-import home.four.you.enums.AdType;
+import home.four.you.model.AdType;
 import home.four.you.model.entity.Apartment;
 import home.four.you.model.entity.House;
 import home.four.you.model.entity.RealEstate;

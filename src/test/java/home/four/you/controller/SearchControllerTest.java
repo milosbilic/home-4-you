@@ -1,6 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.helper.converter.ConvertToAdDto;
+import home.four.you.converter.ConvertToAdDto;
 import home.four.you.service.SearchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

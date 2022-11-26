@@ -1,8 +1,8 @@
-package home.four.you.helper.validation;
+package home.four.you.validation;
 
 
 import home.four.you.dto.FileBucket;
-import home.four.you.helper.validation.annotation.Image;
+import home.four.you.validation.annotation.Image;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

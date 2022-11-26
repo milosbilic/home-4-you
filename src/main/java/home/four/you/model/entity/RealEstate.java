@@ -1,6 +1,6 @@
 package home.four.you.model.entity;
 
-import home.four.you.enums.HeatType;
+import home.four.you.model.HeatType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 

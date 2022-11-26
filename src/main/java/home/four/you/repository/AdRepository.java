@@ -1,6 +1,6 @@
 package home.four.you.repository;
 
-import home.four.you.enums.AdType;
+import home.four.you.model.AdType;
 import home.four.you.model.entity.Ad;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

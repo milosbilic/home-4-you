@@ -3,7 +3,7 @@ package home.four.you.factory;
 import home.four.you.dto.AdDto;
 import home.four.you.dto.ApartmentAdDto;
 import home.four.you.dto.HouseAdDto;
-import home.four.you.enums.RealEstateType;
+import home.four.you.model.RealEstateType;
 import home.four.you.exception.UnsupportedTypeException;
 
 public class AdDtoFactory {

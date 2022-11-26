@@ -1,7 +1,7 @@
 package home.four.you.dto;
 
-import home.four.you.enums.AdType;
-import home.four.you.helper.validation.annotation.Image;
+import home.four.you.model.AdType;
+import home.four.you.validation.annotation.Image;
 import home.four.you.model.entity.Price;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

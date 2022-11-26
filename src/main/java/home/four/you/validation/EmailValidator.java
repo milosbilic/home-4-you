@@ -1,6 +1,6 @@
-package home.four.you.helper.validation;
+package home.four.you.validation;
 
-import home.four.you.helper.validation.annotation.ValidEmail;
+import home.four.you.validation.annotation.ValidEmail;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

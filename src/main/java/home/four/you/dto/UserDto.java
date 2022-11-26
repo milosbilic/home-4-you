@@ -1,6 +1,6 @@
 package home.four.you.dto;
 
-import home.four.you.helper.validation.annotation.PasswordMatches;
+import home.four.you.validation.annotation.PasswordMatches;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

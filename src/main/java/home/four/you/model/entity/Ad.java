@@ -1,6 +1,6 @@
 package home.four.you.model.entity;
 
-import home.four.you.enums.AdType;
+import home.four.you.model.AdType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Where;

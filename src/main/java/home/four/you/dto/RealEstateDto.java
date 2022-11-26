@@ -1,6 +1,6 @@
 package home.four.you.dto;
 
-import home.four.you.enums.HeatType;
+import home.four.you.model.HeatType;
 import home.four.you.model.entity.Location;
 import jakarta.validation.constraints.NotNull;
 

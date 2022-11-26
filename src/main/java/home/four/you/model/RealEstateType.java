@@ -1,21 +1,21 @@
-package home.four.you.enums;
+package home.four.you.model;
 
 import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
-public enum AdType {
+public enum RealEstateType {
 
-	SALE("sale"), PURCHASE("purchase"), RENT("rent"), LEASE("lease");
-
+	HOUSE("house"), APARTMENT("apartment");
+	
 	private String value;
-
-	AdType(String value) {
+	
+	RealEstateType(String value) {
 		this.value = value;
 	}
 
-	public static AdType fromValue(String value) {
-		for (AdType type : values()) {
+	public static RealEstateType fromValue(String value) {
+		for (RealEstateType type : values()) {
 			if (type.value.equalsIgnoreCase(value)) {
 				return type;
 			}
@@ -27,5 +27,5 @@ public enum AdType {
 	public String toString() {
 		return StringUtils.capitalize(value);
 	}
-
+	
 }

@@ -1,7 +1,7 @@
 package home.four.you.helper;
 
-import home.four.you.enums.AdType;
-import home.four.you.enums.HeatType;
+import home.four.you.model.AdType;
+import home.four.you.model.HeatType;
 import home.four.you.model.entity.*;
 import home.four.you.repository.UserRepository;
 import home.four.you.service.AdService;

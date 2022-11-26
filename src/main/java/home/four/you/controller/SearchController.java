@@ -1,10 +1,10 @@
 package home.four.you.controller;
 
 import home.four.you.dto.SearchDto;
-import home.four.you.enums.AdType;
-import home.four.you.enums.RealEstateType;
-import home.four.you.helper.converter.enums.AdTypeConverter;
-import home.four.you.helper.converter.enums.RealEstateTypeConverter;
+import home.four.you.model.AdType;
+import home.four.you.model.RealEstateType;
+import home.four.you.converter.enums.AdTypeConverter;
+import home.four.you.converter.enums.RealEstateTypeConverter;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.LocationService;
 import home.four.you.service.SearchService;

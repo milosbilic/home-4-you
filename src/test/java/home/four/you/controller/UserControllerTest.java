@@ -1,7 +1,7 @@
 package home.four.you.controller;
 
 import home.four.you.dto.UserDto;
-import home.four.you.helper.converter.ConvertToUserEntity;
+import home.four.you.converter.ConvertToUserEntity;
 import home.four.you.model.entity.User;
 import home.four.you.service.UserService;
 import org.junit.jupiter.api.BeforeEach;

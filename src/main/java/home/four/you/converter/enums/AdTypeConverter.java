@@ -1,8 +1,8 @@
-package home.four.you.helper.converter.enums;
+package home.four.you.converter.enums;
 
 import java.beans.PropertyEditorSupport;
 
-import home.four.you.enums.AdType;
+import home.four.you.model.AdType;
 
 public class AdTypeConverter extends PropertyEditorSupport {
 	public void setAsText(final String text) throws IllegalArgumentException {

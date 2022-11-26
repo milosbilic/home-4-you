@@ -1,4 +1,4 @@
-package home.four.you.helper.converter;
+package home.four.you.converter;
 
 import home.four.you.dto.ApartmentDto;
 import home.four.you.dto.HouseDto;

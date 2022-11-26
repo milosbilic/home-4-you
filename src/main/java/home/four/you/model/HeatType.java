@@ -1,21 +1,21 @@
-package home.four.you.enums;
+package home.four.you.model;
 
 import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
-public enum RealEstateType {
+public enum HeatType {
 
-	HOUSE("house"), APARTMENT("apartment");
+	CENTRAL ("central"), GAS ("gas"), WOOD ("wood");
 	
 	private String value;
 	
-	RealEstateType(String value) {
+	private HeatType(String value) {
 		this.value = value;
 	}
-
-	public static RealEstateType fromValue(String value) {
-		for (RealEstateType type : values()) {
+	
+	public static HeatType fromValue(String value) {
+		for (HeatType type : values()) {
 			if (type.value.equalsIgnoreCase(value)) {
 				return type;
 			}
@@ -27,5 +27,6 @@ public enum RealEstateType {
 	public String toString() {
 		return StringUtils.capitalize(value);
 	}
+	
 	
 }

@@ -1,7 +1,7 @@
-package home.four.you.helper.validation;
+package home.four.you.validation;
 
 import home.four.you.dto.UserDto;
-import home.four.you.helper.validation.annotation.PasswordMatches;
+import home.four.you.validation.annotation.PasswordMatches;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

@@ -1,21 +1,21 @@
-package home.four.you.enums;
+package home.four.you.model;
 
 import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
-public enum HeatType {
+public enum AdType {
 
-	CENTRAL ("central"), GAS ("gas"), WOOD ("wood");
-	
+	SALE("sale"), PURCHASE("purchase"), RENT("rent"), LEASE("lease");
+
 	private String value;
-	
-	private HeatType(String value) {
+
+	AdType(String value) {
 		this.value = value;
 	}
-	
-	public static HeatType fromValue(String value) {
-		for (HeatType type : values()) {
+
+	public static AdType fromValue(String value) {
+		for (AdType type : values()) {
 			if (type.value.equalsIgnoreCase(value)) {
 				return type;
 			}
@@ -27,6 +27,5 @@ public enum HeatType {
 	public String toString() {
 		return StringUtils.capitalize(value);
 	}
-	
-	
+
 }

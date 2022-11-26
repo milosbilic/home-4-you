@@ -1,8 +1,8 @@
 package home.four.you.controller;
 
 import home.four.you.dto.SearchDto;
-import home.four.you.enums.AdType;
-import home.four.you.enums.RealEstateType;
+import home.four.you.model.AdType;
+import home.four.you.model.RealEstateType;
 import home.four.you.service.AdService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
