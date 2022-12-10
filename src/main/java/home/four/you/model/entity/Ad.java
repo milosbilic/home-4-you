@@ -38,7 +38,7 @@ public class Ad {
 	private User user;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private RealEstate realEstate;
+	private Property property;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@NotNull
@@ -95,12 +95,12 @@ public class Ad {
 		this.user = user;
 	}
 
-	public RealEstate getRealEstate() {
-		return realEstate;
+	public Property getRealEstate() {
+		return property;
 	}
 
-	public void setRealEstate(RealEstate realEstate) {
-		this.realEstate = realEstate;
+	public void setRealEstate(Property property) {
+		this.property = property;
 	}
 	public Price getPrice() {
 		return price;

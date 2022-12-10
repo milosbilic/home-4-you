@@ -3,7 +3,6 @@ package home.four.you.service.impl;
 import home.four.you.dto.AdDto;
 import home.four.you.dto.FileBucket;
 import home.four.you.dto.HouseAdDto;
-import home.four.you.converter.ConvertToAdEntity;
 import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.House;
 import home.four.you.model.entity.Location;

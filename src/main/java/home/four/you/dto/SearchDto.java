@@ -3,7 +3,7 @@ package home.four.you.dto;
 import home.four.you.model.AdType;
 import home.four.you.model.entity.Apartment;
 import home.four.you.model.entity.House;
-import home.four.you.model.entity.RealEstate;
+import home.four.you.model.entity.Property;
 
 public class SearchDto {
 
@@ -101,7 +101,7 @@ public class SearchDto {
 		return realEstateClass;
 	}
 
-	public void setRealEstateClass(Class<RealEstate> realEstateClass) {
+	public void setRealEstateClass(Class<Property> realEstateClass) {
 		this.realEstateClass = realEstateClass;
 	}
 

@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
-public class House extends RealEstate{
+public class House extends Property {
 
 	@Column(name = "floors_number", nullable = false)
 	private int floorsNumber;

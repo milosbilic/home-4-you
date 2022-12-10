@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Apartment extends RealEstate {
+public class Apartment extends Property {
 
 	@Column(nullable = false)
 	private int floor;

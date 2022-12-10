@@ -88,20 +88,20 @@ public class Bootstrap {
 
     @Transactional
     public void createDummyAd() {
-        RealEstate realEstate = getRealEstateInstance();
-        realEstate.setArea(random.nextInt(200) + 10);
-        realEstate.setRoomsNumber(random.nextInt(5) + 0.5);
-        realEstate.setBooked(booked());
-        realEstate.setHeatType(getHeatType());
-        realEstate.setEquipment(getEquipmentSet());
-        realEstate.setLocation(getLocationInstance());
+        Property property = getRealEstateInstance();
+        property.setArea(random.nextInt(200) + 10);
+        property.setRoomsNumber(random.nextInt(5) + 0.5);
+        property.setBooked(booked());
+        property.setHeatType(getHeatType());
+        property.setEquipment(getEquipmentSet());
+        property.setLocation(getLocationInstance());
 
-        if (realEstate instanceof House) {
-            House house = (House) realEstate;
+        if (property instanceof House) {
+            House house = (House) property;
             house.setFloorsNumber(random.nextInt(4) + 1);
             //	houseRepository.save((House) realEstate);
         } else {
-            Apartment appartment = (Apartment) realEstate;
+            Apartment appartment = (Apartment) property;
             appartment.setFloor(random.nextInt(11) + 1);
             //	appartmentRepository.save((Appartment) realEstate);
         }
@@ -114,13 +114,13 @@ public class Bootstrap {
         ad.setTitle("Dummy Ad");
         ad.setUser(getUserInstance());
         ad.setPrice(price);
-        ad.setRealEstate(realEstate);
+        ad.setRealEstate(property);
         adService.save(ad);
     }
 
 
-    private RealEstate getRealEstateInstance() {
-        RealEstate retVal = null;
+    private Property getRealEstateInstance() {
+        Property retVal = null;
         switch (random.nextInt(2) + 1) {
             case 1:
                 retVal = new House();

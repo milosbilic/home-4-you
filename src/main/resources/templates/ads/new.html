@@ -53,7 +53,7 @@
 								</div>
 								<!-- LOCATION -->
 								<div class="col-sm-3 form-group">
-									<select class="form-control selectpicker" th:field="*{realEstate.location.name}" id="location" data-live-search="true">
+									<select class="form-control selectpicker" th:field="*{property.location.name}" id="location" data-live-search="true">
 										<!-- <option>Location</option>
 										<option>beograd</option>
 										<option>novi sad</option>
@@ -66,7 +66,7 @@
 								</div>
 								<!-- AREA -->
 								<div class="col-sm-3 form-group">
-									<input type="number" class="form-control" th:placeholder="Area" th:field="*{realEstate.area}"/>
+									<input type="number" class="form-control" th:placeholder="Area" th:field="*{property.area}"/>
 								</div>
 								<!-- NUMBER OF ROOMS -->
 								<div class="col-sm-3 form-group">
@@ -74,7 +74,7 @@
 								</div>
 								<!-- HEAT TYPE -->
 								<div class="col-sm-3 form-group">
-									<select th:field="*{realEstate.heatType}" class="form-control">
+									<select th:field="*{property.heatType}" class="form-control">
 										<option th:each="heatType: ${heatTypes}" th:value="${heatType}" th:text="${heatType}"></option>
 									</select>
 								</div>
@@ -89,11 +89,11 @@
 							<div class="row">
 								<!-- HOUSE FIELDS -->
 								<div th:if="${realEstateType.toString().equalsIgnoreCase('house')}" class="col-sm-3 form-group">
-									<input type="number" class="form-control" th:placeholder="'Number ' + 'of ' + 'floors'" th:field="*{realEstate.floorsNumber}"/>
+									<input type="number" class="form-control" th:placeholder="'Number ' + 'of ' + 'floors'" th:field="*{property.floorsNumber}"/>
 								</div>
 								<!-- APARTMENT FIELDS -->
 								<div th:if="${realEstateType.toString().equalsIgnoreCase('apartment')}" class="col-sm-3 form-group">
-									<input type="number" class="form-control" th:placeholder="Floor" th:field="*{realEstate.floor}"/>
+									<input type="number" class="form-control" th:placeholder="Floor" th:field="*{property.floor}"/>
 								</div>
 								<!-- BOOKED -->
 								<div class="col-sm-3 form-checked">			

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class RealEstate {
+public abstract class Property {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

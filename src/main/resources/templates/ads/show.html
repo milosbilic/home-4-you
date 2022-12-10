@@ -25,7 +25,7 @@
 			<ul>
 				<li th:text="${ad.title}"></li>
 				<li>
-					<img th:src="@{'/ads/' + ${ad.realEstate.id} + '/image'}" 
+					<img th:src="@{'/ads/' + ${ad.property.id} + '/image'}"
 						width="200" height="200"/>
 				</li>
 				<li th:text="'Date created: ' + ${ad.dateCreated}"></li>

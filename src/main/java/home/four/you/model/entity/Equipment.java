@@ -17,7 +17,7 @@ public class Equipment {
 	private String name;
 
 	@ManyToMany(mappedBy = "equipment")
-	private List<RealEstate> realEstates;
+	private List<Property> properties;
 
 	public Equipment() {
 	}
@@ -42,12 +42,12 @@ public class Equipment {
 		this.name = name;
 	}
 
-	public List<RealEstate> getRealEstates() {
-		return realEstates;
+	public List<Property> getRealEstates() {
+		return properties;
 	}
 
-	public void setRealEstates(List<RealEstate> realEstates) {
-		this.realEstates = realEstates;
+	public void setRealEstates(List<Property> properties) {
+		this.properties = properties;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Equipment {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((realEstates == null) ? 0 : realEstates.hashCode());
+		result = prime * result + ((properties == null) ? 0 : properties.hashCode());
 		return result;
 	}
 
@@ -79,10 +79,10 @@ public class Equipment {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (realEstates == null) {
-			if (other.realEstates != null)
+		if (properties == null) {
+			if (other.properties != null)
 				return false;
-		} else if (!realEstates.equals(other.realEstates))
+		} else if (!properties.equals(other.properties))
 			return false;
 		return true;
 	}

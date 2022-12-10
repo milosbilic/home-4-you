@@ -21,6 +21,7 @@ import home.four.you.converter.enums.AdTypeConverter;
 import home.four.you.converter.enums.HeatTypeConverter;
 import home.four.you.converter.enums.RealEstateTypeConverter;
 import home.four.you.model.entity.Ad;
+import home.four.you.model.entity.Property;
 import home.four.you.service.AdService;
 import home.four.you.service.ApartmentService;
 import home.four.you.service.EquipmentService;
@@ -46,8 +47,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import home.four.you.model.entity.RealEstate;
 
 @Controller
 @RequestMapping(value = "/ads")
@@ -98,7 +97,7 @@ public class AdController {
 
 	@GetMapping("/{realEstateId}/image")
 	public void renderImage(@PathVariable Long realEstateId, HttpServletResponse response) throws IOException {
-		RealEstate re = houseService.findOne(realEstateId);
+		Property re = houseService.findOne(realEstateId);
 		if (re == null) {
 			re = apartmentService.findOne(realEstateId);
 		} 
