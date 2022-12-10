@@ -24,12 +24,12 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Optional<Location> findByName(String name) {
-        return repository.findByName(name);
+        return Optional.empty();
     }
 
     @Override
     public List<Location> findByNameStartingWith(String name) {
-        return repository.findByNameStartingWith(name);
+        return null;
     }
 
     @Override

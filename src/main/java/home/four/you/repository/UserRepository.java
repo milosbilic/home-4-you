@@ -1,13 +1,26 @@
 package home.four.you.repository;
 
+import home.four.you.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import home.four.you.model.entity.User;
-
+/**
+ * JPA repository for {@link User} entity.
+ */
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByUsername(String username);
+    /**
+     * Finds user by provided username.
+     *
+     * @param username Username.
+     * @return User.
+     */
+    User findByUsername(String username);
 
-	User findByEmail(String email);
-	
+    /**
+     * Finds user by provided email.
+     *
+     * @param email User's email.
+     * @return User.
+     */
+    User findByEmail(String email);
 }

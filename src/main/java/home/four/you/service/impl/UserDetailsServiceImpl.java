@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
-import home.four.you.security.MyUserPrincipal;
+import home.four.you.security.Home4YouUserPrincipal;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	        if (user == null) {
 	            throw new UsernameNotFoundException(username);
 	        }
-	        return new MyUserPrincipal(user);
+	        return new Home4YouUserPrincipal(user);
 	}
 
 }

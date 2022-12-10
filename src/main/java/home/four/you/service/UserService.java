@@ -1,26 +1,69 @@
 package home.four.you.service;
 
-import java.util.List;
-
-import home.four.you.model.dto.UserDto;
 import home.four.you.exception.EmailExistsException;
+import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 
+import java.util.List;
+
+/**
+ * Service for {@link User} entity related operations.
+ */
 public interface UserService {
 
-	List<User> findAll();
-	
-	User save(User user);
-	
-	User save(UserDto user) throws EmailExistsException;
-	
-	void delete(User user);
+    /**
+     * Finds all users.
+     *
+     * @return List of all users.
+     */
+    List<User> findAll();
 
-	User findOne(Long id);
-	
-	User createUserAccount(UserDto userDto);
+    /**
+     * Saves a user.
+     *
+     * @param user User.
+     * @return User.
+     */
+    User save(User user);
 
-	User findByUsername(String username);
-	
-		
+    /**
+     * Saves a user.
+     *
+     * @param user User.
+     * @return User.
+     */
+    User save(UserDto user) throws EmailExistsException;
+
+    /**
+     * Deletes a user.
+     *
+     * @param user User.
+     */
+    void delete(User user);
+
+    /**
+     * Finds user by provided ID.
+     *
+     * @param id User ID.
+     * @return User.
+     */
+    User findOne(Long id);
+
+    /**
+     * Creates a user account with specified details.
+     *
+     * @param userDto User details.
+     * @return Created user.
+     */
+    User createUserAccount(UserDto userDto);
+
+    /**
+     * Finds a user by provided username.
+     *
+     * @param username Username.
+     * @return User.o
+     */
+    User findByUsername(String username);
+
+
 }

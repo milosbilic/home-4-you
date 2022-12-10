@@ -3,25 +3,32 @@ package home.four.you.service.impl;
 import home.four.you.model.entity.House;
 import home.four.you.repository.HouseRepository;
 import home.four.you.service.HouseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementation of {@link HouseService}.
+ */
 @Service
-@Transactional
+@Slf4j
+@RequiredArgsConstructor
 public class HouseServiceImpl implements HouseService {
 
-    @Autowired
-    private HouseRepository repo;
+    private final HouseRepository houseRepository;
 
     @Override
     public House findOne(Long id) {
-        return repo.findById(id).orElseThrow();
+        log.debug("Finding a house with id {}", id);
+
+        return houseRepository.findById(id).orElseThrow();
     }
 
     @Override
     public House save(House house) {
-        return repo.save(house);
+        log.debug("Saving house [{}]", house);
+
+        return houseRepository.save(house);
     }
 
 }

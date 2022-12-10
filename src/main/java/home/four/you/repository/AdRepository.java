@@ -10,6 +10,11 @@ import java.util.List;
  */
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
+    /**
+     * Finds top 3 ads ordered by date created in descending order.
+     *
+     * @return List of matching ads.
+     */
     List<Ad> findTop3ByOrderByDateCreatedDesc();
 
 //    @Query("SELECT a FROM Ad a JOIN a.property p WHERE a.type = :adType "
