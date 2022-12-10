@@ -1,4 +1,4 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
 import java.io.File;
 import java.io.FileOutputStream;

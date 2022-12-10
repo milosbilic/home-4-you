@@ -3,12 +3,12 @@ package home.four.you.service;
 import java.io.IOException;
 import java.util.List;
 
-import home.four.you.dto.SearchDto;
+import home.four.you.model.dto.SearchDto;
 import home.four.you.model.entity.Ad;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import home.four.you.dto.AdDto;
+import home.four.you.model.dto.AdDto;
 
 public interface AdService {
 

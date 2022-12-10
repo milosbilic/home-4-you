@@ -1,6 +1,6 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
-import home.four.you.model.AdType;
+import home.four.you.model.entity.Ad;
 import home.four.you.validation.annotation.Image;
 import home.four.you.model.entity.Price;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public abstract class AdDto {
 	
 	//@Valid
 	//private RealEstateDto realEstate;
-	private AdType adType;
+	private Ad.Type adType;
 	
 	@Image
 	private FileBucket file;
@@ -101,11 +101,11 @@ public abstract class AdDto {
 		return expirationDate;
 	}
 
-	public AdType getAdType() {
+	public Ad.Type getAdType() {
 		return adType;
 	}
 
-	public void setAdType(AdType adType) {
+	public void setAdType(Ad.Type adType) {
 		this.adType = adType;
 	}
 

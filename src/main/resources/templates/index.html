@@ -25,7 +25,7 @@
   					<select class="form-control" th:value="${adType}" th:field="*{adType}">
   						<option th:each="adType: ${adTypes}" th:text="${adType.toString()}" th:value="${adType.toString()}"></option>
   					</select>
-  					<select class="form-control" th:field="*{realEstateType}">
+  					<select class="form-control" th:field="*{propertyType}">
   						<option th:each="property: ${properties}" th:value="${property.toString()}" th:text="${property.toString()}"></option>
   					</select>
   					<input type="text" class="form-control" th:placeholder="Location" th:field="*{location}" />

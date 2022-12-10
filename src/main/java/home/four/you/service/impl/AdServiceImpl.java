@@ -1,7 +1,7 @@
 package home.four.you.service.impl;
 
-import home.four.you.dto.AdDto;
-import home.four.you.dto.SearchDto;
+import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.SearchDto;
 import home.four.you.exception.NotFoundException;
 import home.four.you.helper.Helper;
 import home.four.you.model.entity.Ad;
@@ -67,18 +67,18 @@ public class AdServiceImpl implements AdService {
 		if (equipmentIds != null)
 			equipment = equipmentService.findByIds(equipmentIds);
 		
-		String locationName =  newAd.getRealEstate().getLocation().getName();
+		String locationName =  newAd.getProperty().getLocation().getName();
 		//retrieve location entity or create a new one
 		Optional<Location> locationOptional = locationService.findByName(locationName);
 		if (!locationOptional.isPresent()) 
-			location = new Location(locationName); 
+			location = new Location();
 		else 
 			location = locationOptional.get();
 		newAd.setUser(user);
-		newAd.getRealEstate().setEquipment(equipment);
-		newAd.getRealEstate().setLocation(location);
+		newAd.getProperty().setEquipment(equipment);
+		newAd.getProperty().setLocation(location);
 		newAd.setExpirationDate(calculateExpirationDate());
-		newAd.getRealEstate().setImage(adDto.getFile().getFile().getBytes());
+		newAd.getProperty().setImage(adDto.getFile().getFile().getBytes());
 
 //		return adRepository.save(newAd);
 		return newAd;
@@ -108,15 +108,15 @@ public class AdServiceImpl implements AdService {
 	public Page<Ad> search(SearchDto searchDto, Pageable pageable) {
 		Page<Ad> retVal = null;
 		Class<?> realEstate = Helper.getRealEstateClass(searchDto.getRealEstateType());
-		if (searchDto.getLocation() == null || searchDto.getLocation().equals("")) {
-			retVal = adRepository.search(searchDto.getAdTypeEnum(), realEstate, new BigDecimal(searchDto.getMinPrice()),
-					new BigDecimal(searchDto.getMaxPrice()), searchDto.getMinArea(), 
-					searchDto.getMaxArea(), pageable);
-		} else { // location has been provided
-			retVal = adRepository.search(searchDto.getAdTypeEnum(), searchDto.getLocation(), realEstate,
-					new BigDecimal(searchDto.getMinPrice()), new BigDecimal(searchDto.getMaxPrice()),
-					searchDto.getMinArea(), searchDto.getMaxArea(), pageable);
-		}
+//		if (searchDto.getLocation() == null || searchDto.getLocation().equals("")) {
+//			retVal = adRepository.search(searchDto.getAdTypeEnum(), realEstate, new BigDecimal(searchDto.getMinPrice()),
+//					new BigDecimal(searchDto.getMaxPrice()), searchDto.getMinArea(),
+//					searchDto.getMaxArea(), pageable);
+//		} else { // location has been provided
+//			retVal = adRepository.search(searchDto.getAdTypeEnum(), searchDto.getLocation(), realEstate,
+//					new BigDecimal(searchDto.getMinPrice()), new BigDecimal(searchDto.getMaxPrice()),
+//					searchDto.getMinArea(), searchDto.getMaxArea(), pageable);
+//		}
 		return retVal;
 	}
 }

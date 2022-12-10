@@ -88,11 +88,11 @@
 							</div>
 							<div class="row">
 								<!-- HOUSE FIELDS -->
-								<div th:if="${realEstateType.toString().equalsIgnoreCase('house')}" class="col-sm-3 form-group">
+								<div th:if="${propertyType.toString().equalsIgnoreCase('house')}" class="col-sm-3 form-group">
 									<input type="number" class="form-control" th:placeholder="'Number ' + 'of ' + 'floors'" th:field="*{property.floorsNumber}"/>
 								</div>
 								<!-- APARTMENT FIELDS -->
-								<div th:if="${realEstateType.toString().equalsIgnoreCase('apartment')}" class="col-sm-3 form-group">
+								<div th:if="${propertyType.toString().equalsIgnoreCase('apartment')}" class="col-sm-3 form-group">
 									<input type="number" class="form-control" th:placeholder="Floor" th:field="*{property.floor}"/>
 								</div>
 								<!-- BOOKED -->
@@ -105,7 +105,7 @@
     									<input type="file" class="custom-file-input" id="customFile" th:field="*{file.file}"/>
  									<label class="custom-file-label" style="font-size: 15px;" for="customFile">Add Image</label>
 								</div>
-								<input type="hidden" name="realEstateType" th:value="${realEstateType.toString()}"/>
+								<input type="hidden" name="propertyType" th:value="${propertyType.toString()}"/>
 								<div class="form-group col-sm-3">
 									<button class="btn btn-primary" style="margin-left: 15px" type="submit">Submit</button>
 								</div>

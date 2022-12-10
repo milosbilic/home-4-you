@@ -1,6 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.dto.HouseAdDto;
+import home.four.you.model.dto.HouseAdDto;
 import home.four.you.converter.ConvertToAdDto;
 import home.four.you.converter.ConvertToEquipmentDto;
 import home.four.you.model.entity.Ad;

@@ -1,15 +1,20 @@
 package home.four.you.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 
+/**
+ * Entity class for Price model.
+ */
 @Entity
+@Table(name = "prices")
+@Getter
+@Setter
 public class Price {
 
 	@Id
@@ -20,36 +25,4 @@ public class Price {
 	private BigDecimal amount;
 	
 	private Currency currency;
-	
-	public Price() {}
-	
-	public Price(BigDecimal amount) {
-		this.amount = amount;
-		this.currency = Currency.getInstance("EUR");
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
-
 }

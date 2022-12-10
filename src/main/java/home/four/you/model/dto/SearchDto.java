@@ -1,6 +1,6 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
-import home.four.you.model.AdType;
+import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.Apartment;
 import home.four.you.model.entity.House;
 import home.four.you.model.entity.Property;
@@ -15,7 +15,7 @@ public class SearchDto {
 	private String adType;
 	private String realEstateType;
 
-	private AdType adTypeEnum;
+	private Ad.Type adTypeEnum;
 	private Class<?> realEstateClass;
 
 	public SearchDto() {
@@ -85,17 +85,14 @@ public class SearchDto {
 		this.realEstateType = realEstateType;
 	}
 
-	public AdType getAdTypeEnum() {
+	public Ad.Type getAdTypeEnum() {
 		return adTypeEnum;
 	}
 
-	public void setAdTypeEnum(AdType adTypeEnum) {
+	public void setAdTypeEnum(Ad.Type adTypeEnum) {
 		this.adTypeEnum = adTypeEnum;
 	}
 
-	public void setAdTypeEnum(String adType) {
-		this.adTypeEnum = AdType.fromValue(adType);
-	}
 
 	public Class<?> getRealEstateClass() {
 		return realEstateClass;

@@ -1,8 +1,8 @@
 package home.four.you.service.impl;
 
-import home.four.you.dto.AdDto;
-import home.four.you.dto.FileBucket;
-import home.four.you.dto.HouseAdDto;
+import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.FileBucket;
+import home.four.you.model.dto.HouseAdDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.House;
 import home.four.you.model.entity.Location;
@@ -30,9 +30,6 @@ public class AdServiceImplTest {
 	
 	@Mock
 	UserService userService;
-	
-	@Mock
-    ConvertToAdEntity toEntity;
 	
 	@Mock
 	EquipmentService equipmentService;
@@ -101,18 +98,17 @@ public class AdServiceImplTest {
 		AdDto dto = new HouseAdDto();
 		Ad converted = new Ad();
 		House h = new House();
-		h.setLocation(new Location("locationName"));
-		converted.setRealEstate(h);
+		h.setLocation(new Location());
+		converted.setProperty(h);
 		List<Long> equipmentIds = Arrays.asList(1L, 2L, 3L);
 		FileBucket bucket = new FileBucket();
 		bucket.setFile(new MockMultipartFile("image.jpg", new byte[3]));
 		dto.setFile(bucket);
 		
 		when(userService.findByUsername(username)).thenReturn(u);
-		when(toEntity.convert(dto)).thenReturn(converted);
 		when(equipmentService.findByIds(new ArrayList<>())).thenReturn(new HashSet<>());
 		when(locationService.findByName(h.getLocation().getName()))
-		.thenReturn(Optional.of(new Location("locationName")));
+		.thenReturn(Optional.of(new Location()));
 		when(adRepository.save(converted)).thenReturn(converted);
 		
 		//when

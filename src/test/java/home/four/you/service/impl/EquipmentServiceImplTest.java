@@ -57,13 +57,13 @@ public class EquipmentServiceImplTest {
 	@Test
 	public void testFindByIds() {
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
-		Equipment eq1 = new Equipment("TV");
-		Equipment eq2 = new Equipment("Internet");
-		Equipment eq3 = new Equipment("Telephone");
+//		Equipment eq1 = new Equipment("TV");
+//		Equipment eq2 = new Equipment("Internet");
+//		Equipment eq3 = new Equipment("Telephone");
 		
-		when(repo.findById(1L)).thenReturn(Optional.of(eq1));
-		when(repo.findById(2L)).thenReturn(Optional.of(eq2));
-		when(repo.findById(3L)).thenReturn(Optional.of(eq3));
+//		when(repo.findById(1L)).thenReturn(Optional.of(eq1));
+//		when(repo.findById(2L)).thenReturn(Optional.of(eq2));
+//		when(repo.findById(3L)).thenReturn(Optional.of(eq3));
 		
 		Set<Equipment> result = equipmentServiceImpl.findByIds(ids);
 		

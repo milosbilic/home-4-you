@@ -9,9 +9,8 @@ import org.springframework.data.repository.NoRepositoryBean;
 import home.four.you.model.entity.Property;
 
 @NoRepositoryBean
-public interface RealEstateRepository<T extends Property> extends JpaRepository<T, Long> {
+public interface PropertyRepository<T extends Property> extends JpaRepository<T, Long> {
 
-	@Query("select re from RealEstate re where type(re) = 'House'")
+	@Query("select p from Property p where type(p) = 'House'")
 	List<Property> getHouses();
-	
 }

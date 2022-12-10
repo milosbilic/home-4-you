@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import home.four.you.dto.SearchDto;
+import home.four.you.model.dto.SearchDto;
 import home.four.you.repository.AdRepository;
 import home.four.you.service.AdService;
 import home.four.you.service.SearchService;
@@ -44,7 +44,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 	
 	private void convertStringsToEnums(SearchDto searchDto) {
-		searchDto.setAdTypeEnum(searchDto.getAdType());
+		searchDto.setAdTypeEnum(searchDto.getAdTypeEnum());
 		searchDto.setRealEstateClass(searchDto.getRealEstateType());
 	}
 }

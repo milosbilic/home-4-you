@@ -1,4 +1,4 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
 public class HouseAdDto extends AdDto {
 	

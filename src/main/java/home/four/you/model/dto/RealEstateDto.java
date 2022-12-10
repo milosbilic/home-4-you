@@ -1,7 +1,7 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
-import home.four.you.model.HeatType;
 import home.four.you.model.entity.Location;
+import home.four.you.model.entity.Property.HeatType;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;

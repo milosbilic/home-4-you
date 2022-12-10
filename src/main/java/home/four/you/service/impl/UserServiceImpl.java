@@ -1,6 +1,6 @@
 package home.four.you.service.impl;
 
-import home.four.you.dto.UserDto;
+import home.four.you.model.dto.UserDto;
 import home.four.you.exception.EmailExistsException;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;

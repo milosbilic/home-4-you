@@ -1,128 +1,72 @@
 package home.four.you.model.entity;
 
-import home.four.you.model.AdType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
+/**
+ * Entity class for Ad model.
+ */
 @Entity
+@Table(name = "ads")
 @EntityListeners(AuditingEntityListener.class)
 @Where(clause = "expired = false")
+@Getter
+@Setter
 public class Ad {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    /**
+     * Enumeration for ad type.
+     */
+    public enum Type {
 
-	@Column(nullable = false)
-	private String title;
+        /**
+         * Property in the ad is for sale.
+         */
+        SALE,
+        /**
+         * Property in the ad is for rent.
+         */
+        RENT
+    }
 
-	@Column
-	private String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "date_created")
-	@CreatedDate
-	private Date dateCreated;
+    @Column(nullable = false)
+    private String title;
 
-	@Column(name = "expiration_date")
-	@Temporal(TemporalType.DATE)
-	private Date expirationDate;
+    @Column
+    private String description;
 
-	private boolean expired;
+    @Column(name = "date_created")
+    @CreatedDate
+    private Date dateCreated;
 
-	@ManyToOne
-	private User user;
+    @Column(name = "expiration_date")
+    @Temporal(TemporalType.DATE)
+    private Date expirationDate;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Property property;
+    @Column
+    private boolean expired;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@NotNull
-	private Price price;
+    @ManyToOne
+    private User user;
 
-	@Enumerated(EnumType.STRING)
-	private AdType adType;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Property property;
 
-	public Long getId() {
-		return id;
-	}
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    private Price price;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Property getRealEstate() {
-		return property;
-	}
-
-	public void setRealEstate(Property property) {
-		this.property = property;
-	}
-	public Price getPrice() {
-		return price;
-	}
-
-	public void setPrice(Price price) {
-		this.price = price;
-	}
-
-	public AdType getAdType() {
-		return adType;
-	}
-
-	public void setAdType(AdType adType) {
-		this.adType = adType;
-	}
-
-	public boolean isExpired() {
-		return expired;
-	}
-
-	public void setExpired(boolean expired) {
-		this.expired = expired;
-	}
+    @Enumerated(EnumType.STRING)
+    private Type type;
 }

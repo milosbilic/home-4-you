@@ -1,4 +1,4 @@
-package home.four.you.dto;
+package home.four.you.model.dto;
 
 import home.four.you.validation.annotation.PasswordMatches;
 import com.fasterxml.jackson.annotation.JsonIgnore;

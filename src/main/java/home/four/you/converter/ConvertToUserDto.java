@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import home.four.you.dto.UserDto;
+import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 
 @Component

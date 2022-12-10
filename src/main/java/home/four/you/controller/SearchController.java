@@ -1,10 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.dto.SearchDto;
-import home.four.you.model.AdType;
-import home.four.you.model.RealEstateType;
-import home.four.you.converter.enums.AdTypeConverter;
-import home.four.you.converter.enums.RealEstateTypeConverter;
+import home.four.you.model.dto.SearchDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.LocationService;
 import home.four.you.service.SearchService;
@@ -17,7 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,12 +29,6 @@ public class SearchController {
 	
 	@Autowired
 	private LocationService locationService;
-	
-	@InitBinder
-	public void initBinder(final WebDataBinder webdataBinder) {
-		webdataBinder.registerCustomEditor(AdType.class, new AdTypeConverter());
-		webdataBinder.registerCustomEditor(RealEstateType.class, new RealEstateTypeConverter());
-	}
 
 	@PostMapping
 	public String search(@ModelAttribute("search") @Valid SearchDto searchDto,

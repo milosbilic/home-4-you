@@ -1,8 +1,8 @@
 package home.four.you.controller;
 
-import home.four.you.dto.AdDto;
-import home.four.you.dto.HouseAdDto;
-import home.four.you.dto.SearchDto;
+import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.HouseAdDto;
+import home.four.you.model.dto.SearchDto;
 import home.four.you.converter.ConvertToAdDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;

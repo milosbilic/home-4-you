@@ -1,14 +1,14 @@
 package home.four.you.converter;
 
-import home.four.you.dto.ApartmentDto;
-import home.four.you.dto.HouseDto;
+import home.four.you.model.dto.ApartmentDto;
+import home.four.you.model.dto.HouseDto;
 import home.four.you.model.entity.Apartment;
 import home.four.you.model.entity.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import home.four.you.dto.RealEstateDto;
+import home.four.you.model.dto.RealEstateDto;
 import home.four.you.model.entity.House;
 
 @Component
@@ -23,7 +23,7 @@ public class ConvertToRealEstateDto implements Converter<Property, RealEstateDto
 		if (property instanceof House) {
 			dto = new HouseDto();
 			dto = (HouseDto) setCommonFields(property, dto);
-			((HouseDto) dto).setFloorsNumber(((House) property).getFloorsNumber());
+			((HouseDto) dto).setFloorsNumber(((House) property).getNumberOfFloors());
 		} else if (property instanceof Apartment) {
 			dto = new ApartmentDto();
 			dto = (ApartmentDto) setCommonFields(property, dto);

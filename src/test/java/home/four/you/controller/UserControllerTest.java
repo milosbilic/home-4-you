@@ -1,6 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.dto.UserDto;
+import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 import home.four.you.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +22,6 @@ public class UserControllerTest {
 
 	@Mock
 	UserService userService;
-	
-	@Mock
-	ConvertToUserEntity toEntity;
 	
 	@InjectMocks
 	UserController userController;

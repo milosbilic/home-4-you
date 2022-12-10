@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import home.four.you.dto.AdDto;
-import home.four.you.dto.ApartmentAdDto;
-import home.four.you.dto.HouseAdDto;
+import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.ApartmentAdDto;
+import home.four.you.model.dto.HouseAdDto;
 import home.four.you.model.entity.House;
 
 @Component
@@ -38,8 +38,8 @@ public class ConvertToAdDto implements Converter<Ad, AdDto>{
 		dto.setDateCreated(ad.getDateCreated());
 		dto.setExpirationDate(ad.getExpirationDate());
 		dto.setFormattedPrice(ad.getPrice());
-		dto.setRealEstate(toRealEstateDto.convert(ad.getRealEstate()));
-		dto.setAdType(ad.getAdType());
+		dto.setRealEstate(toRealEstateDto.convert(ad.getProperty()));
+		dto.setAdType(ad.getType());
 		return dto;
 	}
 
@@ -53,9 +53,9 @@ public class ConvertToAdDto implements Converter<Ad, AdDto>{
 	
 	private AdDto getInstance(Ad ad) {
 		AdDto retVal = null;
-		if (ad.getRealEstate() instanceof House)
+		if (ad.getProperty() instanceof House)
 			retVal = new HouseAdDto();
-		if (ad.getRealEstate() instanceof Apartment) {
+		if (ad.getProperty() instanceof Apartment) {
 			retVal = new ApartmentAdDto();
 		}
 		return retVal;

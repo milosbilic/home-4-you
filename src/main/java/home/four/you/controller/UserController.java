@@ -1,12 +1,11 @@
 package home.four.you.controller;
 
-import home.four.you.dto.UserDto;
+import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 import home.four.you.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

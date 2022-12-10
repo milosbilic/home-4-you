@@ -1,8 +1,8 @@
 package home.four.you.controller;
 
-import home.four.you.dto.SearchDto;
-import home.four.you.model.AdType;
-import home.four.you.model.RealEstateType;
+import home.four.you.model.dto.SearchDto;
+import home.four.you.model.PropertyType;
+import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,8 @@ public class HomeController {
 		httpSession.removeAttribute("searchCritirea");
 		ModelAndView mav = new ModelAndView("index");
 //		mav.addObject("newestAds", toDto.convert(adService.findNewest()));
-		mav.addObject("adTypes", AdType.values());
-		mav.addObject("realEstates", RealEstateType.values());
+		mav.addObject("adTypes", Ad.Type.values());
+		mav.addObject("realEstates", PropertyType.values());
 		mav.addObject("search", new SearchDto());
 		return mav;
 	}
@@ -56,9 +56,6 @@ public class HomeController {
 
 	private boolean authenticated() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			return true;
-		}
-		return false;
+		return !(auth instanceof AnonymousAuthenticationToken);
 	}
 }

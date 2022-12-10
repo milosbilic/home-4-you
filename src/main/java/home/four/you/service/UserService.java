@@ -2,7 +2,7 @@ package home.four.you.service;
 
 import java.util.List;
 
-import home.four.you.dto.UserDto;
+import home.four.you.model.dto.UserDto;
 import home.four.you.exception.EmailExistsException;
 import home.four.you.model.entity.User;
 

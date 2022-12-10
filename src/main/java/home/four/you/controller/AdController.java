@@ -7,19 +7,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.four.you.dto.AdDto;
-import home.four.you.dto.ApartmentAdDto;
-import home.four.you.dto.HouseAdDto;
-import home.four.you.model.AdType;
-import home.four.you.model.HeatType;
-import home.four.you.model.RealEstateType;
+import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.ApartmentAdDto;
+import home.four.you.model.dto.HouseAdDto;
+import home.four.you.model.PropertyType;
 import home.four.you.exception.NotFoundException;
 import home.four.you.exception.UnsupportedTypeException;
 import home.four.you.factory.AdDtoFactory;
 import home.four.you.converter.ConvertToEquipmentDto;
-import home.four.you.converter.enums.AdTypeConverter;
-import home.four.you.converter.enums.HeatTypeConverter;
-import home.four.you.converter.enums.RealEstateTypeConverter;
 import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.Property;
 import home.four.you.service.AdService;
@@ -74,13 +69,6 @@ public class AdController {
 	private static final String HAS_ANY_ROLE = "hasAnyRole('USER', 'ADMIN')";
 
 	private static final String UPLOAD_LOCATION = "E:/temp/";
-	
-	@InitBinder
-	public void initBinder(final WebDataBinder webdataBinder) {
-		webdataBinder.registerCustomEditor(AdType.class, new AdTypeConverter());
-		webdataBinder.registerCustomEditor(RealEstateType.class, new RealEstateTypeConverter());
-		webdataBinder.registerCustomEditor(HeatType.class, new HeatTypeConverter());
-	}
 
 	@GetMapping
 	public List<AdDto> findAll() {
@@ -112,12 +100,12 @@ public class AdController {
 	}
 
 	@GetMapping("/new")
-	public ModelAndView newAdd(@RequestParam RealEstateType realEstateType) {
+	public ModelAndView newAdd(@RequestParam PropertyType propertyType) {
 		ModelAndView mav = new ModelAndView("ads/new");
-		mav.addObject("newAd", AdDtoFactory.getInstance(realEstateType));
-		mav.addObject("adTypes", AdType.values());
-		mav.addObject("realEstateType", realEstateType);
-		mav.addObject("heatTypes", HeatType.values());
+		mav.addObject("newAd", AdDtoFactory.getInstance(propertyType));
+		mav.addObject("adTypes", Ad.Type.values());
+		mav.addObject("realEstateType", propertyType);
+		mav.addObject("heatTypes", Property.HeatType.values());
 		//TODO implement caching on query methods for these kind of queries
 		mav.addObject("equipment", toEquipmentDto.convert(equipmentService.findAll()));
 		return mav;
