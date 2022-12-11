@@ -16,6 +16,7 @@ import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +40,10 @@ public class AdServiceImpl implements AdService {
     private final LocationService locationService;
 
     @Override
-    public List<Ad> findAll() {
+    public Page<Ad> findAll(Pageable pageable) {
         log.debug("Finding all ads...");
 
-        return adRepository.findAll();
+        return adRepository.findAll(pageable);
     }
 
     @Override

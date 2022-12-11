@@ -3,7 +3,7 @@ package home.four.you.controller;
 import home.four.you.model.dto.AdDto;
 import home.four.you.model.dto.HouseAdDto;
 import home.four.you.model.dto.SearchDto;
-import home.four.you.converter.ConvertToAdDto;
+import home.four.you.converter.AdToAdDtoConverter;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ public class HomeControllerTest {
 	AdService adService;
 	
 	@Mock
-    ConvertToAdDto toDto;
+	AdToAdDtoConverter toDto;
 	
 	@InjectMocks
 	HomeController homeController;
@@ -48,7 +48,7 @@ public class HomeControllerTest {
 		List<AdDto> dtos = Arrays.asList(new HouseAdDto(), new HouseAdDto(), new HouseAdDto());
 
 		when(adService.findNewest()).thenReturn(ads);
-		when(toDto.convert(ads)).thenReturn(dtos);
+//		when(toDto.convert(ads)).thenReturn(dtos);
 		
 		mockMvc.perform(get("/"))
 		.andExpect(status().isOk())

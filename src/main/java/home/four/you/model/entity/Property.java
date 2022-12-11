@@ -11,10 +11,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "properties")
-@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-public abstract class Property {
+public class Property {
 
     /**
      * Enumeration for property's heat type.
@@ -44,17 +43,11 @@ public abstract class Property {
     @Column
     private double area;
 
-    @Column(name = "rooms_number")
-    private double roomsNumber;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "real_estate_equipment",
-            joinColumns = @JoinColumn(name = "real_estate_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "equipment_id", referencedColumnName = "id"))
-    private Set<Equipment> equipment;
+    @Column(name = "number_of_rooms")
+    private double numberOfRooms;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "heat_type") // TODO think about not allowing null values
+    @Column(name = "heat_type")
     private HeatType heatType;
 
     @Column
@@ -62,4 +55,18 @@ public abstract class Property {
 
     @Lob
     private byte[] image;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "real_estate_equipment",
+            joinColumns = @JoinColumn(name = "real_estate_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "equipment_id", referencedColumnName = "id"))
+    private Set<Equipment> equipment;
+
+    @OneToOne
+    @JoinColumn(name = "house_id")
+    private House house;
+
+    @OneToOne
+    @JoinColumn(name = "apartment_id")
+    private Apartment apartment;
 }

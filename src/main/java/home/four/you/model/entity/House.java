@@ -1,8 +1,6 @@
 package home.four.you.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +11,15 @@ import lombok.Setter;
 @Table(name = "houses")
 @Getter
 @Setter
-public class House extends Property {
+public class House {
 
-	@Column(name = "number_of_floors", nullable = false)
+	@Id
+	@GeneratedValue
+	private Long id;
+
+	@Column(name = "number_of_floors")
 	private int numberOfFloors;
+
+	@Column(name = "court_yard_area")
+	private int courtYardArea;
 }

@@ -19,7 +19,7 @@ public interface AdService {
      *
      * @return List of all ads.
      */
-    List<Ad> findAll();
+    Page<Ad> findAll(Pageable pageable);
 
     /**
      * Finds an ad by provided ID.

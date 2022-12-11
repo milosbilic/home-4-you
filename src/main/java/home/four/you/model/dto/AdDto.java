@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-public abstract class AdDto {
+public class AdDto {
 
 	private Long id;
 	
@@ -41,7 +41,7 @@ public abstract class AdDto {
 		return price;
 	}
 
-	public abstract RealEstateDto getRealEstate();
+//	public abstract RealEstateDto getRealEstate();
 
 	public String getTitle() {
 		return title;
@@ -79,7 +79,7 @@ public abstract class AdDto {
 		this.price = price;
 	}
 
-	public abstract void setRealEstate(RealEstateDto realEstate);
+//	public abstract void setRealEstate(RealEstateDto realEstate);
 
 	public void setTitle(String title) {
 		this.title = title;

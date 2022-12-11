@@ -1,8 +1,8 @@
 package home.four.you.controller;
 
 import home.four.you.model.dto.HouseAdDto;
-import home.four.you.converter.ConvertToAdDto;
-import home.four.you.converter.ConvertToEquipmentDto;
+import home.four.you.converter.AdToAdDtoConverter;
+import home.four.you.converter.EquipmentToEquipmentDtoConverter;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
 import home.four.you.service.ApartmentService;
@@ -37,10 +37,10 @@ public class AdControllerTest {
     EquipmentService equipmentService;
 
 	@Mock
-    ConvertToAdDto toDto;
+	AdToAdDtoConverter toDto;
 
 	@Mock
-    ConvertToEquipmentDto toEquipmentDto;
+    EquipmentToEquipmentDtoConverter toEquipmentDto;
 	
 	@InjectMocks
 	AdController adController;

@@ -6,7 +6,6 @@
   	<th:block th:include="fragments/general :: head"></th:block>
   </head>
 
-  	
   <body>
 
     <th:block th:replace="fragments/general :: nav"></th:block>
@@ -25,7 +24,7 @@
   					<select class="form-control" th:value="${adType}" th:field="*{adType}">
   						<option th:each="adType: ${adTypes}" th:text="${adType.toString()}" th:value="${adType.toString()}"></option>
   					</select>
-  					<select class="form-control" th:field="*{propertyType}">
+  					<select class="form-control" th:field="${realEstates}">
   						<option th:each="property: ${properties}" th:value="${property.toString()}" th:text="${property.toString()}"></option>
   					</select>
   					<input type="text" class="form-control" th:placeholder="Location" th:field="*{location}" />

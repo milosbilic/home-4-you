@@ -1,6 +1,8 @@
 package home.four.you.repository;
 
 import home.four.you.model.entity.Ad;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
      * @return List of matching ads.
      */
     List<Ad> findTop3ByOrderByDateCreatedDesc();
+
+    Page<Ad> findAll(Pageable pageable);
 
 //    @Query("SELECT a FROM Ad a JOIN a.property p WHERE a.type = :adType "
 //            + "AND TYPE(re) IN (:realEstate) AND p.location.name = :location "

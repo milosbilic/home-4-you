@@ -1,7 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.converter.ConvertToAdDto;
-import home.four.you.service.SearchService;
+import home.four.you.converter.AdToAdDtoConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +20,7 @@ public class SearchControllerTest {
     SearchService searchService;
 
     @Mock
-    ConvertToAdDto toAdDto;
+    AdToAdDtoConverter toAdDto;
 
     @InjectMocks
     SearchController searchController;

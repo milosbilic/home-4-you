@@ -1,6 +1,6 @@
 package home.four.you.controller;
 
-import home.four.you.converter.ConvertToEquipmentDto;
+import home.four.you.converter.EquipmentToEquipmentDtoConverter;
 import home.four.you.exception.NotFoundException;
 import home.four.you.exception.UnsupportedTypeException;
 import home.four.you.factory.AdDtoFactory;
@@ -20,7 +20,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -57,7 +56,7 @@ public class AdController {
 //	@Autowired
 //	private ConvertToAdDto toDto;
 
-    private final ConvertToEquipmentDto toEquipmentDto;
+    private final EquipmentToEquipmentDtoConverter toEquipmentDto;
 
     private static final String HAS_ANY_ROLE = "hasAnyRole('USER', 'ADMIN')";
 
@@ -84,18 +83,18 @@ public class AdController {
     public void renderImage(@PathVariable Long realEstateId, HttpServletResponse response) throws IOException {
         log.debug("Rendering image for property {}", realEstateId);
 
-        Property re = houseService.findOne(realEstateId);
-        if (re == null) {
-            re = apartmentService.findOne(realEstateId);
-        }
-        if (re == null) {
-            throw new NotFoundException("No real estate with id of " + realEstateId);
-        }
+//        Property re = houseService.findOne(realEstateId);
+//        if (re == null) {
+//            re = apartmentService.findOne(realEstateId);
+//        }
+//        if (re == null) {
+//            throw new NotFoundException("No real estate with id of " + realEstateId);
+//        }
 
-        byte[] image = re.getImage();
-        response.setContentType("image/jpeg");
-        InputStream is = new ByteArrayInputStream(image);
-        IOUtils.copy(is, response.getOutputStream());
+//        byte[] image = re.getImage();
+//        response.setContentType("image/jpeg");
+//        InputStream is = new ByteArrayInputStream(image);
+//        IOUtils.copy(is, response.getOutputStream());
     }
 
     @GetMapping("/new")
@@ -108,7 +107,7 @@ public class AdController {
         mav.addObject("realEstateType", propertyType);
         mav.addObject("heatTypes", Property.HeatType.values());
         //TODO implement caching on query methods for these kind of queries
-        mav.addObject("equipment", toEquipmentDto.convert(equipmentService.findAll()));
+//        mav.addObject("equipment", toEquipmentDto.convert(equipmentService.findAll()));
         return mav;
     }
 
