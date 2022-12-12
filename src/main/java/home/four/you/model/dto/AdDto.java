@@ -2,7 +2,6 @@ package home.four.you.model.dto;
 
 import home.four.you.model.entity.Ad;
 import home.four.you.validation.annotation.Image;
-import home.four.you.model.entity.Price;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -65,14 +64,6 @@ public class AdDto {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void setFormattedPrice(Price price) {
-		String pattern = "###,###.00";
-		DecimalFormat format = new DecimalFormat(pattern);
-		this.price = new PriceDto(price.getId(), price.getCurrency());
-		// setting amount String value from a BigDecimal
-		this.price.setAmountOutput(format.format(price.getAmount()));
 	}
 	
 	public void setPrice(PriceDto price) {

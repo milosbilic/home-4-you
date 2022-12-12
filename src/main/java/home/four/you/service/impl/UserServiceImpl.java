@@ -4,6 +4,7 @@ import home.four.you.exception.EmailExistsException;
 import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
+import home.four.you.repository.AdRepository;
 import home.four.you.repository.RoleRepository;
 import home.four.you.repository.UserRepository;
 import home.four.you.service.UserService;
@@ -23,6 +24,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private final AdRepository adRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -92,8 +94,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     private boolean emailExists(String email) {

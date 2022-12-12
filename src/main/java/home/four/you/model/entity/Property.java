@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -56,17 +57,12 @@ public class Property {
     @Lob
     private byte[] image;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "real_estate_equipment",
-            joinColumns = @JoinColumn(name = "real_estate_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "equipment_id", referencedColumnName = "id"))
-    private Set<Equipment> equipment;
+    @ManyToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+    private Set<Equipment> equipment = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(name = "house_id")
+    @OneToOne(mappedBy = "property")
     private House house;
 
-    @OneToOne
-    @JoinColumn(name = "apartment_id")
+    @OneToOne(mappedBy = "property")
     private Apartment apartment;
 }

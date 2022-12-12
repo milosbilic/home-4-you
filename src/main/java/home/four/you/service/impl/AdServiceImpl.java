@@ -16,7 +16,6 @@ import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -63,10 +62,10 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Ad save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException {
+    public Ad save(AdDto adDto, List<Long> equipmentIds, String email) throws IOException {
         log.debug("Saving ad [{}]", adDto);
 
-        User user = userService.findByUsername(username);
+        User user = userService.findByEmail(email);
         Set<Equipment> equipment = null;
         Location location = null;
 //		Ad newAd = toEntity.convert(adDto);

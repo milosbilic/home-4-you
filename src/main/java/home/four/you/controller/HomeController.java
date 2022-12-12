@@ -7,6 +7,7 @@ import home.four.you.service.AdService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,18 +26,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     private final AdService adService;
-
-//	@Autowired
-//	private ConvertToAdDto toDto;
+    private final ConversionService conversionService;
 
     @GetMapping
     public ModelAndView index(HttpSession httpSession) {
         log.debug("Fetching details for index page");
 
         //remove previous search if exists
-        httpSession.removeAttribute("searchCritirea");
+//        httpSession.removeAttribute("searchCritirea");
+        var newest = adService.findNewest();
         ModelAndView mav = new ModelAndView("index");
 //		mav.addObject("newestAds", toDto.convert(adService.findNewest()));
+        mav.addObject("newestAds", newest);
         mav.addObject("adTypes", Ad.Type.values());
         mav.addObject("realEstates", PropertyType.values());
         mav.addObject("search", new SearchDto());

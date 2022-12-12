@@ -19,4 +19,8 @@ public class Apartment {
 
 	@Column(nullable = false)
 	private int floor;
+
+	@OneToOne
+	@JoinColumn(name = "property_id")
+	private Property property;
 }

@@ -58,12 +58,12 @@ public interface UserService {
     User createUserAccount(UserDto userDto);
 
     /**
-     * Finds a user by provided username.
+     * Finds a user by provided email.
      *
-     * @param username Username.
-     * @return User.o
+     * @param email User's email.
+     * @return User.
      */
-    User findByUsername(String username);
+    User findByEmail(String email);
 
 
 }

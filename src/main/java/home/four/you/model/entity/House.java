@@ -22,4 +22,8 @@ public class House {
 
 	@Column(name = "court_yard_area")
 	private int courtYardArea;
+
+	@OneToOne
+	@JoinColumn(name = "property_id")
+	private Property property;
 }

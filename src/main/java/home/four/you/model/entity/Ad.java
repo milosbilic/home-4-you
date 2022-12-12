@@ -8,6 +8,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,7 +17,6 @@ import java.util.Date;
 @Entity
 @Table(name = "ads")
 @EntityListeners(AuditingEntityListener.class)
-@Where(clause = "expired = false")
 @Getter
 @Setter
 public class Ad {
@@ -40,6 +40,10 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     @Column(nullable = false)
     private String title;
 
@@ -55,18 +59,11 @@ public class Ad {
     private Date expirationDate;
 
     @Column
-    private boolean expired;
+    private BigDecimal price;
 
     @ManyToOne
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Property property;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @NotNull
-    private Price price;
-
-    @Enumerated(EnumType.STRING)
-    private Type type;
 }

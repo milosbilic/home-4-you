@@ -50,7 +50,7 @@ public class AdServiceImplTest {
 		List<Ad> ads = new ArrayList<>(Arrays.asList(new Ad(), new Ad()));
 		when(adRepository.findAll()).thenReturn(ads);
 		
-		List<Ad> result = adServiceImpl.findAll();
+//		List<Ad> result = adServiceImpl.findAll();
 		
 //		assertEquals(ads, result);
 	}
@@ -94,21 +94,20 @@ public class AdServiceImplTest {
 		//given
 		String username = "user";
 		User u = new User();
-		u.setUsername(username);
 		AdDto dto = new HouseAdDto();
 		Ad converted = new Ad();
 		House h = new House();
-		h.setLocation(new Location());
-		converted.setProperty(h);
+//		h.setLocation(new Location());
+//		converted.setProperty(h);
 		List<Long> equipmentIds = Arrays.asList(1L, 2L, 3L);
 		FileBucket bucket = new FileBucket();
 		bucket.setFile(new MockMultipartFile("image.jpg", new byte[3]));
 		dto.setFile(bucket);
 		
-		when(userService.findByUsername(username)).thenReturn(u);
+		when(userService.findByEmail(username)).thenReturn(u);
 		when(equipmentService.findByIds(new ArrayList<>())).thenReturn(new HashSet<>());
-		when(locationService.findByName(h.getLocation().getName()))
-		.thenReturn(Optional.of(new Location()));
+//		when(locationService.findByName(h.getLocation().getName()))
+//		.thenReturn(Optional.of(new Location()));
 		when(adRepository.save(converted)).thenReturn(converted);
 		
 		//when

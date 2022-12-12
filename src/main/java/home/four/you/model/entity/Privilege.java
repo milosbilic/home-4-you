@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entity class for Privilege model.
@@ -22,6 +24,6 @@ public class Privilege {
 	@Column
 	private String name;
 
-	@ManyToMany(mappedBy = "privileges")
-	private Collection<Role> roles;
+	@ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
+	private Set<Role> roles = new HashSet<>();
 }

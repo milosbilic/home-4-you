@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entity class for Equipment model.
@@ -16,14 +17,17 @@ import java.util.List;
 @Setter
 public class Equipment {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false, unique = true)
-	@NotEmpty
-	private String name;
+    @Column(nullable = false, unique = true)
+    @NotEmpty
+    private String name;
 
-	@ManyToMany(mappedBy = "equipment")
-	private List<Property> properties;
+    @ManyToMany
+    @JoinTable(name = "property_equipment",
+            joinColumns = @JoinColumn(name = "equipment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
+    private Set<Property> properties = new HashSet<>();
 }

@@ -17,9 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SearchControllerTest {
 
     @Mock
-    SearchService searchService;
-
-    @Mock
     AdToAdDtoConverter toAdDto;
 
     @InjectMocks

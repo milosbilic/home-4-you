@@ -16,6 +16,6 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
      *
      * @return List of matching properties.
      */
-    @Query("select p from Property p where p.house is not null")
-    List<Property> getHouses();
+//    @Query("select p from Property p where p.house is not null")
+//    List<Property> getHouses();
 }

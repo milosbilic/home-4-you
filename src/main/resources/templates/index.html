@@ -52,7 +52,7 @@
               		<a th:href="@{'/ads/' + ${ad.id}}">
               			<h3 th:text="${ad.title}">Easy to Use</h3>
               		</a>
-              		<p class="lead mb-0" th:text="${ad.price.amountOutput} + ' ' + ${ad.price.currency}">
+              		<p class="lead mb-0" th:text="${ad.price}">
               			400 EUR
               		</p>
             	</div>
