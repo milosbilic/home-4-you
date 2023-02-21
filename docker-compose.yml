@@ -9,14 +9,3 @@ services:
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: home-4-you
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-#    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-#    volumes:
-#      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"

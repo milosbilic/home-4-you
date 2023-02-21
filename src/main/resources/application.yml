@@ -9,7 +9,7 @@ spring:
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
   sql:
     init:
       mode: never
