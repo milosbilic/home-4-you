@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -52,11 +53,11 @@ public class Ad {
 
     @Column(name = "date_created")
     @CreatedDate
-    private Date dateCreated;
+    private LocalDate dateCreated;
 
     @Column(name = "expiration_date")
     @Temporal(TemporalType.DATE)
-    private Date expirationDate;
+    private LocalDate expirationDate;
 
     @Column
     private BigDecimal price;

@@ -125,14 +125,6 @@ public class AdServiceImplTest {
 //		assertEquals(converted.getUser(), result.getUser());
 	}
 
-	@Test
-	public void testDelete() {
-		Ad ad = new Ad();	
-		
-		adServiceImpl.delete(ad);
-		
-		verify(adRepository, times(1)).delete(ad);
-	}
 
 	@Test
 	public void testFindNewest() {

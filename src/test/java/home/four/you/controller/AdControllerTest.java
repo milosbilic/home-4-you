@@ -1,108 +1,84 @@
 package home.four.you.controller;
 
-import home.four.you.model.dto.HouseAdDto;
-import home.four.you.converter.AdToAdDtoConverter;
-import home.four.you.converter.EquipmentToEquipmentDtoConverter;
+import home.four.you.model.dto.AdBriefDetailsDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
-import home.four.you.service.ApartmentService;
-import home.four.you.service.EquipmentService;
-import home.four.you.service.HouseService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import java.util.List;
 
+import static home.four.you.TestUtil.generateId;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+/**
+ * Unit tests for {@link AdController}.
+ */
+@ExtendWith(MockitoExtension.class)
 public class AdControllerTest {
 
-	@Mock
+    AdController controller;
+
+    @Mock
     AdService adService;
 
-	@Mock
-    HouseService houseService;
+    @Mock
+    ConversionService conversionService;
 
-	@Mock
-    ApartmentService apartmentService;
+    @Mock
+    Ad ad;
 
-	@Mock
-    EquipmentService equipmentService;
+    @BeforeEach
+    public void setUp() {
+        controller = new AdController(adService, conversionService);
+    }
 
-	@Mock
-	AdToAdDtoConverter toDto;
+    @Test
+    @DisplayName("Find all")
+    void findAll() {
+        var pageable = mock(Pageable.class);
+        var dto = mock(AdBriefDetailsDto.class);
+        var page = new PageImpl<>(List.of(ad));
 
-	@Mock
-    EquipmentToEquipmentDtoConverter toEquipmentDto;
-	
-	@InjectMocks
-	AdController adController;
-	
-	MockMvc mockMvc;
-	
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(adController).build();
-	}
+        when(adService.findAll(pageable)).thenReturn(page);
+        when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
 
-	@Test
-	public void testFindAll() {
-		//not implemented
-	}
+        var result = controller.findAll(pageable);
 
-	@Test
-	public void testFindOne() throws Exception {
-		Ad ad = new Ad();
-		
-		when(adService.findOne(1L)).thenReturn(ad);
-		when(toDto.convert(ad)).thenReturn(new HouseAdDto());
-		
-		mockMvc.perform(get("/ads/1"))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(view().name("ads/show"))
-		.andExpect(model().attribute("ad", notNullValue()));
-	}
-	
-	@Test
-	public void whenInvalidParameterInputFindingAd_thenReturnClientError() throws Exception {
-		Ad ad = new Ad();
-		
-		when(adService.findOne(1L)).thenReturn(ad);
-		when(toDto.convert(ad)).thenReturn(new HouseAdDto());
-		
-		mockMvc.perform(get("/ads/invalid"))//invalid path variable format
-		.andDo(print())
-		.andExpect(status().isBadRequest());
-	}
+        assertThat(result).isEqualTo(new PageImpl<>(List.of(dto)));
+    }
 
+    @Test
+    @DisplayName("Find one")
+    void findOne() {
+        Long id = generateId();
+        var dto = mock(AdBriefDetailsDto.class);
 
+        when(adService.findOne(id)).thenReturn(ad);
 
-	@Test
-	public void testNewAdd() throws Exception {
-		mockMvc.perform(get("/ads/new").param("realEstateType", "house"))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(model().attribute("adTypes", notNullValue()))
-		.andExpect(model().attribute("heatTypes", notNullValue()))
-		.andExpect(model().attribute("newAd", notNullValue()))
-		.andExpect(model().attribute("realEstateType", notNullValue()))
-		.andExpect(view().name("ads/new"));
-		
-	}
+        when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
 
-	
-	@Test
-	public void testDelete() {
-		//not implemented
-	}
+        var result = controller.findOne(id);
 
+        assertThat(result).isEqualTo(dto);
+    }
+
+    @Test
+    @DisplayName("Delete")
+    void delete() {
+        Long id = generateId();
+
+        controller.delete(id);
+
+        verify(adService, times(1)).delete(id);
+        verifyNoMoreInteractions(adService);
+    }
 }

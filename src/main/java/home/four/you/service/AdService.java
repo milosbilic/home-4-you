@@ -40,11 +40,11 @@ public interface AdService {
     Ad save(AdDto adDto, List<Long> equipmentIds, String username) throws IOException;
 
     /**
-     * Deletes an ad.
+     * Deletes an ad by provided ID.
      *
-     * @param ad Ad.
+     * @param id Ad ID.
      */
-    void delete(Ad ad);
+    void delete(Long id);
 
     /**
      * Finds the most recent ads.

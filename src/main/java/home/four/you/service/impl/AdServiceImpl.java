@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -92,10 +94,10 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public void delete(Ad ad) {
-        log.debug("Deleting ad [{}]", ad);
+    public void delete(Long id) {
+        log.debug("Deleting ad {}", id);
 
-        adRepository.delete(ad);
+        adRepository.deleteById(id);
     }
 
     @Override
@@ -124,12 +126,9 @@ public class AdServiceImpl implements AdService {
     }
 
     // set expiration date to 3 months from creation date
-    private Date calculateExpirationDate() {
-        Date now = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(now);
-        c.add(Calendar.MONTH, 3);
-        Date expirationDate = c.getTime();
-        return expirationDate;
+    private LocalDate calculateExpirationDate() {
+        var now = LocalDate.now();
+
+        return now.plus(3, ChronoUnit.MONTHS);
     }
 }

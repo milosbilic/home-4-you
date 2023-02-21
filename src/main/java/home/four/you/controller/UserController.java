@@ -27,16 +27,6 @@ public class UserController {
 
     private static final String HAS_ANY_ROLE = "hasAnyRole('USER', 'ADMIN')";
 
-//	@GetMapping
-//	public List<UserDto> getUsers() {
-//		return toDto.convert(userService.findAll());
-//	}
-//	
-//	@GetMapping("/{id}")
-//	public UserDto findOne(@PathVariable Long id) {
-//		return toDto.convert(userService.findOne(id));
-//	}
-
     @PostMapping
     public ModelAndView createUser(
             @ModelAttribute("user") @Valid UserDto userDto, BindingResult result,
