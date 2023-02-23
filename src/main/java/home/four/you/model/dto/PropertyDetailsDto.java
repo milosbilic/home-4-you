@@ -24,6 +24,6 @@ public record PropertyDetailsDto(Long id,
                                  Property.HeatType heatType,
                                  Boolean booked,
                                  Set<EquipmentDto> equipment,
-                                 HouseDto house,
-                                 ApartmentDto apartment) {
+                                 HouseDetailsDto house,
+                                 ApartmentDetailsDto apartment) {
 }

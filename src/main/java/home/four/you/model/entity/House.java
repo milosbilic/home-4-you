@@ -16,14 +16,14 @@ import lombok.experimental.Accessors;
 public class House {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "number_of_floors")
     private Integer numberOfFloors;
 
-    @Column(name = "court_yard_area")
-    private Integer courtYardArea;
+    @Column(name = "courtyard_area")
+    private Integer courtyardArea;
 
     @OneToOne
     @JoinColumn(name = "property_id")

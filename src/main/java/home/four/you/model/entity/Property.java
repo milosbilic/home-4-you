@@ -66,9 +66,23 @@ public class Property {
     @JoinColumn(name = "ad_id")
     private Ad ad;
 
-    @OneToOne(mappedBy = "property")
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
     private House house;
 
-    @OneToOne(mappedBy = "property")
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
     private Apartment apartment;
+
+    public Property setHouse(House house) {
+        this.house = house;
+        house.setProperty(this);
+
+        return this;
+    }
+
+    public Property setApartment(Apartment apartment) {
+        this.apartment = apartment;
+        apartment.setProperty(this);
+
+        return this;
+    }
 }

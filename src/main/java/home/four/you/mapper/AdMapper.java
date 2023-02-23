@@ -2,6 +2,7 @@ package home.four.you.mapper;
 
 import home.four.you.model.dto.AdBriefDetailsDto;
 import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,4 +25,6 @@ public interface AdMapper {
     @Mapping(source = "property.area", target = "area")
     @Mapping(source = "property.numberOfRooms", target = "numberOfRooms")
     AdBriefDetailsDto mapToBriefDetailsDto(Ad ad);
+
+    CreateAdResponseDto mapToCreateAdResponseDto(Ad ad);
 }

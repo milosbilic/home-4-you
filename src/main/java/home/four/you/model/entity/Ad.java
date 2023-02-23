@@ -52,9 +52,9 @@ public class Ad {
     @Column
     private Integer price;
 
-    @Column(name = "date_created")
+    @Column(name = "created_at")
     @CreatedDate
-    private Instant dateCreated;
+    private Instant createdAt;
 
     @Column(name = "expiration_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,4 +65,11 @@ public class Ad {
 
     @ManyToOne
     private User user;
+
+    public Ad setProperty(Property property) {
+        this.property = property;
+        property.setAd(this);
+
+        return this;
+    }
 }

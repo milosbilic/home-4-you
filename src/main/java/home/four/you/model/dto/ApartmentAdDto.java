@@ -2,7 +2,7 @@ package home.four.you.model.dto;
 
 public class ApartmentAdDto extends AdDto {
 	
-	private ApartmentDto realEstate;
+	private ApartmentDetailsDto realEstate;
 
 //	@Override
 //	public ApartmentDto getRealEstate() {

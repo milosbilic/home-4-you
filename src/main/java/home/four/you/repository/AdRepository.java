@@ -17,31 +17,14 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
      *
      * @return List of matching ads.
      */
-    List<Ad> findTop3ByOrderByDateCreatedDesc();
+    List<Ad> findTop3ByOrderByCreatedAtDesc();
 
+    /**
+     * Finds all ads.
+     *
+     * @param pageable the pageable to request a paged result, can be {@link Pageable#unpaged()}, must not be
+     *                 {@literal null}.
+     * @return Page of all ads.
+     */
     Page<Ad> findAll(Pageable pageable);
-
-//    @Query("SELECT a FROM Ad a JOIN a.property p WHERE a.type = :adType "
-//            + "AND TYPE(re) IN (:realEstate) AND p.location.name = :location "
-//            + "AND a.price.amount >= :minPrice AND a.price.amount <= :maxPrice "
-//            + "AND a.property.area >= :minArea AND a.property.area <= :maxArea")
-//    Page<Ad> search(@Param("adType") Ad.Type adType,
-//                    @Param("location") String location,
-//                    @Param("realEstate") Class<?> realEstate,
-//                    @Param("minPrice") BigDecimal minPrice,
-//                    @Param("maxPrice") BigDecimal maxPrice,
-//                    @Param("minArea") double minArea,
-//                    @Param("maxArea") double maxArea, Pageable pageable);
-//
-//
-//    @Query("SELECT a FROM Ad a JOIN a.property p WHERE a.type = :adType "
-//            + "AND TYPE(p) IN (:realEstate) "
-//            + "AND a.price.amount >= :minPrice AND a.price.amount <= :maxPrice "
-//            + "AND a.property.area >= :minArea AND a.property.area <= :maxArea")
-//    Page<Ad> search(@Param("adType") Ad.Type adType,
-//                    @Param("realEstate") Class<?> realEstate,
-//                    @Param("minPrice") BigDecimal minPrice,
-//                    @Param("maxPrice") BigDecimal maxPrice,
-//                    @Param("minArea") double minArea,
-//                    @Param("maxArea") double maxArea, Pageable pageable);
 }

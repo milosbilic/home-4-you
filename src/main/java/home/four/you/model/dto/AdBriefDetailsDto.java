@@ -2,7 +2,7 @@ package home.four.you.model.dto;
 
 import home.four.you.model.entity.Ad;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Brief details DTO for ad entity.
@@ -12,6 +12,6 @@ public record AdBriefDetailsDto(Long id,
                                 String title,
                                 Integer area,
                                 Integer numberOfRooms,
-                                Date dateCreated,
+                                Instant createdAt,
                                 Integer price) {
 }

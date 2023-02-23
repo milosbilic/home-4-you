@@ -46,7 +46,7 @@ public class AdServiceImpl implements AdService {
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
-                .orElseThrow(BadRequestException::new);
+                .orElseThrow(() -> new BadRequestException("Location not found."));
 
         var newAd = new Ad()
                 .setTitle(dto.title())
@@ -88,17 +88,21 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         log.debug("Deleting ad {}", id);
 
-        adRepository.deleteById(id);
+        adRepository.findById(id)
+                .ifPresentOrElse(adRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Ad not found!");
+                });
     }
 
     @Override
     public List<Ad> findNewest() {
         log.debug("Finding newest ads...");
 
-        return adRepository.findTop3ByOrderByDateCreatedDesc();
+        return adRepository.findTop3ByOrderByCreatedAtDesc();
     }
 
     private Instant calculateExpirationDate() {
@@ -111,7 +115,7 @@ public class AdServiceImpl implements AdService {
         if (propertyDto.house() != null) {
             property.setHouse(new House()
                     .setNumberOfFloors(propertyDto.house().numberOfFloors())
-                    .setCourtYardArea(propertyDto.house().courtyardArea()));
+                    .setCourtyardArea(propertyDto.house().courtyardArea()));
         } else {
             property.setApartment(new Apartment()
                     .setFloor(propertyDto.apartment().floor()));
