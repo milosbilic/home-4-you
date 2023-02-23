@@ -14,13 +14,6 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    /**
-     * Maps {@link User} to {@link UserDto}.
-     *
-     * @param user User.
-     * @return Mapped user.
-     */
-    UserDto mapToDto(User user);
 
 
     UserBriefDetailsDto mapToBriefDetails(User user);

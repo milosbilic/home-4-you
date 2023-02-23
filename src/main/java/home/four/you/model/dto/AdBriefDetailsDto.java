@@ -8,11 +8,10 @@ import java.util.Date;
  * Brief details DTO for ad entity.
  */
 public record AdBriefDetailsDto(Long id,
-                               String title,
-                               String description,
-                               Date dateCreated,
-                               Date expirationDate,
-                               UserDto user,
-                               PriceDto price,
-                               Ad.Type type) {
+                                Ad.Type type,
+                                String title,
+                                Integer area,
+                                Integer numberOfRooms,
+                                Date dateCreated,
+                                Integer price) {
 }

@@ -1,16 +1,13 @@
 package home.four.you.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Entity class for Ad model.
@@ -20,6 +17,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@Accessors(chain = true)
 public class Ad {
 
     /**
@@ -51,20 +49,20 @@ public class Ad {
     @Column
     private String description;
 
+    @Column
+    private Integer price;
+
     @Column(name = "date_created")
     @CreatedDate
-    private LocalDate dateCreated;
+    private Instant dateCreated;
 
     @Column(name = "expiration_date")
-    @Temporal(TemporalType.DATE)
-    private LocalDate expirationDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Instant expirationDate;
 
-    @Column
-    private BigDecimal price;
+    @OneToOne(mappedBy = "ad", cascade = CascadeType.ALL)
+    private Property property;
 
     @ManyToOne
     private User user;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Property property;
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Converter from {@link Ad} to {@link AdBriefDetailsDto}.
  */
 @Component
-public class AdToAdBriefDetailsDto implements Converter<Ad, AdBriefDetailsDto> {
+public class AdToAdBriefDetailsDtoConverter implements Converter<Ad, AdBriefDetailsDto> {
 
     @Override
     public AdBriefDetailsDto convert(Ad ad) {

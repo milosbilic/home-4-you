@@ -9,10 +9,10 @@ spring:
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      show-sql: true
+      ddl-auto: none
+#      ddl-auto: create-drop
   sql:
     init:
-      mode: never
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#      mode: always
+#      mode: never

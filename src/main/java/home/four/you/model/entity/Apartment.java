@@ -3,6 +3,7 @@ package home.four.you.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * Entity class for Apartment model.
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Table(name = "apartments")
 @Getter
 @Setter
+@Accessors(chain = true)
 public class Apartment {
 
 	@Id
@@ -18,7 +20,7 @@ public class Apartment {
 	private Long id;
 
 	@Column(nullable = false)
-	private int floor;
+	private Integer floor;
 
 	@OneToOne
 	@JoinColumn(name = "property_id")

@@ -18,4 +18,11 @@ public interface LocationService {
 
     List<Location> findByNameStartingWith(String name);
 
+    /**
+     * Finds a location by provided ID.
+     *
+     * @param id Location ID.
+     * @return Matching location, or empty {@link Optional}.
+     */
+    Optional<Location> findById(Long id);
 }

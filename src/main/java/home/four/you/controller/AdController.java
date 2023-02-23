@@ -1,6 +1,8 @@
 package home.four.you.controller;
 
 import home.four.you.model.dto.AdBriefDetailsDto;
+import home.four.you.model.dto.CreateAdRequestDto;
+import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
 import jakarta.validation.Valid;
@@ -25,6 +27,16 @@ public class AdController {
     private final AdService adService;
 
     private final ConversionService conversionService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto) {
+        log.debug("Creating ad [{}]", dto);
+
+        var ad = adService.createAd(dto);
+
+        return conversionService.convert(ad, CreateAdResponseDto.class);
+    }
 
     @GetMapping
     public Page<AdBriefDetailsDto> findAll(@PageableDefault Pageable pageable) {

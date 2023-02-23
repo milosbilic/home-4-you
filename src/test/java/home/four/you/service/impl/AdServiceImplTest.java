@@ -74,57 +74,6 @@ public class AdServiceImplTest {
 //		assertNull(nonExisting);
 	}
 
-	@Test
-	public void testSaveAd() {
-		Ad ad = new Ad();
-		when(adRepository.save(ad)).thenReturn(ad);
-		
-		
-		Ad result = adServiceImpl.save(ad);
-		
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.MONTH, 3);
-//		assertEquals(ad.getExpirationDate().getMonth(), c.getTime().getMonth());
-//		assertEquals(ad, result);
-	}
-
-	@Test
-	public void testSaveAdDtoListOfLongString() throws IOException {
-		//given
-		String username = "user";
-		User u = new User();
-		AdDto dto = new HouseAdDto();
-		Ad converted = new Ad();
-		House h = new House();
-//		h.setLocation(new Location());
-//		converted.setProperty(h);
-		List<Long> equipmentIds = Arrays.asList(1L, 2L, 3L);
-		FileBucket bucket = new FileBucket();
-		bucket.setFile(new MockMultipartFile("image.jpg", new byte[3]));
-		dto.setFile(bucket);
-		
-		when(userService.findByEmail(username)).thenReturn(u);
-		when(equipmentService.findByIds(new ArrayList<>())).thenReturn(new HashSet<>());
-//		when(locationService.findByName(h.getLocation().getName()))
-//		.thenReturn(Optional.of(new Location()));
-		when(adRepository.save(converted)).thenReturn(converted);
-		
-		//when
-		Ad result = adServiceImpl.save(dto, equipmentIds, username);
-		
-		//then
-//		assertEquals(converted.getAdType(), result.getAdType());
-//		assertEquals(converted.getDateCreated(), result.getDateCreated());
-//		assertEquals(converted.getDescription(), result.getDescription());
-//		assertEquals(converted.getExpirationDate(), result.getExpirationDate());
-//		assertEquals(converted.getId(), result.getId());
-//		assertEquals(converted.getPrice(), result.getPrice());
-//		assertEquals(converted.getRealEstate(), result.getRealEstate());
-//		assertEquals(converted.getTitle(), result.getTitle());
-//		assertEquals(converted.getUser(), result.getUser());
-	}
-
 
 	@Test
 	public void testFindNewest() {

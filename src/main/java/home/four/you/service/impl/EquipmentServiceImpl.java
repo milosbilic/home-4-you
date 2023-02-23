@@ -37,7 +37,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Set<Equipment> findByIds(List<Long> ids) {
+    public Set<Equipment> findByIds(Set<Long> ids) {
         log.debug("Finding equipment with ids [{}]", ids);
 
         //TODO Implement a query for this specific case.

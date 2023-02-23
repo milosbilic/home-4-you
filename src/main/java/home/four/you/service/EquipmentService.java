@@ -31,6 +31,6 @@ public interface EquipmentService {
      * @param ids Equipment IDs.
      * @return Set of matching equipment.
      */
-    Set<Equipment> findByIds(List<Long> ids);
+    Set<Equipment> findByIds(Set<Long> ids);
 
 }

@@ -1,13 +1,13 @@
 package home.four.you.service.impl;
 
-import home.four.you.exception.NotFoundException;
-import home.four.you.helper.Helper;
-import home.four.you.model.dto.AdDto;
-import home.four.you.model.dto.SearchDto;
+import home.four.you.exception.BadRequestException;
+import home.four.you.exception.ResourceNotFoundException;
+import home.four.you.model.dto.CreateAdRequestDto;
+import home.four.you.model.dto.CreatePropertyRequestDto;
 import home.four.you.model.entity.Ad;
-import home.four.you.model.entity.Equipment;
-import home.four.you.model.entity.Location;
-import home.four.you.model.entity.User;
+import home.four.you.model.entity.Apartment;
+import home.four.you.model.entity.House;
+import home.four.you.model.entity.Property;
 import home.four.you.repository.AdRepository;
 import home.four.you.service.AdService;
 import home.four.you.service.EquipmentService;
@@ -18,27 +18,59 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.List;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * Implementation of {@link AdService}.
  */
+@Service
 @Slf4j
 @RequiredArgsConstructor
-@Service
 public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
-
+    private final LocationService locationService;
     private final EquipmentService equipmentService;
-
     private final UserService userService;
 
-    private final LocationService locationService;
+    @Override
+    @Transactional
+    public Ad createAd(CreateAdRequestDto dto) {
+        log.debug("Creating ad [{}]", dto);
+
+        var propertyDto = dto.property();
+        var location = locationService.findById(propertyDto.locationId())
+                .orElseThrow(BadRequestException::new);
+
+        var newAd = new Ad()
+                .setTitle(dto.title())
+                .setDescription(dto.description())
+                .setType(dto.type())
+                .setPrice(dto.price())
+                .setExpirationDate(calculateExpirationDate())
+                .setUser(userService.findOne(1L)); // TODO Real user should be set when security is implemented.
+
+        var property = new Property()
+                .setArea(propertyDto.area())
+                .setLocation(location)
+                .setHeatType(propertyDto.heatType())
+                .setNumberOfRooms(propertyDto.numberOfRooms())
+                .setBooked(propertyDto.booked())
+                .setEquipment(ofNullable(propertyDto.equipmentIds())
+                        .map(equipmentService::findByIds)
+                        .orElse(null));
+
+        setPropertyType(property, propertyDto);
+        newAd.setProperty(property);
+
+        return adRepository.save(newAd);
+    }
 
     @Override
     public Page<Ad> findAll(Pageable pageable) {
@@ -52,45 +84,7 @@ public class AdServiceImpl implements AdService {
         log.debug("Finding ad with id {}", id);
 
         return adRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Ad with the ID of " + id + " not found,"));
-    }
-
-    @Override
-    public Ad save(Ad ad) {
-        log.debug("Saving ad [{}]", ad);
-
-        ad.setExpirationDate(calculateExpirationDate());
-        return adRepository.save(ad);
-    }
-
-    @Override
-    public Ad save(AdDto adDto, List<Long> equipmentIds, String email) throws IOException {
-        log.debug("Saving ad [{}]", adDto);
-
-        User user = userService.findByEmail(email);
-        Set<Equipment> equipment = null;
-        Location location = null;
-//		Ad newAd = toEntity.convert(adDto);
-        var newAd = new Ad();
-
-        if (equipmentIds != null)
-            equipment = equipmentService.findByIds(equipmentIds);
-
-        String locationName = newAd.getProperty().getLocation().getName();
-        //retrieve location entity or create a new one
-        Optional<Location> locationOptional = locationService.findByName(locationName);
-        if (!locationOptional.isPresent())
-            location = new Location();
-        else
-            location = locationOptional.get();
-        newAd.setUser(user);
-        newAd.getProperty().setEquipment(equipment);
-        newAd.getProperty().setLocation(location);
-        newAd.setExpirationDate(calculateExpirationDate());
-        newAd.getProperty().setImage(adDto.getFile().getFile().getBytes());
-
-//		return adRepository.save(newAd);
-        return newAd;
+                .orElseThrow(() -> new ResourceNotFoundException("Ad with the ID of " + id + " not found,"));
     }
 
     @Override
@@ -107,28 +101,20 @@ public class AdServiceImpl implements AdService {
         return adRepository.findTop3ByOrderByDateCreatedDesc();
     }
 
-    @Override
-    public Page<Ad> search(SearchDto searchDto, Pageable pageable) {
-        log.debug("Searching for ads with criteria [{}]", searchDto);
+    private Instant calculateExpirationDate() {
+        var now = Instant.now();
 
-        Page<Ad> retVal = null;
-        Class<?> realEstate = Helper.getRealEstateClass(searchDto.getRealEstateType());
-//		if (searchDto.getLocation() == null || searchDto.getLocation().equals("")) {
-//			retVal = adRepository.search(searchDto.getAdTypeEnum(), realEstate, new BigDecimal(searchDto.getMinPrice()),
-//					new BigDecimal(searchDto.getMaxPrice()), searchDto.getMinArea(),
-//					searchDto.getMaxArea(), pageable);
-//		} else { // location has been provided
-//			retVal = adRepository.search(searchDto.getAdTypeEnum(), searchDto.getLocation(), realEstate,
-//					new BigDecimal(searchDto.getMinPrice()), new BigDecimal(searchDto.getMaxPrice()),
-//					searchDto.getMinArea(), searchDto.getMaxArea(), pageable);
-//		}
-        return retVal;
+        return now.plus(90, ChronoUnit.DAYS);
     }
 
-    // set expiration date to 3 months from creation date
-    private LocalDate calculateExpirationDate() {
-        var now = LocalDate.now();
-
-        return now.plus(3, ChronoUnit.MONTHS);
+    private void setPropertyType(Property property, CreatePropertyRequestDto propertyDto) {
+        if (propertyDto.house() != null) {
+            property.setHouse(new House()
+                    .setNumberOfFloors(propertyDto.house().numberOfFloors())
+                    .setCourtYardArea(propertyDto.house().courtyardArea()));
+        } else {
+            property.setApartment(new Apartment()
+                    .setFloor(propertyDto.apartment().floor()));
+        }
     }
 }

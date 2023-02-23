@@ -1,6 +1,6 @@
 package home.four.you.service.impl;
 
-import home.four.you.exception.NotFoundException;
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.entity.Apartment;
 import home.four.you.repository.ApartmentRepository;
 import home.four.you.service.ApartmentService;
@@ -23,7 +23,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         log.debug("Finding an apartment with id of {}", id);
 
         return apartmentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Apartment with id of " + id + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Apartment with id of " + id + " not found!"));
     }
 
     @Override

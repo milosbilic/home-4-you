@@ -3,6 +3,7 @@ package home.four.you.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(name = "properties")
 @Getter
 @Setter
+@Accessors(chain = true)
 public class Property {
 
     /**
@@ -42,23 +44,27 @@ public class Property {
     private Location location;
 
     @Column
-    private double area;
+    private Integer area;
 
     @Column(name = "number_of_rooms")
-    private double numberOfRooms;
+    private Double numberOfRooms;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "heat_type")
     private HeatType heatType;
 
     @Column
-    private boolean booked;
+    private Boolean booked;
 
     @Lob
     private byte[] image;
 
     @ManyToMany(mappedBy = "properties", fetch = FetchType.LAZY)
     private Set<Equipment> equipment = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "ad_id")
+    private Ad ad;
 
     @OneToOne(mappedBy = "property")
     private House house;
