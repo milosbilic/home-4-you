@@ -65,12 +65,6 @@ CREATE TABLE IF NOT EXISTS ads
   user_id bigint NOT NULL REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS equipment
-(
-    id SERIAL PRIMARY KEY,
-    name character varying(255) UNIQUE NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS properties
 (
   id SERIAL NOT NULL PRIMARY KEY,
@@ -85,8 +79,8 @@ CREATE TABLE IF NOT EXISTS properties
 
 CREATE TABLE IF NOT EXISTS property_equipment
 (
-    equipment_id bigint NOT NULL REFERENCES equipment (id),
-    property_id bigint NOT NULL REFERENCES properties (id)
+    property_id bigint NOT NULL REFERENCES properties (id),
+    equipment CHARACTER VARYING (256) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS apartments

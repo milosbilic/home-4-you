@@ -57,16 +57,16 @@ public class AdControllerTest {
     }
 
     @Test
-    @DisplayName("Find one")
-    void findOne() {
+    @DisplayName("Get details - ok")
+    void getDetails_ok() {
         Long id = generateId();
         var dto = mock(AdBriefDetailsDto.class);
 
-        when(adService.findOne(id)).thenReturn(ad);
+        when(adService.findById(id)).thenReturn(ad);
 
         when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
 
-        var result = controller.findOne(id);
+        var result = controller.getDetails(id);
 
         assertThat(result).isEqualTo(dto);
     }

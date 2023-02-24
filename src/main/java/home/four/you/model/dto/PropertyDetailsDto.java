@@ -1,5 +1,6 @@
 package home.four.you.model.dto;
 
+import home.four.you.model.entity.Equipment;
 import home.four.you.model.entity.Property;
 
 import java.util.Set;
@@ -23,7 +24,7 @@ public record PropertyDetailsDto(Long id,
                                  Double numberOfRooms,
                                  Property.HeatType heatType,
                                  Boolean booked,
-                                 Set<EquipmentDto> equipment,
+                                 Set<Equipment> equipment,
                                  HouseDetailsDto house,
                                  ApartmentDetailsDto apartment) {
 }

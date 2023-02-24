@@ -19,13 +19,12 @@ import org.springframework.web.bind.annotation.*;
  * Controller for {@link Ad} related operations.
  */
 @RestController
-@RequestMapping(value = "ads")
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping(value = "ads")
 public class AdController {
 
     private final AdService adService;
-
     private final ConversionService conversionService;
 
     @PostMapping
@@ -42,16 +41,15 @@ public class AdController {
     public Page<AdBriefDetailsDto> findAll(@PageableDefault Pageable pageable) {
         log.debug("Finding ads");
 
-        var ads = adService.findAll(pageable);
-
-        return ads.map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
+        return adService.findAll(pageable)
+                .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
     }
 
-    @GetMapping("/{id}")
-    public AdBriefDetailsDto findOne(@PathVariable Long id) {
+    @GetMapping("{id}")
+    public AdBriefDetailsDto getDetails(@PathVariable Long id) {
         log.debug("Finding ad with id {}", id);
 
-        var ad = adService.findOne(id);
+        var ad = adService.findById(id);
 
         return conversionService.convert(ad, AdBriefDetailsDto.class);
     }

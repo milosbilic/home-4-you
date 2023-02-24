@@ -1,16 +1,14 @@
 package home.four.you.service.impl;
 
 import home.four.you.model.entity.Equipment;
-import home.four.you.repository.EquipmentRepository;
 import home.four.you.service.EquipmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-
-import static java.util.stream.Collectors.toSet;
 
 /**
  * Implementation of {@link EquipmentService}.
@@ -20,13 +18,13 @@ import static java.util.stream.Collectors.toSet;
 @RequiredArgsConstructor
 public class EquipmentServiceImpl implements EquipmentService {
 
-    private final EquipmentRepository equipmentRepository;
+   /* private final EquipmentRepository equipmentRepository;
 
     @Override
-    public Equipment findOne(Long id) {
+    public Optional<Equipment> findById(Long id) {
         log.debug("Finding equipment with id {}", id);
 
-        return equipmentRepository.findById(id).orElseThrow();
+        return equipmentRepository.findById(id);
     }
 
     @Override
@@ -37,14 +35,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Set<Equipment> findByIds(Set<Long> ids) {
+    public List<Equipment> findByIds(Set<Long> ids) {
         log.debug("Finding equipment with ids [{}]", ids);
 
-        //TODO Implement a query for this specific case.
-        return ids.stream()
-                .map(this::findOne)
-                .collect(toSet());
-    }
+        return equipmentRepository.findByIdIn(ids);
+    }*/
 
 
 }

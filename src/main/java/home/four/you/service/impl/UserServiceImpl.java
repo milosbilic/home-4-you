@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
     @Override
     public List<User> findAll() {
         log.debug("Finding all users");
@@ -43,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findOne(Long id) {
+    public User findById(Long id) {
         log.debug("Finding user with id {}", id);
 
         return userRepository.findById(id).orElseThrow();

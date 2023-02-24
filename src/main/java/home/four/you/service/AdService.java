@@ -1,7 +1,6 @@
 package home.four.you.service;
 
 import home.four.you.model.dto.CreateAdRequestDto;
-import home.four.you.model.dto.SearchDto;
 import home.four.you.model.entity.Ad;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,7 @@ public interface AdService {
      * @param id Ad ID.
      * @return Ad.
      */
-    Ad findOne(Long id);
+    Ad findById(Long id);
 
     /**
      * Deletes an ad by provided ID.

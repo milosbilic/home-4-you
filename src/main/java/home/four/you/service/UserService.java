@@ -47,7 +47,7 @@ public interface UserService {
      * @param id User ID.
      * @return User.
      */
-    User findOne(Long id);
+    User findById(Long id);
 
     /**
      * Creates a user account with specified details.

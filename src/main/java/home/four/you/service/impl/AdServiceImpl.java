@@ -10,7 +10,6 @@ import home.four.you.model.entity.House;
 import home.four.you.model.entity.Property;
 import home.four.you.repository.AdRepository;
 import home.four.you.service.AdService;
-import home.four.you.service.EquipmentService;
 import home.four.you.service.LocationService;
 import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +35,6 @@ public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
     private final LocationService locationService;
-    private final EquipmentService equipmentService;
     private final UserService userService;
 
     @Override
@@ -54,7 +52,7 @@ public class AdServiceImpl implements AdService {
                 .setType(dto.type())
                 .setPrice(dto.price())
                 .setExpirationDate(calculateExpirationDate())
-                .setUser(userService.findOne(1L)); // TODO Real user should be set when security is implemented.
+                .setUser(userService.findById(1L)); // TODO Real user should be set when security is implemented.
 
         var property = new Property()
                 .setArea(propertyDto.area())
@@ -62,9 +60,8 @@ public class AdServiceImpl implements AdService {
                 .setHeatType(propertyDto.heatType())
                 .setNumberOfRooms(propertyDto.numberOfRooms())
                 .setBooked(propertyDto.booked())
-                .setEquipment(ofNullable(propertyDto.equipmentIds())
-                        .map(equipmentService::findByIds)
-                        .orElse(null));
+                .setEquipment(propertyDto.equipment());
+
 
         setPropertyType(property, propertyDto);
         newAd.setProperty(property);
@@ -80,7 +77,7 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Ad findOne(Long id) {
+    public Ad findById(Long id) {
         log.debug("Finding ad with id {}", id);
 
         return adRepository.findById(id)

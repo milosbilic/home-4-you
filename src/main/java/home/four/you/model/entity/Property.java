@@ -33,7 +33,7 @@ public class Property {
         /**
          * Property has wood heating.
          */
-        WOOD
+        WOOD;
     }
 
     @Id
@@ -59,7 +59,10 @@ public class Property {
     @Lob
     private byte[] image;
 
-    @ManyToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = Equipment.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "property_equipment")
+    @Column(name = "equipment")
     private Set<Equipment> equipment = new HashSet<>();
 
     @OneToOne
