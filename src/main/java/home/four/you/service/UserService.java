@@ -1,7 +1,5 @@
 package home.four.you.service;
 
-import home.four.you.exception.EmailExistsException;
-import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 
 import java.util.List;
@@ -27,14 +25,6 @@ public interface UserService {
     User save(User user);
 
     /**
-     * Saves a user.
-     *
-     * @param user User.
-     * @return User.
-     */
-    User save(UserDto user) throws EmailExistsException;
-
-    /**
      * Deletes a user.
      *
      * @param user User.
@@ -48,14 +38,6 @@ public interface UserService {
      * @return User.
      */
     User findById(Long id);
-
-    /**
-     * Creates a user account with specified details.
-     *
-     * @param userDto User details.
-     * @return Created user.
-     */
-    User createUserAccount(UserDto userDto);
 
     /**
      * Finds a user by provided email.

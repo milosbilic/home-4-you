@@ -1,7 +1,7 @@
 package home.four.you.mapper;
 
 import home.four.you.model.dto.AdBriefDetailsDto;
-import home.four.you.model.dto.AdDto;
+import home.four.you.model.dto.AdDetailsDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
 import org.mapstruct.Mapper;
@@ -26,5 +26,20 @@ public interface AdMapper {
     @Mapping(source = "property.numberOfRooms", target = "numberOfRooms")
     AdBriefDetailsDto mapToBriefDetailsDto(Ad ad);
 
+    /**
+     * Maps ad entity to {@link CreateAdResponseDto}.
+     *
+     * @param ad Ad.
+     * @return Mapped {@link CreateAdResponseDto}.
+     */
     CreateAdResponseDto mapToCreateAdResponseDto(Ad ad);
+
+    /**
+     * Maps ad entity to full-details DTO.
+     *
+     * @param ad Ad.
+     * @return Mapped {@link AdDetailsDto}.
+     */
+    @Mapping(source = "user.id", target = "ownerId")
+    AdDetailsDto mapToDetailsDto(Ad ad);
 }

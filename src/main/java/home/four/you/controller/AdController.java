@@ -1,6 +1,7 @@
 package home.four.you.controller;
 
 import home.four.you.model.dto.AdBriefDetailsDto;
+import home.four.you.model.dto.AdDetailsDto;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
@@ -46,12 +47,12 @@ public class AdController {
     }
 
     @GetMapping("{id}")
-    public AdBriefDetailsDto getDetails(@PathVariable Long id) {
+    public AdDetailsDto getDetails(@PathVariable Long id) {
         log.debug("Finding ad with id {}", id);
 
         var ad = adService.findById(id);
 
-        return conversionService.convert(ad, AdBriefDetailsDto.class);
+        return conversionService.convert(ad, AdDetailsDto.class);
     }
 
     @DeleteMapping("{id}")

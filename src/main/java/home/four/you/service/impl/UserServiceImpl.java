@@ -1,8 +1,5 @@
 package home.four.you.service.impl;
 
-import home.four.you.exception.EmailExistsException;
-import home.four.you.model.dto.UserDto;
-import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
 import home.four.you.repository.AdRepository;
 import home.four.you.repository.RoleRepository;
@@ -13,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Implementation of {@link UserService}.
@@ -54,23 +49,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserDto user) throws EmailExistsException {
-        log.debug("Saving user [{}]", user);
-
-        if (emailExists(user.getEmail())) {
-            throw new EmailExistsException("There is an account with this email: "
-                    + user.getEmail());
-        }
-        var registered = new User();
-//        User registered = toEntity.convertMinimum(user);
-//        registered.setPassword(passwordEncoder.encode(user.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findById(2L).orElseThrow());
-        registered.setRoles(roles);
-        return userRepository.save(registered);
-    }
-
-    @Override
     public void delete(User user) {
         log.debug("Deleting user [{}]", user);
 
@@ -78,25 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUserAccount(UserDto userDto) {
-        log.debug("Creating user [{}]", userDto);
-
-        User registered = null;
-        try {
-            registered = save(userDto);
-        } catch (EmailExistsException e) {
-            return null;
-        }
-        return registered;
-    }
-
-    @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    private boolean emailExists(String email) {
-        User user = userRepository.findByEmail(email);
-        return user != null;
     }
 }

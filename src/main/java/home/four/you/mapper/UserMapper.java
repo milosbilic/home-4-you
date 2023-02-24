@@ -1,7 +1,6 @@
 package home.four.you.mapper;
 
 import home.four.you.model.dto.UserBriefDetailsDto;
-import home.four.you.model.dto.UserDto;
 import home.four.you.model.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

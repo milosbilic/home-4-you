@@ -1,7 +1,7 @@
 package home.four.you.config;
 
 import home.four.you.converter.AdToAdBriefDetailsDtoConverter;
-import home.four.you.converter.AdToAdDtoConverter;
+import home.four.you.converter.AdToAdDetailsDtoConverter;
 import home.four.you.converter.AdToCreateAdResponseDtoConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new AdToAdBriefDetailsDtoConverter());
-        registry.addConverter(new AdToAdDtoConverter());
+        registry.addConverter(new AdToAdDetailsDtoConverter());
         registry.addConverter(new AdToCreateAdResponseDtoConverter());
     }
 }
