@@ -1,4 +1,4 @@
-package home.four.you.config;
+package home.four.you.configuration;
 
 import home.four.you.converter.AdToAdBriefDetailsDtoConverter;
 import home.four.you.converter.AdToAdDetailsDtoConverter;

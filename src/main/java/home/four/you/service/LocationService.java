@@ -10,14 +10,6 @@ import java.util.Optional;
  */
 public interface LocationService {
 
-    Location save(Location location);
-
-    Location findOne(Long id);
-
-    Optional<Location> findByName(String name);
-
-    List<Location> findByNameStartingWith(String name);
-
     /**
      * Finds a location by provided ID.
      *

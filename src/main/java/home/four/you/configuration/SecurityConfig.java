@@ -1,4 +1,4 @@
-package home.four.you.config;
+package home.four.you.configuration;
 
 //@Configuration
 //@EnableWebSecurity

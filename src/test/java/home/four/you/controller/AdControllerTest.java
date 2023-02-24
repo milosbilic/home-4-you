@@ -1,6 +1,9 @@
 package home.four.you.controller;
 
 import home.four.you.model.dto.AdBriefDetailsDto;
+import home.four.you.model.dto.AdDetailsDto;
+import home.four.you.model.dto.CreateAdRequestDto;
+import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.service.AdService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +45,20 @@ public class AdControllerTest {
     }
 
     @Test
+    @DisplayName("Create ad - ok")
+    void createAd_ok() {
+        var dto = mock(CreateAdRequestDto.class);
+        var responseDto = mock(CreateAdResponseDto.class);
+
+        when(adService.createAd(dto)).thenReturn(ad);
+        when(conversionService.convert(ad, CreateAdResponseDto.class)).thenReturn(responseDto);
+
+        var result = controller.createAd(dto);
+
+        assertThat(result).isEqualTo(responseDto);
+    }
+
+    @Test
     @DisplayName("Find all")
     void findAll() {
         var pageable = mock(Pageable.class);
@@ -60,11 +77,11 @@ public class AdControllerTest {
     @DisplayName("Get details - ok")
     void getDetails_ok() {
         Long id = generateId();
-        var dto = mock(AdBriefDetailsDto.class);
+        var dto = mock(AdDetailsDto.class);
 
         when(adService.findById(id)).thenReturn(ad);
 
-        when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
+        when(conversionService.convert(ad, AdDetailsDto.class)).thenReturn(dto);
 
         var result = controller.getDetails(id);
 

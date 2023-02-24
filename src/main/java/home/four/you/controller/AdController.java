@@ -30,7 +30,7 @@ public class AdController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto) {
+    public CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto) {
         log.debug("Creating ad [{}]", dto);
 
         var ad = adService.createAd(dto);
