@@ -1,6 +1,9 @@
 spring:
   application:
-    name: Home 4 You
+    name: Home-4-You
+    version: "@project.version@"
+  flyway:
+    enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/home-4-you
     driver-class-name: org.postgresql.Driver
@@ -8,11 +11,12 @@ spring:
     password: password
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
     hibernate:
       show-sql: true
-#      ddl-auto: none
-#      ddl-auto: create
-  sql:
-    init:
-#      mode: always
-#      mode: never
+      ddl-auto: none
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
