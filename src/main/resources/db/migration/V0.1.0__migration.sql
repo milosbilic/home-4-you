@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS ads
   type character varying(255) COLLATE pg_catalog."default",
   title character varying(255) COLLATE pg_catalog."default" NOT NULL,
   description character varying(255),
-  expiration_date timestamp,
+  expiration_date timestamp with time zone,
   price bigint,
-  created_at timestamp,
+  created_at timestamp with time zone,
   owner_id bigint NOT NULL REFERENCES users (id)
 );
 
