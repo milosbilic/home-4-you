@@ -40,6 +40,6 @@ public interface AdMapper {
      * @param ad Ad.
      * @return Mapped {@link AdDetailsDto}.
      */
-    @Mapping(source = "user.id", target = "ownerId")
+    @Mapping(source = "owner.id", target = "ownerId")
     AdDetailsDto mapToDetailsDto(Ad ad);
 }

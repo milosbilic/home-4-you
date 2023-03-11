@@ -23,8 +23,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static java.util.Optional.ofNullable;
-
 /**
  * Implementation of {@link AdService}.
  */
@@ -52,7 +50,7 @@ public class AdServiceImpl implements AdService {
                 .setType(dto.type())
                 .setPrice(dto.price())
                 .setExpirationDate(calculateExpirationDate())
-                .setUser(userService.findById(1L)); // TODO Real user should be set when security is implemented.
+                .setOwner(userService.findById(1L)); // TODO Real user should be set when security is implemented.
 
         var property = new Property()
                 .setArea(propertyDto.area())

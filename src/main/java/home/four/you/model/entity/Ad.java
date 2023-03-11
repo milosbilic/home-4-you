@@ -64,7 +64,7 @@ public class Ad {
     private Property property;
 
     @ManyToOne
-    private User user;
+    private User owner;
 
     public Ad setProperty(Property property) {
         this.property = property;

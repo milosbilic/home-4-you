@@ -59,7 +59,7 @@ public class Property {
     @Lob
     private byte[] image;
 
-    @ElementCollection(targetClass = Equipment.class)
+    @ElementCollection(targetClass = Equipment.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "property_equipment")
     @Column(name = "equipment")

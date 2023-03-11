@@ -10,5 +10,4 @@ public enum Equipment {
     BALCONY,
     FRIDGE,
     FREEZER,
-
 }

@@ -16,12 +16,13 @@ import java.time.Instant;
  * @param property       Property being advertised.
  * @param ownerId        Owner ID.
  */
-public record AdDetailsDto(Ad.Type type,
+public record AdDetailsDto(Long id,
+                           Ad.Type type,
                            String title,
                            String description,
                            Integer price,
                            Instant createdAt,
                            Instant expirationDate,
-                           PropertyDetailsDto property,
-                           Long ownerId) {
+                           Long ownerId,
+                           PropertyDetailsDto property) {
 }
