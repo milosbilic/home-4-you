@@ -23,6 +23,6 @@ public class UserServiceImpl implements UserService {
         log.debug("Finding user with id {}", id);
 
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }

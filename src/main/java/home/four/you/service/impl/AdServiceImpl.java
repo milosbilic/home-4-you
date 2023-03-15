@@ -79,7 +79,7 @@ public class AdServiceImpl implements AdService {
         log.debug("Finding ad with id {}", id);
 
         return adRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Ad with the ID of " + id + " not found,"));
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class AdServiceImpl implements AdService {
 
         adRepository.findById(id)
                 .ifPresentOrElse(adRepository::delete, () -> {
-                    throw new ResourceNotFoundException("Ad not found!");
+                    throw new ResourceNotFoundException();
                 });
     }
 

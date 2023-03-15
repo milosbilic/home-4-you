@@ -7,6 +7,9 @@ import home.four.you.repository.RoleRepository;
 import home.four.you.repository.UserRepository;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +20,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static home.four.you.TestUtil.generateId;
+import static home.four.you.model.entity.Ad.Type.SALE;
 import static home.four.you.model.entity.Equipment.*;
+import static home.four.you.model.entity.Property.HeatType.WOOD;
 import static java.util.Collections.singletonList;
 import static net.bytebuddy.utility.RandomString.make;
 
@@ -35,6 +42,8 @@ public class HttpBasedTest {
         RestAssuredConfig.config().getLogConfig()
                 .enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.ALL);
     }
+
+    protected static final String APPLICATION_JSON = "application/json";
 
     protected static final String ADS_URI = "/ads";
     protected static final String AD_URI = "/ads/{id}";
@@ -68,7 +77,7 @@ public class HttpBasedTest {
         return adRepository.save(new Ad()
                 .setTitle(make())
                 .setDescription(make())
-                .setType(Ad.Type.SALE)
+                .setType(SALE)
                 .setExpirationDate(Instant.now().plus(90, ChronoUnit.DAYS))
                 .setPrice(generateId().intValue())
                 .setOwner(createUser())
@@ -100,5 +109,55 @@ public class HttpBasedTest {
                 .setRoles(Set.of(roleRepository.findByRole(Role.AuthorityRole.ROLE_ADMIN)));
     }
 
+    protected JSONObject createHouseAdJSON() throws JSONException {
+        return createAdWithoutProperty()
+                .put("property", houseJSON());
+    }
+
+    protected JSONObject createApartmentAdJSON() throws JSONException {
+        return createAdWithoutProperty()
+                .put("property", apartmentJSON());
+    }
+
+    private JSONObject createAdWithoutProperty() throws JSONException {
+        return new JSONObject()
+                .put("type", SALE.toString())
+                .put("title", make())
+                .put("description", make())
+                .put("price", generateId());
+    }
+
+    private JSONObject houseJSON() throws JSONException {
+        return propertyJSON()
+                .put("house", new JSONObject()
+                        .put("numberOfFloors", 2)
+                        .put("courtyardArea", generateId()));
+    }
+
+    private JSONObject apartmentJSON() throws JSONException {
+        return propertyJSON()
+                .put("apartment", new JSONObject()
+                        .put("floor", 2));
+    }
+
+    private JSONObject propertyJSON() throws JSONException {
+        return new JSONObject()
+                .put("heatType", WOOD.toString())
+                .put("locationId", 2)
+                .put("area", generateId())
+                .put("numberOfRooms", generateId())
+                .put("booked", true)
+                .put("equipment", new JSONArray()
+                        .put(TV.toString())
+                        .put(WASHING_MACHINE.toString()));
+    }
+
+    protected List<Object> getEquipment(JSONArray array) throws JSONException {
+        var retVal = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            retVal.add(array.get(i));
+        }
+        return retVal;
+    }
 
 }

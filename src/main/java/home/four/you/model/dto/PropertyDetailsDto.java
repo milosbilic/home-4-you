@@ -20,7 +20,7 @@ import java.util.Set;
  */
 public record PropertyDetailsDto(Long id,
                                  LocationDetailsDto location,
-                                 Double area,
+                                 Integer area,
                                  Double numberOfRooms,
                                  Property.HeatType heatType,
                                  Boolean booked,

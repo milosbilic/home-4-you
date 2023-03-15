@@ -21,7 +21,7 @@ public record CreateAdResponseDto(Long id,
                                   Ad.Type type,
                                   String title,
                                   String description,
-                                  BigDecimal price,
+                                  Integer price,
                                   Instant createdAt,
                                   Instant expirationDate,
                                   PropertyDetailsDto property) {

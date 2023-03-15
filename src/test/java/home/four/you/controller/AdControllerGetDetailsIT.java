@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 /**
  * Integration tests for {@link AdController#getDetails(Long)} endpoint.
  */
-@DisplayName("Get details")
+@DisplayName("Get ad details")
 public class AdControllerGetDetailsIT extends HttpBasedTest {
 
     @Test
@@ -26,7 +26,6 @@ public class AdControllerGetDetailsIT extends HttpBasedTest {
                 .when()
                 .get(url(AD_URI), generateId())
                 .then()
-                .log().all()
                 .statusCode(NOT_FOUND.value());
     }
 
@@ -40,7 +39,6 @@ public class AdControllerGetDetailsIT extends HttpBasedTest {
                 .when()
                 .get(url(AD_URI), ad.getId())
                 .then()
-                .log().all()
                 .statusCode(OK.value())
                 .body("id", equalTo(ad.getId().intValue()))
                 .body("type", equalTo(ad.getType().toString()))
