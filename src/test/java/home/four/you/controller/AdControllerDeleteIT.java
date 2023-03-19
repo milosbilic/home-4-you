@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
  * Integration tests for {@link AdController#delete(Long)} endpoint.
  */
 @DisplayName("Delete Ad")
-public class AdControllerDeleteIT extends HttpBasedTest {
+class AdControllerDeleteIT extends HttpBasedTest {
 
     @Test
     @DisplayName("Not found")

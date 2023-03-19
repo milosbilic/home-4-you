@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.CREATED;
  * Integration tests for {@link AdController#createAd(CreateAdRequestDto)} endpoint.
  */
 @DisplayName("Create ad")
-public class AdControllerCreateAdIT extends HttpBasedTest {
+class AdControllerCreateAdIT extends HttpBasedTest {
 
     @Test
     @DisplayName("Location not found")

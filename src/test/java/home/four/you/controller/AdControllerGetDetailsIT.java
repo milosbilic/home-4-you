@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.OK;
  * Integration tests for {@link AdController#getDetails(Long)} endpoint.
  */
 @DisplayName("Get ad details")
-public class AdControllerGetDetailsIT extends HttpBasedTest {
+class AdControllerGetDetailsIT extends HttpBasedTest {
 
     @Test
     @DisplayName("Not found")

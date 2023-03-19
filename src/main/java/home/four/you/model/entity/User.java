@@ -4,11 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Entity class for User model.
@@ -39,9 +38,19 @@ public class User {
     @Column
     private String phone;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne
+    private Role role;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Ad> ads = new ArrayList<>();
+
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(role.getName().name()));
+        authorities.addAll(
+                role.getPrivileges().stream()
+                        .map(privilege -> new SimpleGrantedAuthority(privilege.getName().name()))
+                        .collect(Collectors.toSet()));
+        return authorities;
+    }
 }

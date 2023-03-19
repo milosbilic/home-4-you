@@ -5,6 +5,7 @@ import home.four.you.repository.AdRepository;
 import home.four.you.repository.LocationRepository;
 import home.four.you.repository.RoleRepository;
 import home.four.you.repository.UserRepository;
+import home.four.you.security.auth.authorization.AuthorityRole;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import org.json.JSONArray;
@@ -28,6 +29,7 @@ import static home.four.you.TestUtil.generateId;
 import static home.four.you.model.entity.Ad.Type.SALE;
 import static home.four.you.model.entity.Equipment.*;
 import static home.four.you.model.entity.Property.HeatType.WOOD;
+import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_ADMIN;
 import static java.util.Collections.singletonList;
 import static net.bytebuddy.utility.RandomString.make;
 
@@ -106,7 +108,7 @@ public class HttpBasedTest {
                         .setLastName(make())
                         .setPassword(make())
                         .setPhone(make()))
-                .setRoles(Set.of(roleRepository.findByRole(Role.AuthorityRole.ROLE_ADMIN)));
+                .setRole(roleRepository.findByName(ROLE_ADMIN));
     }
 
     protected JSONObject createHouseAdJSON() throws JSONException {

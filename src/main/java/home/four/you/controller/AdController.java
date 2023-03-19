@@ -58,7 +58,7 @@ public class AdController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        log.debug("Deleting an ad {}", id);
+        log.debug("Deleting ad {}", id);
 
         adService.delete(id);
     }
