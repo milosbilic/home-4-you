@@ -3,7 +3,6 @@ package home.four.you.service;
 import home.four.you.model.entity.Role;
 import home.four.you.repository.RoleRepository;
 import home.four.you.security.auth.authorization.AuthorityRole;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
