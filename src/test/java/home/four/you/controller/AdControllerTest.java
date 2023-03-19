@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for {@link AdController}.
  */
 @ExtendWith(MockitoExtension.class)
-public class AdControllerTest {
+class AdControllerTest {
 
     AdController controller;
 

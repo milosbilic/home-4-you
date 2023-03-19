@@ -1,5 +1,6 @@
 package home.four.you.model.entity;
 
+import home.four.you.security.auth.authorization.AuthorityPrivilege;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ public class Privilege {
 	private Long id;
 
 	@Column
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private AuthorityPrivilege name;
 
 	@ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>();

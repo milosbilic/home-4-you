@@ -1,26 +1,20 @@
 -- DB migration for application version 0.0.1
 
+CREATE TABLE IF NOT EXISTS roles
+(
+  id SERIAL NOT NULL PRIMARY KEY,
+  name character varying(255) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS users
 (
   id SERIAL PRIMARY KEY,
   email character varying(255) NOT NULL UNIQUE,
   first_name character varying(255) NOT NULL,
   last_name character varying(255) NOT NULL,
-  password character varying(255) NOT NULL,
-  phone character varying(255) NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS roles
-(
-  id SERIAL NOT NULL PRIMARY KEY,
-  role character varying(255) NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS users_roles
-(
-  user_id bigint NOT NULL REFERENCES users (id),
-  role_id bigint NOT NULL REFERENCES roles (id),
-  CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id)
+  password character varying(255) NULL,
+  phone character varying(255) NULL UNIQUE,
+  role_id bigint NOT NULL REFERENCES roles (id)
 );
 
 CREATE TABLE IF NOT EXISTS privileges
@@ -87,16 +81,13 @@ CREATE TABLE IF NOT EXISTS houses
   property_id bigint NOT NULL REFERENCES properties (id)
 );
 
-INSERT INTO users(email, first_name, last_name, password, phone)
-    VALUES ('milos.bilic1995@gmail.com', 'Milos', 'Bilic', 'password', '+38134456');
-
-INSERT INTO roles(role)
+INSERT INTO roles(name)
     VALUES ('ROLE_ADMIN');
-INSERT INTO roles(role)
+INSERT INTO roles(name)
     VALUES ('ROLE_USER');
 
-INSERT INTO users_roles
-    VALUES (1, 1);
+INSERT INTO users(email, first_name, last_name, password, phone, role_id)
+    VALUES ('milos.bilic1995@gmail.com', 'Milos', 'Bilic', 'password', '+38134456', 1);
 
 INSERT INTO locations(name, zip_code)
     VALUES ('Belgrade', '11000');
