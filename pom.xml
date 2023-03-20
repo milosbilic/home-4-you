@@ -171,6 +171,7 @@
                         <exclude>**/*Mapper.class/</exclude>
                         <exclude>**/*MapperImpl.class/</exclude>
                         <exclude>**/*Converter.class/</exclude>
+                        <exclude>**/*Principal.class</exclude>
                         <exclude>**/*RepositoryCustomImpl.class/</exclude>
                     </excludes>
                 </configuration>

@@ -35,3 +35,4 @@ spring:
 home-4-you:
   auth:
     jwtSecret: aG9tZV80X3lvdV9zZWNyZXRfa2V5
+    expirationTime: 864000000

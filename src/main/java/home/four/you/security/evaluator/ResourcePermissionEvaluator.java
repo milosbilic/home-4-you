@@ -62,7 +62,6 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
         return ResourceCaller.builder()
                 .admin(principal.isAdmin())
                 .id(principal.getId())
-                .callerId(principal.getCallerId())
                 .build();
     }
 

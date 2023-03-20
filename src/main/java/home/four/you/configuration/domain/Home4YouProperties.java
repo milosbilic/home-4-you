@@ -2,6 +2,7 @@ package home.four.you.configuration.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -16,9 +17,12 @@ public class Home4YouProperties {
 
     @Getter
     @Setter
+    @Accessors(chain = true)
     public static class Auth {
 
         private String jwtSecret;
+
+        private long expirationTime;
     }
 
 }

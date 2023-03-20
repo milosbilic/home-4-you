@@ -22,16 +22,8 @@ public class UserPrincipal implements UserDetails {
     private final String email;
     private final String firstName;
     private final String lastName;
-    private final String externalId;
-    private final boolean active;
-    private final boolean guest;
-    private final String guestToken;
-    private final boolean agreementAccepted;
     private final Collection<SimpleGrantedAuthority> authorities;
     private final AuthorityRole role;
-    private final boolean mimicking;
-    private final Long callerId;
-    private final Long mimicProjectId;
 
     @Override
     public String getPassword() {
@@ -60,7 +52,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active;
+        return true;
     }
 
     @Override

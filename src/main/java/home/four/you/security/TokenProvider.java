@@ -36,12 +36,13 @@ public class TokenProvider {
         claims.put("firstName", user.getFirstName());
         claims.put("lastName", user.getLastName());
 
-        String secretKey = home4YouProperties.getAuth().getJwtSecret();
+        Home4YouProperties.Auth auth = home4YouProperties.getAuth();
+        String secretKey = auth.getJwtSecret();
 
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 864000000))
+                .setExpiration(new Date(System.currentTimeMillis() + auth.getExpirationTime()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }

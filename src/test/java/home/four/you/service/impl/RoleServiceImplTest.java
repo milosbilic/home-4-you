@@ -1,8 +1,9 @@
-package home.four.you.service;
+package home.four.you.service.impl;
 
 import home.four.you.model.entity.Role;
 import home.four.you.repository.RoleRepository;
 import home.four.you.security.auth.authorization.AuthorityRole;
+import home.four.you.service.RoleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 class RoleServiceImplTest {
 
-    RoleService service;
+    RoleServiceImpl service;
 
     @Mock
     RoleRepository roleRepository;
