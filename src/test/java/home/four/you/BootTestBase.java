@@ -1,4 +1,4 @@
-package com.focusvision.intervu.controlpanel.api;
+package home.four.you;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -10,8 +10,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Base class for {@link SpringBootTest} integration tests.
- *
- * @author Branko Ostojic (bostojic@itekako.com)
  */
 @ActiveProfiles("it-test")
 @ExtendWith(SpringExtension.class)
