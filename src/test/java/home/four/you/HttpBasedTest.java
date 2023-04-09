@@ -5,7 +5,7 @@ import home.four.you.repository.AdRepository;
 import home.four.you.repository.LocationRepository;
 import home.four.you.repository.RoleRepository;
 import home.four.you.repository.UserRepository;
-import home.four.you.security.auth.authorization.AuthorityRole;
+import home.four.you.security.TokenProvider;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import org.json.JSONArray;
@@ -62,8 +62,11 @@ public class HttpBasedTest {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private TokenProvider tokenProvider;
+
     protected String url(String path) {
-        String URL_TEMPLATE = "http://localhost:%s%s";
+        final String URL_TEMPLATE = "http://localhost:%s%s";
 
         return String.format(URL_TEMPLATE, port, path);
     }
@@ -71,6 +74,13 @@ public class HttpBasedTest {
     protected HttpHeaders defaultHeaders() {
         var headers = new HttpHeaders();
         headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
+
+        return headers;
+    }
+
+    protected HttpHeaders authenticatedHeaders(User user) {
+        var headers = new HttpHeaders();
+        headers.setBearerAuth(tokenProvider.createToken(user));
 
         return headers;
     }
@@ -101,14 +111,14 @@ public class HttpBasedTest {
                 .setZipCode(make()));
     }
 
-    private User createUser() {
+    protected User createUser() {
         return userRepository.save(new User()
-                        .setEmail(make())
-                        .setFirstName(make())
-                        .setLastName(make())
-                        .setPassword(make())
-                        .setPhone(make()))
-                .setRole(roleRepository.findByName(ROLE_ADMIN));
+                .setEmail(make())
+                .setFirstName(make())
+                .setLastName(make())
+                .setPassword(make())
+                .setPhone(make())
+                .setRole(roleRepository.findByName(ROLE_ADMIN)));
     }
 
     protected JSONObject createHouseAdJSON() throws JSONException {

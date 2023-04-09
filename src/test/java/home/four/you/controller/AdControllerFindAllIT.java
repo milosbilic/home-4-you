@@ -18,7 +18,7 @@ class AdControllerFindAllIT extends HttpBasedTest {
     @DisplayName("Ok")
     void ok() {
         given()
-                .headers(defaultHeaders())
+                .headers(authenticatedHeaders(createUser()))
                 .when()
                 .get(url(ADS_URI))
                 .then()

@@ -19,7 +19,7 @@ class AdControllerDeleteIT extends HttpBasedTest {
     @DisplayName("Not found")
     void notFound() {
         given()
-                .headers(defaultHeaders())
+                .headers(authenticatedHeaders(createUser()))
                 .when()
                 .delete(url(AD_URI), generateId())
                 .then()
@@ -32,7 +32,7 @@ class AdControllerDeleteIT extends HttpBasedTest {
         var ad = createRandomAd();
 
         given()
-                .headers(defaultHeaders())
+                .headers(authenticatedHeaders(ad.getOwner()))
                 .when()
                 .delete(url(AD_URI), ad.getId())
                 .then()
