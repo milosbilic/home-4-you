@@ -29,7 +29,7 @@ public class TokenProvider {
      * @return Generated JWT token
      */
     public String createToken(User user) {
-        log.debug("Creating JWT for user {}", user.getEmail());
+        log.info("Creating JWT for user {}", user.getEmail());
 
         var claims = new HashMap<String, Object>();
         claims.put("sub", user.getEmail());
@@ -54,7 +54,7 @@ public class TokenProvider {
      * @return true if validated or false.
      */
     public boolean validateToken(String authToken) {
-        log.debug("Validating JWT token {}", authToken);
+        log.info("Validating JWT token {}", authToken);
 
         return validateTokenSignedWith(authToken, home4YouProperties.getAuth().getJwtSecret());
     }
@@ -66,7 +66,7 @@ public class TokenProvider {
      * @return Username.
      */
     public String getUsernameFromToken(String token) {
-        log.debug("Getting user name from token {}", token);
+        log.info("Getting user name from token {}", token);
 
         return extractSubjectFromToken(token, home4YouProperties.getAuth().getJwtSecret());
     }

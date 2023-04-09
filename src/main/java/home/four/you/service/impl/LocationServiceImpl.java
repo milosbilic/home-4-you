@@ -22,7 +22,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Optional<Location> findById(Long id) {
-        log.debug("Finding location {}", id);
+        log.info("Finding location {}", id);
 
         return repository.findById(id);
     }

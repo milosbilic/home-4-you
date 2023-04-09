@@ -27,7 +27,7 @@ public class PrivilegeEvaluationHandlerImpl implements PrivilegeEvaluationHandle
     @Override
     public boolean handle(ResourceCaller caller, Serializable resourceId,
                           AuthorityPrivilege privilege) {
-        log.debug("Evaluating user [{}] privilege [{}] on resource ID [{}]", caller.getId(), privilege,
+        log.info("Evaluating user [{}] privilege [{}] on resource ID [{}]", caller.getId(), privilege,
                 resourceId);
 
         return ofNullable(evaluators.get(privilege))
@@ -37,7 +37,7 @@ public class PrivilegeEvaluationHandlerImpl implements PrivilegeEvaluationHandle
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        log.debug("Initializing ownership evaluators");
+        log.info("Initializing ownership evaluators");
 
         evaluators = applicationContext.getBeansOfType(PrivilegeEvaluator.class)
                 .values().stream()

@@ -31,7 +31,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex,
                                                                          WebRequest request) {
-        log.debug("Handling resource not found exception {}", ex.getMessage());
+        log.info("Handling resource not found exception {}", ex.getMessage());
 
         var response = new ErrorResponse(ex.getCode(), ex.getCode().name());
 

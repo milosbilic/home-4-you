@@ -24,7 +24,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) {
-        log.debug("Handling success authentication");
+        log.info("Handling success authentication");
 
         var principal = (UserOAuth2Principal) authentication.getPrincipal();
 

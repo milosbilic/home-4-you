@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.debug("Fetching user with email {}", username);
+        log.info("Fetching user with email {}", username);
 
         return userRepository.findByEmail(username)
                 .map(user -> UserPrincipal.builder()

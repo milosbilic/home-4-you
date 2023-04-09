@@ -31,7 +31,7 @@ public class AdController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto) {
-        log.debug("Creating ad [{}]", dto);
+        log.info("Creating ad [{}]", dto);
 
         var ad = adService.createAd(dto);
 
@@ -40,7 +40,7 @@ public class AdController {
 
     @GetMapping
     public Page<AdBriefDetailsDto> findAll(@PageableDefault Pageable pageable) {
-        log.debug("Finding ads");
+        log.info("Finding ads");
 
         return adService.findAll(pageable)
                 .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
@@ -48,7 +48,7 @@ public class AdController {
 
     @GetMapping("{id}")
     public AdDetailsDto getDetails(@PathVariable Long id) {
-        log.debug("Finding ad with id {}", id);
+        log.info("Finding ad with id {}", id);
 
         var ad = adService.findById(id);
 
@@ -58,7 +58,7 @@ public class AdController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        log.debug("Deleting ad {}", id);
+        log.info("Deleting ad {}", id);
 
         adService.delete(id);
     }

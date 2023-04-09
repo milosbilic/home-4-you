@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        log.debug("Finding user with id {}", id);
+        log.info("Finding user with id {}", id);
 
         return userRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        log.debug("Finding user with email {}", email);
+        log.info("Finding user with email {}", email);
 
         return userRepository.findByEmail(email);
     }
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(GoogleUserInfo googleUserInfo) {
-        log.debug("Creating user {}", googleUserInfo.getEmail());
+        log.info("Creating user {}", googleUserInfo.getEmail());
 
         var user = new User()
                 .setEmail(googleUserInfo.getEmail())

@@ -38,7 +38,7 @@ public class AdServiceImpl implements AdService {
     @Override
     @Transactional
     public Ad createAd(CreateAdRequestDto dto) {
-        log.debug("Creating ad [{}]", dto);
+        log.info("Creating ad [{}]", dto);
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
@@ -69,14 +69,14 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public Page<Ad> findAll(Pageable pageable) {
-        log.debug("Finding all ads...");
+        log.info("Finding all ads...");
 
         return adRepository.findAll(pageable);
     }
 
     @Override
     public Ad findById(Long id) {
-        log.debug("Finding ad with id {}", id);
+        log.info("Finding ad with id {}", id);
 
         return adRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -85,7 +85,7 @@ public class AdServiceImpl implements AdService {
     @Override
     @Transactional
     public void delete(Long id) {
-        log.debug("Deleting ad {}", id);
+        log.info("Deleting ad {}", id);
 
         adRepository.findById(id)
                 .ifPresentOrElse(adRepository::delete, () -> {
@@ -95,7 +95,7 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public List<Ad> findNewest() {
-        log.debug("Finding newest ads...");
+        log.info("Finding newest ads...");
 
         return adRepository.findTop3ByOrderByCreatedAtDesc();
     }

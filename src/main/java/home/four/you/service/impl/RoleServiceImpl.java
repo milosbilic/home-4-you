@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findByName(AuthorityRole name) {
-        log.debug("Finding role {}", name);
+        log.info("Finding role {}", name);
 
         return roleRepository.findByName(name);
     }
