@@ -15,8 +15,19 @@ import static org.springframework.http.HttpStatus.OK;
 class AdControllerFindAllIT extends HttpBasedTest {
 
     @Test
-    @DisplayName("Ok")
-    void ok() {
+    @DisplayName("Ok - unauthenticated")
+    void ok_unauthenticated() {
+        given()
+                .headers(defaultHeaders())
+                .when()
+                .get(url(ADS_URI))
+                .then()
+                .statusCode(OK.value());
+    }
+
+    @Test
+    @DisplayName("Ok - authenticated")
+    void ok_authenticated() {
         given()
                 .headers(authenticatedHeaders(createUser()))
                 .when()

@@ -12,14 +12,28 @@ import org.junit.jupiter.api.Test;
 import static home.four.you.TestUtil.generateId;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Integration tests for {@link AdController#createAd(CreateAdRequestDto)} endpoint.
  */
 @DisplayName("Create ad")
 class AdControllerCreateAdIT extends HttpBasedTest {
+
+    @Test
+    @DisplayName("Unauthorized")
+    void unauthorized() throws JSONException {
+        var ad = createHouseAdJSON();
+
+        given()
+                .headers(defaultHeaders())
+                .when()
+                .contentType(APPLICATION_JSON)
+                .body(ad.toString())
+                .post(url(ADS_URI))
+                .then()
+                .statusCode(UNAUTHORIZED.value());
+    }
 
     @Test
     @DisplayName("Location not found")

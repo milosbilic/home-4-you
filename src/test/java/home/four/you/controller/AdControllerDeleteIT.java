@@ -6,14 +6,24 @@ import org.junit.jupiter.api.Test;
 
 import static home.four.you.TestUtil.generateId;
 import static io.restassured.RestAssured.given;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Integration tests for {@link AdController#delete(Long)} endpoint.
  */
 @DisplayName("Delete Ad")
 class AdControllerDeleteIT extends HttpBasedTest {
+
+    @Test
+    @DisplayName("Unauthorized")
+    void unauthorized() {
+        given()
+                .headers(defaultHeaders())
+                .when()
+                .delete(url(AD_URI), generateId())
+                .then()
+                .statusCode(UNAUTHORIZED.value());
+    }
 
     @Test
     @DisplayName("Not found")

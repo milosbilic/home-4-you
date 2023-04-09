@@ -7,6 +7,7 @@ import home.four.you.service.impl.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+/**
+ * HTTP Security configuration class.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -32,23 +36,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/").permitAll();
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/oauth2/**").permitAll();
-                    auth.anyRequest().authenticated();
-                })
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ads/**").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(httpSecurity -> httpSecurity.sessionCreationPolicy(STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(UNAUTHORIZED)))
                 .formLogin().disable()
                 .httpBasic().disable()
-                .oauth2Login(oauth2 -> {
-                    oauth2.authorizationEndpoint(endpoint -> endpoint.baseUri("/oauth2/authorize"));
-                    oauth2.redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"));
-                    oauth2.userInfoEndpoint().userService(customOAuth2UserService);
-                    oauth2.successHandler(successHandler);
-                    oauth2.failureHandler(failureHandler);
-                })
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(endpoint -> endpoint.baseUri("/oauth2/authorize"))
+                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                        .successHandler(successHandler)
+                        .failureHandler(failureHandler)
+                        .userInfoEndpoint().userService(customOAuth2UserService))
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

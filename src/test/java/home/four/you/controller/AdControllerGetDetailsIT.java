@@ -30,8 +30,28 @@ class AdControllerGetDetailsIT extends HttpBasedTest {
     }
 
     @Test
-    @DisplayName("Ok")
-    void ok() {
+    @DisplayName("Ok - unauthenticated")
+    void ok_unauthenticated() {
+        var ad = createRandomAd();
+
+        given()
+                .headers(defaultHeaders())
+                .when()
+                .get(url(AD_URI), ad.getId())
+                .then()
+                .statusCode(OK.value())
+                .body("id", equalTo(ad.getId().intValue()))
+                .body("type", equalTo(ad.getType().toString()))
+                .body("title", equalTo(ad.getTitle()))
+                .body("description", equalTo(ad.getDescription()))
+                .body("price", equalTo(ad.getPrice()))
+                .body("createdAt", startsWith(truncateInstant(ad.getCreatedAt())))
+                .body("expirationDate", startsWith(truncateInstant(ad.getExpirationDate())));
+    }
+
+    @Test
+    @DisplayName("Ok - authenticated")
+    void ok_authenticated() {
         var ad = createRandomAd();
 
         given()

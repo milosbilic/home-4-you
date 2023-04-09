@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 /**
@@ -54,6 +56,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        var uri = request.getRequestURI();
+
+        return uri.equals("/")
+                || requestMatches(GET, "/ads", request);
+    }
+
     private Optional<String> getJwtFromRequest(HttpServletRequest request) {
         return ofNullable(request.getHeader("Authorization"))
                 .filter(StringUtils::hasText)
@@ -77,5 +87,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 userPrincipal, null, userPrincipal.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         getContext().setAuthentication(authentication);
+    }
+
+    private boolean requestMatches(HttpMethod method, String uri, HttpServletRequest request) {
+        return method.name().equals(request.getMethod()) && request.getRequestURI().startsWith(uri);
     }
 }
