@@ -1,6 +1,6 @@
 package home.four.you.security.evaluator;
 
-import home.four.you.security.ResourceCaller;
+import home.four.you.security.UserPrincipal;
 import home.four.you.security.auth.authorization.AuthorityPrivilege;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -25,8 +25,7 @@ public class PrivilegeEvaluationHandlerImpl implements PrivilegeEvaluationHandle
     private Map<AuthorityPrivilege, PrivilegeEvaluator> evaluators;
 
     @Override
-    public boolean handle(ResourceCaller caller, Serializable resourceId,
-                          AuthorityPrivilege privilege) {
+    public boolean handle(UserPrincipal caller, Serializable resourceId, AuthorityPrivilege privilege) {
         log.info("Evaluating user [{}] privilege [{}] on resource ID [{}]", caller.getId(), privilege,
                 resourceId);
 

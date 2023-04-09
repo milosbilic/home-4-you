@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import static home.four.you.TestUtil.generateId;
-import static home.four.you.security.auth.authorization.AuthorityPrivilege.AD_CREATE;
+import static home.four.you.security.auth.authorization.AuthorityPrivilege.AD_DELETE;
 import static java.util.Set.of;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +50,7 @@ class ResourcePermissionEvaluatorTest {
     void notAuthenticated() {
         when(authentication.getPrincipal()).thenReturn(null);
         assertThat(evaluator.hasPermission(authentication, generateId().toString(), make(),
-                AD_CREATE)).isFalse();
+                AD_DELETE)).isFalse();
         verifyNoMoreInteractions(handler);
     }
 
@@ -59,7 +59,7 @@ class ResourcePermissionEvaluatorTest {
     void noPrivilege() {
         when(authentication.getPrincipal()).thenReturn(userPrincipal);
         assertThat(evaluator.hasPermission(authentication, generateId().toString(), make(),
-                AD_CREATE)).isFalse();
+                AD_DELETE)).isFalse();
         verifyNoMoreInteractions(handler);
     }
 
@@ -69,38 +69,34 @@ class ResourcePermissionEvaluatorTest {
         var resourceId = generateId().toString();
         when(authentication.getPrincipal()).thenReturn(userPrincipal);
 
-        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_CREATE)).isFalse();
+        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_DELETE)).isFalse();
     }
 
     @Test
     @DisplayName("Permitted")
     void permitted() {
         var email = make();
-        var userPrincipal = UserPrincipal
-                .builder()
-                .email(email)
-                .authorities(of(new SimpleGrantedAuthority(AD_CREATE.name())))
-                .build();
+        var userPrincipal = new UserPrincipal()
+                .setEmail(email)
+                .setAuthorities(of(new SimpleGrantedAuthority(AD_DELETE.name())));
         var resourceId = generateId().toString();
         when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(handler.handle(any(), eq(resourceId), eq(AD_CREATE))).thenReturn(true);
+        when(handler.handle(any(), eq(resourceId), eq(AD_DELETE))).thenReturn(true);
 
-        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_CREATE)).isTrue();
+        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_DELETE)).isTrue();
     }
 
     @Test
     @DisplayName("Not permitted - can't handle")
     void notPermitted_cantHandle() {
         var email = make();
-        var userPrincipal = UserPrincipal
-                .builder()
-                .email(email)
-                .authorities(of(new SimpleGrantedAuthority(AD_CREATE.name())))
-                .build();
+        var userPrincipal = new UserPrincipal()
+                .setEmail(email)
+                .setAuthorities(of(new SimpleGrantedAuthority(AD_DELETE.name())));
         var resourceId = generateId().toString();
         when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(handler.handle(any(), eq(resourceId), eq(AD_CREATE))).thenReturn(false);
+        when(handler.handle(any(), eq(resourceId), eq(AD_DELETE))).thenReturn(false);
 
-        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_CREATE)).isFalse();
+        assertThat(evaluator.hasPermission(authentication, resourceId, make(), AD_DELETE)).isFalse();
     }
 }

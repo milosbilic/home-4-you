@@ -43,7 +43,7 @@ class AdControllerCreateAdIT extends HttpBasedTest {
         property.put("locationId", generateId());
 
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(createRegularUser()))
                 .when()
                 .contentType(APPLICATION_JSON)
                 .body(ad.toString())
@@ -63,7 +63,7 @@ class AdControllerCreateAdIT extends HttpBasedTest {
         JSONArray equipment = property.getJSONArray("equipment");
 
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(createRegularUser()))
                 .when()
                 .contentType(APPLICATION_JSON)
                 .body(ad.toString())
@@ -101,7 +101,7 @@ class AdControllerCreateAdIT extends HttpBasedTest {
         JSONArray equipment = property.getJSONArray("equipment");
 
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(createRegularUser()))
                 .when()
                 .contentType(APPLICATION_JSON)
                 .body(ad.toString())

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.IOException;
@@ -20,7 +21,10 @@ import java.io.IOException;
 import static home.four.you.TestUtil.generateId;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 /**
@@ -135,10 +139,10 @@ class TokenAuthenticationFilterTest {
     @DisplayName("Authenticated - user")
     void authenticated_user() throws ServletException, IOException {
         String token = make();
-        var userPrincipal = UserPrincipal.builder()
-                .id(generateId())
-                .email(make())
-                .build();
+        var userPrincipal = new UserPrincipal()
+                .setId(generateId())
+                .setEmail(make());
+
         when(request.getHeader(AUTH_HEADER)).thenReturn(BEARER_PREFIX + token);
         when(tokenProvider.validateToken(token)).thenReturn(true);
         when(tokenProvider.getUsernameFromToken(token)).thenReturn(userPrincipal.getEmail());
@@ -151,5 +155,47 @@ class TokenAuthenticationFilterTest {
         var principal = (UserPrincipal) getContext().getAuthentication().getPrincipal();
 
         assertThat(principal).isEqualTo(userPrincipal);
+    }
+
+    @Test
+    @DisplayName("Should not filter - true, root URI")
+    void shouldNotFilter_trueRootUri() {
+        when(request.getRequestURI()).thenReturn("/");
+
+        var result = filter.shouldNotFilter(request);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should not filter - true, GET ads URI")
+    void shouldNotFilter_trueGetAdsUri() {
+        when(request.getRequestURI()).thenReturn("/ads");
+        when(request.getMethod()).thenReturn(HttpMethod.GET.name());
+
+        var result = filter.shouldNotFilter(request);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should not filter - false")
+    void shouldNotFilter_false() {
+        when(request.getRequestURI()).thenReturn(make());
+
+        var result = filter.shouldNotFilter(request);
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("Should not filter - false, method matches, URI doesn't")
+    void shouldNotFilter_falseMethodMatchesUriDoesNot() {
+        when(request.getMethod()).thenReturn(HttpMethod.GET.name());
+        when(request.getRequestURI()).thenReturn(make());
+
+        var result = filter.shouldNotFilter(request);
+
+        assertThat(result).isFalse();
     }
 }

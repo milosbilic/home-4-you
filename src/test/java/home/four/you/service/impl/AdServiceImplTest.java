@@ -1,7 +1,6 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateApartmentDto;
 import home.four.you.model.dto.CreateHouseDto;
@@ -33,7 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link AdServiceImpl}.
@@ -154,17 +157,7 @@ class AdServiceImplTest {
 
         var result = service.findById(id);
 
-        assertThat(result).isEqualTo(ad);
-    }
-
-    @Test
-    @DisplayName("Find by ID - not found")
-    void findById_notFound() {
-        Long id = generateId();
-
-        when(adRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class, () -> service.findById(id));
+        assertThat(result).hasValue(ad);
     }
 
     @Test
@@ -172,22 +165,10 @@ class AdServiceImplTest {
     void delete_okFoundAndDeleted() {
         Long id = generateId();
 
-        when(adRepository.findById(id)).thenReturn(Optional.of(ad));
-
         service.delete(id);
 
-        verify(adRepository, times(1)).delete(ad);
+        verify(adRepository, times(1)).deleteById(id);
         verifyNoMoreInteractions(adRepository);
-    }
-
-    @Test
-    @DisplayName("Delete - not found")
-    void delete_notFound() {
-        Long id = generateId();
-
-        when(adRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class, () -> service.delete(id));
     }
 
     @Test
@@ -200,5 +181,17 @@ class AdServiceImplTest {
         var result = service.findNewest();
 
         assertThat(result).isEqualTo(ads);
+    }
+
+    @Test
+    @DisplayName("Get by ID - ok")
+    void getById_ok() {
+        Long id = generateId();
+
+        when(adRepository.getReferenceById(id)).thenReturn(ad);
+
+        var result = service.getById(id);
+
+        assertThat(result).isEqualTo(ad);
     }
 }

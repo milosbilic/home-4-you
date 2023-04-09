@@ -6,6 +6,7 @@ import home.four.you.repository.LocationRepository;
 import home.four.you.repository.RoleRepository;
 import home.four.you.repository.UserRepository;
 import home.four.you.security.TokenProvider;
+import home.four.you.security.auth.authorization.AuthorityRole;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ import static home.four.you.model.entity.Ad.Type.SALE;
 import static home.four.you.model.entity.Equipment.*;
 import static home.four.you.model.entity.Property.HeatType.WOOD;
 import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_ADMIN;
+import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_USER;
 import static java.util.Collections.singletonList;
 import static net.bytebuddy.utility.RandomString.make;
 
@@ -92,7 +94,7 @@ public class HttpBasedTest {
                 .setType(SALE)
                 .setExpirationDate(Instant.now().plus(90, ChronoUnit.DAYS))
                 .setPrice(generateId().intValue())
-                .setOwner(createUser())
+                .setOwner(createRegularUser())
                 .setProperty(new Property()
                         .setEquipment(Set.of(TV, BALCONY, FREEZER, FRIDGE))
                         .setBooked(true)
@@ -111,14 +113,22 @@ public class HttpBasedTest {
                 .setZipCode(make()));
     }
 
-    protected User createUser() {
+    protected User createRegularUser() {
+        return createUser(ROLE_USER);
+    }
+
+    protected User createAdmin() {
+        return createUser(ROLE_ADMIN);
+    }
+
+    private User createUser(AuthorityRole role) {
         return userRepository.save(new User()
                 .setEmail(make())
                 .setFirstName(make())
                 .setLastName(make())
                 .setPassword(make())
                 .setPhone(make())
-                .setRole(roleRepository.findByName(ROLE_ADMIN)));
+                .setRole(roleRepository.findByName(role)));
     }
 
     protected JSONObject createHouseAdJSON() throws JSONException {

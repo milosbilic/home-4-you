@@ -5,6 +5,7 @@ import home.four.you.model.dto.AdDetailsDto;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
+import home.four.you.model.entity.User;
 import home.four.you.service.AdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 import static home.four.you.TestUtil.generateId;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,7 +81,7 @@ class AdControllerTest {
         Long id = generateId();
         var dto = mock(AdDetailsDto.class);
 
-        when(adService.findById(id)).thenReturn(ad);
+        when(adService.findById(id)).thenReturn(Optional.of(ad));
 
         when(conversionService.convert(ad, AdDetailsDto.class)).thenReturn(dto);
 
@@ -92,8 +94,9 @@ class AdControllerTest {
     @DisplayName("Delete")
     void delete() {
         Long id = generateId();
+        var caller = mock(User.class);
 
-        controller.delete(id);
+        controller.delete(id/*caller*/);
 
         verify(adService, times(1)).delete(id);
         verifyNoMoreInteractions(adService);

@@ -26,10 +26,25 @@ class AdControllerDeleteIT extends HttpBasedTest {
     }
 
     @Test
+    @DisplayName("Forbidden")
+    void forbidden() {
+        var ad = createRandomAd();
+
+        given()
+                .headers(authenticatedHeaders(createRegularUser()))
+                .when()
+                .delete(url(AD_URI), ad.getId())
+                .then()
+                .statusCode(FORBIDDEN.value());
+    }
+
+    @Test
     @DisplayName("Not found")
     void notFound() {
+        var user = createRegularUser();
+
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(user))
                 .when()
                 .delete(url(AD_URI), generateId())
                 .then()
@@ -37,12 +52,25 @@ class AdControllerDeleteIT extends HttpBasedTest {
     }
 
     @Test
-    @DisplayName("Ok")
-    void ok() {
+    @DisplayName("Ok, as regular user")
+    void ok_asRegularUser() {
         var ad = createRandomAd();
 
         given()
                 .headers(authenticatedHeaders(ad.getOwner()))
+                .when()
+                .delete(url(AD_URI), ad.getId())
+                .then()
+                .statusCode(NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("Ok, as admin")
+    void ok_asAdmin() {
+        var ad = createRandomAd();
+
+        given()
+                .headers(authenticatedHeaders(createAdmin()))
                 .when()
                 .delete(url(AD_URI), ad.getId())
                 .then()

@@ -1,10 +1,12 @@
 package home.four.you.controller;
 
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.AdBriefDetailsDto;
 import home.four.you.model.dto.AdDetailsDto;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
+import home.four.you.security.auth.authorization.permission.CanDeleteAd;
 import home.four.you.service.AdService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for {@link Ad} related operations.
@@ -50,12 +59,14 @@ public class AdController {
     public AdDetailsDto getDetails(@PathVariable Long id) {
         log.info("Finding ad with id {}", id);
 
-        var ad = adService.findById(id);
+        var ad = adService.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
 
         return conversionService.convert(ad, AdDetailsDto.class);
     }
 
     @DeleteMapping("{id}")
+    @CanDeleteAd
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         log.info("Deleting ad {}", id);

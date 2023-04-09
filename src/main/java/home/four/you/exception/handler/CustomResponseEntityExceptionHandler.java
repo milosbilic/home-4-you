@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import static home.four.you.exception.ErrorCode.ACCESS_DENIED;
 import static home.four.you.exception.ErrorCode.VALIDATION_ERROR;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.util.StringUtils.hasText;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @ControllerAdvice
@@ -45,7 +49,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                                                                  WebRequest request) {
         log.error("Handling Home 4 You  exception: {}", ex.getMessage());
 
-        var message = isEmpty(ex.getMessage()) ? ex.getCode().name() : ex.getMessage();
+        var message = !hasText(ex.getMessage()) ? ex.getCode().name() : ex.getMessage();
         var exceptionResponse = new ErrorResponse(ex.getCode(), message);
 
         return ResponseEntity
@@ -62,6 +66,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(new ValidationErrorResponse(VALIDATION_ERROR.name(), errors));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<ErrorResponse> handleAccessDeniedException(
+            AccessDeniedException ex,
+            WebRequest request) {
+        log.error("Handling access denied exception", ex);
+
+        ErrorResponse exceptionResponse = new ErrorResponse(ACCESS_DENIED, ex.getMessage());
+
+        return ResponseEntity
+                .status(FORBIDDEN)
+                .body(exceptionResponse);
     }
 
 }

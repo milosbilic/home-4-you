@@ -22,7 +22,7 @@ class AdControllerGetDetailsIT extends HttpBasedTest {
     @DisplayName("Not found")
     void notFound() {
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(createRegularUser()))
                 .when()
                 .get(url(AD_URI), generateId())
                 .then()
@@ -55,7 +55,7 @@ class AdControllerGetDetailsIT extends HttpBasedTest {
         var ad = createRandomAd();
 
         given()
-                .headers(authenticatedHeaders(createUser()))
+                .headers(authenticatedHeaders(createRegularUser()))
                 .when()
                 .get(url(AD_URI), ad.getId())
                 .then()

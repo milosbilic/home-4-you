@@ -25,14 +25,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("Fetching user with email {}", username);
 
         return userRepository.findByEmail(username)
-                .map(user -> UserPrincipal.builder()
-                        .id(user.getId())
-                        .email(user.getEmail())
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .authorities(user.getAuthorities())
-                        .role(user.getRole().getName())
-                        .build())
+                .map(user -> new UserPrincipal()
+                        .setId(user.getId())
+                        .setEmail(user.getEmail())
+                        .setFirstName(user.getFirstName())
+                        .setLastName(user.getLastName())
+                        .setAuthorities(user.getAuthorities())
+                        .setRole(user.getRole().getName()))
                 .orElseThrow(() -> new UsernameNotFoundException(format("User %s not found.", username)));
     }
 }

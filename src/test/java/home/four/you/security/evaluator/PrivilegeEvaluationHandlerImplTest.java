@@ -1,6 +1,6 @@
 package home.four.you.security.evaluator;
 
-import home.four.you.security.ResourceCaller;
+import home.four.you.security.UserPrincipal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.Map;
 
 import static home.four.you.TestUtil.generateId;
-import static home.four.you.security.auth.authorization.AuthorityPrivilege.AD_CREATE;
+import static home.four.you.security.auth.authorization.AuthorityPrivilege.AD_DELETE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +27,7 @@ class PrivilegeEvaluationHandlerImplTest {
     @Mock
     private ApplicationContext ctxMock;
     @Mock
-    private ResourceCaller user;
+    private UserPrincipal user;
     @Mock
     private PrivilegeEvaluator evaluator;
 
@@ -49,7 +49,7 @@ class PrivilegeEvaluationHandlerImplTest {
     void handleNoEvaluator() {
         handler.setApplicationContext(ctxMock);
 
-        boolean result = handler.handle(user, generateId(), AD_CREATE);
+        boolean result = handler.handle(user, generateId(), AD_DELETE);
 
         verify(ctxMock).getBeansOfType(PrivilegeEvaluator.class);
         assertThat(result).isFalse();
@@ -61,11 +61,11 @@ class PrivilegeEvaluationHandlerImplTest {
         Long resourceId = generateId();
         when(ctxMock.getBeansOfType(PrivilegeEvaluator.class)).thenReturn(
                 Map.of("evaluator", evaluator));
-        when(evaluator.supportedPrivilege()).thenReturn(AD_CREATE);
+        when(evaluator.supportedPrivilege()).thenReturn(AD_DELETE);
         when(evaluator.evaluate(user, resourceId)).thenReturn(false);
         handler.setApplicationContext(ctxMock);
 
-        boolean result = handler.handle(user, resourceId, AD_CREATE);
+        boolean result = handler.handle(user, resourceId, AD_DELETE);
 
         assertThat(result).isFalse();
     }
@@ -76,11 +76,11 @@ class PrivilegeEvaluationHandlerImplTest {
         Long resourceId = generateId();
         when(ctxMock.getBeansOfType(PrivilegeEvaluator.class)).thenReturn(
                 Map.of("evaluator", evaluator));
-        when(evaluator.supportedPrivilege()).thenReturn(AD_CREATE);
+        when(evaluator.supportedPrivilege()).thenReturn(AD_DELETE);
         when(evaluator.evaluate(user, resourceId)).thenReturn(true);
         handler.setApplicationContext(ctxMock);
 
-        boolean result = handler.handle(user, resourceId, AD_CREATE);
+        boolean result = handler.handle(user, resourceId, AD_DELETE);
 
         assertThat(result).isTrue();
     }

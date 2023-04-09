@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service for {@link Ad} entity related operations.
@@ -25,7 +26,15 @@ public interface AdService {
      * @param id Ad ID.
      * @return Ad.
      */
-    Ad findById(Long id);
+    Optional<Ad> findById(Long id);
+
+    /**
+     * Gets ad by provided ID.
+     *
+     * @param id Ad ID.
+     * @return Matching Ad.
+     */
+    Ad getById(Long id);
 
     /**
      * Deletes an ad by provided ID.

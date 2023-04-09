@@ -1,7 +1,7 @@
 package home.four.you.security.evaluator;
 
 
-import home.four.you.security.ResourceCaller;
+import home.four.you.security.UserPrincipal;
 import home.four.you.security.auth.authorization.AuthorityPrivilege;
 
 import java.io.Serializable;
@@ -20,5 +20,5 @@ public interface PrivilegeEvaluationHandler {
      * @param privilege  Required resource privilege.
      * @return true/false indicating the ownership
      */
-    boolean handle(ResourceCaller caller, Serializable resourceId, AuthorityPrivilege privilege);
+    boolean handle(UserPrincipal caller, Serializable resourceId, AuthorityPrivilege privilege);
 }

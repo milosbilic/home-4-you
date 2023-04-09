@@ -1,6 +1,5 @@
 package home.four.you.security.evaluator;
 
-import home.four.you.security.ResourceCaller;
 import home.four.you.security.UserPrincipal;
 import home.four.you.security.auth.authorization.AuthorityPrivilege;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +25,7 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
     private final PrivilegeEvaluationHandler handler;
 
     @Override
-    public boolean hasPermission(Authentication authentication, Object targetDomainObject,
-                                 Object permission) {
+    public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         return false;
     }
 
@@ -43,7 +41,6 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
         boolean hasOwnership = ofNullable(authentication.getPrincipal())
                 .map(principal -> (UserPrincipal) principal)
                 .filter(principal -> hasPrivilege(principal.getAuthorities(), privilege))
-                .map(this::mapToResourceCaller)
                 .map(resourceCaller -> handler.handle(resourceCaller, targetId, privilege))
                 .orElse(false);
 
@@ -57,12 +54,4 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
                 .map(SimpleGrantedAuthority::getAuthority)
                 .anyMatch(s -> s.equals(privilege.name()));
     }
-
-    private ResourceCaller mapToResourceCaller(UserPrincipal principal) {
-        return ResourceCaller.builder()
-                .admin(principal.isAdmin())
-                .id(principal.getId())
-                .build();
-    }
-
 }

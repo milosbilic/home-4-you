@@ -1,7 +1,6 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreatePropertyRequestDto;
 import home.four.you.model.entity.Ad;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of {@link AdService}.
@@ -75,11 +75,17 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Ad findById(Long id) {
+    public Optional<Ad> findById(Long id) {
         log.info("Finding ad with id {}", id);
 
-        return adRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+        return adRepository.findById(id);
+    }
+
+    @Override
+    public Ad getById(Long id) {
+        log.info("Getting ad {}", id);
+
+        return adRepository.getReferenceById(id);
     }
 
     @Override
@@ -87,10 +93,7 @@ public class AdServiceImpl implements AdService {
     public void delete(Long id) {
         log.info("Deleting ad {}", id);
 
-        adRepository.findById(id)
-                .ifPresentOrElse(adRepository::delete, () -> {
-                    throw new ResourceNotFoundException();
-                });
+        adRepository.deleteById(id);
     }
 
     @Override
