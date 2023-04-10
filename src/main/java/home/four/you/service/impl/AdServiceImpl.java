@@ -1,6 +1,7 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreatePropertyRequestDto;
 import home.four.you.model.entity.Ad;
@@ -8,6 +9,7 @@ import home.four.you.model.entity.Apartment;
 import home.four.you.model.entity.House;
 import home.four.you.model.entity.Property;
 import home.four.you.repository.AdRepository;
+import home.four.you.security.UserPrincipal;
 import home.four.you.service.AdService;
 import home.four.you.service.LocationService;
 import home.four.you.service.UserService;
@@ -37,12 +39,14 @@ public class AdServiceImpl implements AdService {
 
     @Override
     @Transactional
-    public Ad createAd(CreateAdRequestDto dto) {
+    public Ad createAd(CreateAdRequestDto dto, UserPrincipal caller) {
         log.info("Creating ad [{}]", dto);
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
                 .orElseThrow(() -> new BadRequestException("Location not found."));
+        var owner = userService.findById(caller.getId())
+                .orElseThrow(ResourceNotFoundException::new);
 
         var newAd = new Ad()
                 .setTitle(dto.title())
@@ -50,7 +54,7 @@ public class AdServiceImpl implements AdService {
                 .setType(dto.type())
                 .setPrice(dto.price())
                 .setExpirationDate(calculateExpirationDate())
-                .setOwner(userService.findById(1L)); // TODO Real user should be set when security is implemented.
+                .setOwner(owner);
 
         var property = new Property()
                 .setArea(propertyDto.area())

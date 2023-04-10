@@ -6,6 +6,8 @@ import home.four.you.model.dto.AdDetailsDto;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
+import home.four.you.security.CurrentUser;
+import home.four.you.security.UserPrincipal;
 import home.four.you.security.auth.authorization.permission.CanDeleteAd;
 import home.four.you.service.AdService;
 import jakarta.validation.Valid;
@@ -39,10 +41,11 @@ public class AdController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto) {
+    public CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto,
+                                        @CurrentUser UserPrincipal caller) {
         log.info("Creating ad [{}]", dto);
 
-        var ad = adService.createAd(dto);
+        var ad = adService.createAd(dto, caller);
 
         return conversionService.convert(ad, CreateAdResponseDto.class);
     }

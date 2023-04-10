@@ -2,6 +2,7 @@ package home.four.you.service;
 
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.entity.Ad;
+import home.four.you.security.UserPrincipal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -50,5 +51,12 @@ public interface AdService {
      */
     List<Ad> findNewest();
 
-    Ad createAd(CreateAdRequestDto dto);
+    /**
+     * Creates an ad with specified details and sets the caller user as ad's owner.
+     *
+     * @param dto    Ad create request DTO.
+     * @param caller User posting ad.
+     * @return Created ad.
+     */
+    Ad createAd(CreateAdRequestDto dto, UserPrincipal caller);
 }
