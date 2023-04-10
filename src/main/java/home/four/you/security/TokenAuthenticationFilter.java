@@ -61,7 +61,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         var uri = request.getRequestURI();
 
         return uri.equals("/")
-                || requestMatches(GET, "/ads", request);
+                || requestMatches(GET, "/ads", request)
+                || uri.startsWith("/v3/api-docs")
+                || uri.startsWith("/swagger");
     }
 
     private Optional<String> getJwtFromRequest(HttpServletRequest request) {
