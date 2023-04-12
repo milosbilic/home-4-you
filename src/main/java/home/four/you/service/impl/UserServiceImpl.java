@@ -1,5 +1,7 @@
 package home.four.you.service.impl;
 
+import home.four.you.exception.BadRequestException;
+import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
 import home.four.you.security.auth.GoogleUserInfo;
@@ -49,6 +51,26 @@ public class UserServiceImpl implements UserService {
                 .setFirstName(googleUserInfo.getFirstName())
                 .setLastName(googleUserInfo.getLastName())
                 .setRole(roleService.findByName(ROLE_USER));
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public User createUser(CreateUserRequestDto dto) {
+        log.info("Creating user [{}]", dto);
+
+        if (userRepository.existsByEmail(dto.email())) {
+            throw new BadRequestException("User already exists!");
+        }
+
+        var user = new User()
+                .setEmail(dto.email())
+                .setFirstName(dto.firstName())
+                .setLastName(dto.lastName())
+                .setPassword(dto.password())
+                .setPhone(dto.phone())
+                .setRole(roleService.findByName(dto.role()));
 
         return userRepository.save(user);
     }

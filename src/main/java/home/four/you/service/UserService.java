@@ -1,5 +1,6 @@
 package home.four.you.service;
 
+import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.User;
 import home.four.you.security.auth.GoogleUserInfo;
 
@@ -33,4 +34,12 @@ public interface UserService {
      * @return Created user.
      */
     User createUser(GoogleUserInfo googleUserInfo);
+
+    /**
+     * Creates new user with specified details.
+     *
+     * @param dto Create user request DTO.
+     * @return Created user.
+     */
+    User createUser(CreateUserRequestDto dto);
 }

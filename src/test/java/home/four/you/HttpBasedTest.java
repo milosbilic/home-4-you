@@ -9,6 +9,7 @@ import home.four.you.security.TokenProvider;
 import home.four.you.security.auth.authorization.AuthorityRole;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,8 @@ public class HttpBasedTest {
     protected static final String ADS_URI = "/ads";
     protected static final String AD_URI = "/ads/{id}";
     protected static final String ADS_LATEST_URI = ADS_URI + "/latest";
+
+    protected static final String USERS_URI = "/users";
 
     @Autowired
     protected AdRepository adRepository;
@@ -124,7 +127,7 @@ public class HttpBasedTest {
 
     private User createUser(AuthorityRole role) {
         return userRepository.save(new User()
-                .setEmail(make())
+                .setEmail(generateRandomEmail())
                 .setFirstName(make())
                 .setLastName(make())
                 .setPassword(make())
@@ -175,12 +178,21 @@ public class HttpBasedTest {
                         .put(WASHING_MACHINE.toString()));
     }
 
-    protected List<Object> getEquipment(JSONArray array) throws JSONException {
-        var retVal = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            retVal.add(array.get(i));
-        }
-        return retVal;
+    protected JSONObject createUserJSON() throws JSONException {
+        var password = make();
+        return new JSONObject()
+                .put("email", generateRandomEmail())
+                .put("firstName", make())
+                .put("lastName", make())
+                .put("password", password)
+                .put("repeatedPassword", password)
+                .put("phone", make())
+                .put("role", ROLE_USER.toString());
+    }
+
+    protected String generateRandomEmail() {
+        String email = make() + '@' + make() + '.' + RandomStringUtils.randomAlphabetic(3);
+        return email.toLowerCase();
     }
 
 }

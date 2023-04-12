@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 /**
@@ -62,6 +63,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         return uri.equals("/")
                 || requestMatches(GET, "/ads", request)
+                || requestMatches(POST, "/users", request)
                 || uri.startsWith("/v3/api-docs")
                 || uri.startsWith("/swagger");
     }

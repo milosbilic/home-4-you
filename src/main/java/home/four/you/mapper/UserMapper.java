@@ -1,6 +1,6 @@
 package home.four.you.mapper;
 
-import home.four.you.model.dto.UserBriefDetailsDto;
+import home.four.you.model.dto.CreateUserResponseDto;
 import home.four.you.model.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,7 +13,11 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-
-
-    UserBriefDetailsDto mapToBriefDetails(User user);
+    /**
+     * Maps user entity to {@link CreateUserResponseDto}.
+     *
+     * @param user User entity.
+     * @return Mapped created response.
+     */
+    CreateUserResponseDto mapToCreatedUserResponseDto(User user);
 }

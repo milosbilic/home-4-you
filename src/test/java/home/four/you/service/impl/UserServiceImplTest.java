@@ -1,5 +1,7 @@
 package home.four.you.service.impl;
 
+import home.four.you.exception.BadRequestException;
+import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
@@ -17,8 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static home.four.you.TestUtil.generateId;
+import static home.four.you.exception.ErrorCode.BAD_REQUEST;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -41,6 +46,9 @@ class UserServiceImplTest {
 
     @Mock
     User user;
+
+    @Mock
+    CreateUserRequestDto dto;
 
     @BeforeEach
     void setUp() {
@@ -81,5 +89,29 @@ class UserServiceImplTest {
         service.createUser(googleInfo);
 
         verify(userRepository, times(1)).save(any());
+    }
+
+    @Test
+    @DisplayName("Create user - ok")
+    void createUser_ok() {
+        when(userRepository.existsByEmail(dto.email())).thenReturn(false);
+        when(userRepository.save(any())).thenReturn(user);
+
+        var result = service.createUser(dto);
+
+        assertThat(result).isEqualTo(user);
+    }
+
+    @Test
+    @DisplayName("Create user - user already exists")
+    void createUser_userAlreadyExists() {
+        when(userRepository.existsByEmail(dto.email())).thenReturn(true);
+
+        var ex = assertThrows(BadRequestException.class, () -> service.createUser(dto));
+
+        assertAll(
+                () -> assertThat(ex.getCode()).isEqualTo(BAD_REQUEST),
+                () -> assertThat(ex.getMessage()).isEqualTo("User already exists!")
+        );
     }
 }

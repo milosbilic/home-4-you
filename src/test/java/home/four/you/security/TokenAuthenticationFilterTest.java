@@ -212,4 +212,12 @@ class TokenAuthenticationFilterTest {
         when(request.getRequestURI()).thenReturn("/swagger");
         assertThat(filter.shouldNotFilter(request)).isTrue();
     }
+
+    @Test
+    @DisplayName("Should not filter - true, POST users URI")
+    void shouldNotFilter_truePostUsersUri() {
+        when(request.getRequestURI()).thenReturn("/users");
+        when(request.getMethod()).thenReturn(HttpMethod.POST.name());
+        assertThat(filter.shouldNotFilter(request)).isTrue();
+    }
 }
