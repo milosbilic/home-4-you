@@ -1,6 +1,5 @@
 package home.four.you.service.impl;
 
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
@@ -20,8 +19,11 @@ import java.util.Optional;
 import static home.four.you.TestUtil.generateId;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link UserServiceImpl}.
@@ -46,25 +48,15 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Find by ID - ok, found")
-    void findById_okFound() {
+    @DisplayName("Get by ID - ok")
+    void getById_ok() {
         Long id = generateId();
 
-        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(userRepository.getReferenceById(id)).thenReturn(user);
 
-        var result = service.findById(id);
+        var result = service.getById(id);
 
         assertThat(result).isEqualTo(user);
-    }
-
-    @Test
-    @DisplayName("Find by ID - not found")
-    void findById_notFound() {
-        Long id = generateId();
-
-        when(userRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class, () -> service.findById(id));
     }
 
     @Test

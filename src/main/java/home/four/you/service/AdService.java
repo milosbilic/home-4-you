@@ -30,14 +30,6 @@ public interface AdService {
     Optional<Ad> findById(Long id);
 
     /**
-     * Gets ad by provided ID.
-     *
-     * @param id Ad ID.
-     * @return Matching Ad.
-     */
-    Ad getById(Long id);
-
-    /**
      * Deletes an ad by provided ID.
      *
      * @param id Ad ID.
@@ -49,7 +41,7 @@ public interface AdService {
      *
      * @return Most recent ads.
      */
-    List<Ad> findNewest();
+    List<Ad> findLatest();
 
     /**
      * Creates an ad with specified details and sets the caller user as ad's owner.

@@ -51,6 +51,7 @@ public class HttpBasedTest {
 
     protected static final String ADS_URI = "/ads";
     protected static final String AD_URI = "/ads/{id}";
+    protected static final String ADS_LATEST_URI = ADS_URI + "/latest";
 
     @Autowired
     protected AdRepository adRepository;

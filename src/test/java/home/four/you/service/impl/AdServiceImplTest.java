@@ -9,6 +9,7 @@ import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.Location;
 import home.four.you.model.entity.User;
 import home.four.you.repository.AdRepository;
+import home.four.you.security.UserPrincipal;
 import home.four.you.service.AdService;
 import home.four.you.service.LocationService;
 import home.four.you.service.UserService;
@@ -58,6 +59,9 @@ class AdServiceImplTest {
     @Mock
     Ad ad;
 
+    @Mock
+    UserPrincipal caller;
+
     @BeforeEach
     void setUp() {
         service = new AdServiceImpl(adRepository, locationService, userService);
@@ -75,7 +79,7 @@ class AdServiceImplTest {
         when(property.locationId()).thenReturn(locationId);
         when(locationService.findById(dto.property().locationId())).thenReturn(Optional.empty());
 
-        assertThrows(BadRequestException.class, () -> service.createAd(dto));
+        assertThrows(BadRequestException.class, () -> service.createAd(dto, caller));
     }
 
     @Test
@@ -92,12 +96,12 @@ class AdServiceImplTest {
         when(dto.property()).thenReturn(property);
         when(property.locationId()).thenReturn(locationId);
         when(locationService.findById(dto.property().locationId())).thenReturn(Optional.of(location));
-        when(userService.findById(1L)).thenReturn(owner);
+        when(userService.getById(caller.getId())).thenReturn(owner);
         when(property.equipment()).thenReturn(equipment);
         when(property.house()).thenReturn(house);
         when(adRepository.save(any())).thenReturn(ad);
 
-        var result = service.createAd(dto);
+        var result = service.createAd(dto, caller);
 
         assertAll(
                 () -> assertThat(result).isEqualTo(ad),
@@ -120,12 +124,12 @@ class AdServiceImplTest {
         when(dto.property()).thenReturn(property);
         when(property.locationId()).thenReturn(locationId);
         when(locationService.findById(dto.property().locationId())).thenReturn(Optional.of(location));
-        when(userService.findById(1L)).thenReturn(owner);
+        when(userService.getById(caller.getId())).thenReturn(owner);
         when(property.equipment()).thenReturn(equipment);
         when(property.apartment()).thenReturn(apartment);
         when(adRepository.save(any())).thenReturn(ad);
 
-        var result = service.createAd(dto);
+        var result = service.createAd(dto, caller);
 
         assertAll(
                 () -> assertThat(result).isEqualTo(ad),
@@ -172,26 +176,14 @@ class AdServiceImplTest {
     }
 
     @Test
-    @DisplayName("Find newest - ok")
-    void findNewest_ok() {
+    @DisplayName("Find latest - ok")
+    void findLatest_ok() {
         var ads = List.of(ad, ad, ad);
 
         when(adRepository.findTop3ByOrderByCreatedAtDesc()).thenReturn(ads);
 
-        var result = service.findNewest();
+        var result = service.findLatest();
 
         assertThat(result).isEqualTo(ads);
-    }
-
-    @Test
-    @DisplayName("Get by ID - ok")
-    void getById_ok() {
-        Long id = generateId();
-
-        when(adRepository.getReferenceById(id)).thenReturn(ad);
-
-        var result = service.getById(id);
-
-        assertThat(result).isEqualTo(ad);
     }
 }

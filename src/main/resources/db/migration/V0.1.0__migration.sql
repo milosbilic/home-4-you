@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS ads
   description character varying(255),
   expiration_date timestamp with time zone,
   price bigint,
-  created_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL,
   owner_id bigint NOT NULL REFERENCES users (id)
 );
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS properties
   booked boolean NOT NULL,
   heat_type character varying(255),
   image oid,
-  number_of_rooms integer,
+  number_of_rooms decimal,
   location_id bigint NOT NULL REFERENCES locations (id),
   ad_id bigint NOT NULL REFERENCES ads (id)
 );
@@ -97,11 +97,11 @@ INSERT INTO locations(name, zip_code)
     VALUES ('Ruma', '24000');
 
 INSERT INTO ads(type, title, description, expiration_date, price, created_at, owner_id)
-    VALUES ('RENT','Izdavanje stana u Beogradu' , 'Slobodan za izdavanje stan u Beogradu (Vozdovac)', null, 600, null, 1);
+    VALUES ('RENT','Izdavanje stana u Beogradu' , 'Slobodan za izdavanje stan u Beogradu (Vozdovac)', null, 600, current_timestamp, 1);
 INSERT INTO ads(type, title, description, expiration_date, price, created_at, owner_id)
-    VALUES ('RENT', 'Izdavanje stana u Novom Sadu','Slobodan za izdavanje stan u Novom Sadu (Grbavica)',null, 250, null, 1);
+    VALUES ('RENT', 'Izdavanje stana u Novom Sadu','Slobodan za izdavanje stan u Novom Sadu (Grbavica)',null, 250, current_timestamp, 1);
 INSERT INTO ads(type, title, description, expiration_date, price, created_at, owner_id)
-    VALUES ('SALE', 'Prodaja kuce - Ruma', 'Prodajem super kucu kod Borkovca', null, 180000, null, 1);
+    VALUES ('SALE', 'Prodaja kuce - Ruma', 'Prodajem super kucu kod Borkovca', null, 180000, current_timestamp, 1);
 
 INSERT INTO properties(area, booked, heat_type, image, number_of_rooms, location_id, ad_id)
     VALUES (42, true, 'ELECTRIC', null, 2, 1, 1);

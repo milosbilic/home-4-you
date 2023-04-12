@@ -1,10 +1,8 @@
 package home.four.you.service.impl;
 
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
 import home.four.you.security.auth.GoogleUserInfo;
-import home.four.you.security.auth.authorization.AuthorityRole;
 import home.four.you.service.RoleService;
 import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +26,10 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
 
     @Override
-    public User findById(Long id) {
-        log.info("Finding user with id {}", id);
+    public User getById(Long id) {
+        log.info("Getting user reference by id {}", id);
 
-        return userRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+        return userRepository.getReferenceById(id);
     }
 
     @Override

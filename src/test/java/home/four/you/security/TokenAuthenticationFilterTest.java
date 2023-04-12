@@ -198,4 +198,18 @@ class TokenAuthenticationFilterTest {
 
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("Should not filter - true API docs URI")
+    void shouldNotFilter_trueApiDocsUri() {
+        when(request.getRequestURI()).thenReturn("/v3/api-docs");
+        assertThat(filter.shouldNotFilter(request)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should not filter - true, swagger URI")
+    void shouldNotFilter_trueSwaggerUri() {
+        when(request.getRequestURI()).thenReturn("/swagger");
+        assertThat(filter.shouldNotFilter(request)).isTrue();
+    }
 }

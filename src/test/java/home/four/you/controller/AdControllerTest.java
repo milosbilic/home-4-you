@@ -6,6 +6,7 @@ import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.model.entity.User;
+import home.four.you.security.UserPrincipal;
 import home.four.you.service.AdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,11 +52,12 @@ class AdControllerTest {
     void createAd_ok() {
         var dto = mock(CreateAdRequestDto.class);
         var responseDto = mock(CreateAdResponseDto.class);
+        var caller = mock(UserPrincipal.class);
 
-        when(adService.createAd(dto)).thenReturn(ad);
+        when(adService.createAd(dto, caller)).thenReturn(ad);
         when(conversionService.convert(ad, CreateAdResponseDto.class)).thenReturn(responseDto);
 
-        var result = controller.createAd(dto);
+        var result = controller.createAd(dto, caller);
 
         assertThat(result).isEqualTo(responseDto);
     }
@@ -94,11 +96,23 @@ class AdControllerTest {
     @DisplayName("Delete")
     void delete() {
         Long id = generateId();
-        var caller = mock(User.class);
 
-        controller.delete(id/*caller*/);
+        controller.delete(id);
 
         verify(adService, times(1)).delete(id);
         verifyNoMoreInteractions(adService);
+    }
+
+    @Test
+    @DisplayName("Find latest")
+    void findLatest() {
+        var dto = mock(AdBriefDetailsDto.class);
+
+        when(adService.findLatest()).thenReturn(List.of(ad, ad, ad));
+        when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
+
+        var result = controller.getLatest();
+
+        assertThat(result).isEqualTo(List.of(dto, dto, dto));
     }
 }

@@ -3,6 +3,7 @@ package home.four.you.controller;
 import home.four.you.HttpBasedTest;
 import home.four.you.exception.ErrorCode;
 import home.four.you.model.dto.CreateAdRequestDto;
+import home.four.you.security.UserPrincipal;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.http.HttpStatus.*;
 
 /**
- * Integration tests for {@link AdController#createAd(CreateAdRequestDto)} endpoint.
+ * Integration tests for {@link AdController#createAd(CreateAdRequestDto, UserPrincipal)} endpoint.
  */
 @DisplayName("Create ad")
 class AdControllerCreateAdIT extends HttpBasedTest {

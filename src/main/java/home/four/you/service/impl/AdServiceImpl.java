@@ -45,8 +45,6 @@ public class AdServiceImpl implements AdService {
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
                 .orElseThrow(() -> new BadRequestException("Location not found."));
-        var owner = userService.findById(caller.getId())
-                .orElseThrow(ResourceNotFoundException::new);
 
         var newAd = new Ad()
                 .setTitle(dto.title())
@@ -54,7 +52,7 @@ public class AdServiceImpl implements AdService {
                 .setType(dto.type())
                 .setPrice(dto.price())
                 .setExpirationDate(calculateExpirationDate())
-                .setOwner(owner);
+                .setOwner(userService.getById(caller.getId()));
 
         var property = new Property()
                 .setArea(propertyDto.area())
@@ -86,13 +84,6 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Ad getById(Long id) {
-        log.info("Getting ad {}", id);
-
-        return adRepository.getReferenceById(id);
-    }
-
-    @Override
     @Transactional
     public void delete(Long id) {
         log.info("Deleting ad {}", id);
@@ -101,8 +92,8 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public List<Ad> findNewest() {
-        log.info("Finding newest ads...");
+    public List<Ad> findLatest() {
+        log.info("Finding latest ads...");
 
         return adRepository.findTop3ByOrderByCreatedAtDesc();
     }

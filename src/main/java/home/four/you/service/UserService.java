@@ -11,12 +11,12 @@ import java.util.Optional;
 public interface UserService {
 
     /**
-     * Finds user by provided ID.
+     * Gets user by provided ID.
      *
      * @param id User ID.
      * @return User.
      */
-    User findById(Long id);
+    User getById(Long id);
 
     /**
      * Finds a user by provided email.

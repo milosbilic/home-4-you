@@ -11,7 +11,7 @@ public record AdBriefDetailsDto(Long id,
                                 Ad.Type type,
                                 String title,
                                 Integer area,
-                                Integer numberOfRooms,
+                                double numberOfRooms,
                                 Instant createdAt,
                                 Integer price) {
 }

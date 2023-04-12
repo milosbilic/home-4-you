@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Controller for {@link Ad} related operations.
  */
@@ -75,6 +77,15 @@ public class AdController {
         log.info("Deleting ad {}", id);
 
         adService.delete(id);
+    }
+
+    @GetMapping("latest")
+    public List<AdBriefDetailsDto> getLatest() {
+        log.info("Getting latest ads");
+
+        return adService.findLatest().stream()
+                .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class))
+                .toList();
     }
 
 }
