@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static home.four.you.TestUtil.generateId;
 import static io.restassured.RestAssured.given;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 /**
  * Integration tests for {@link AdController#delete(Long)} endpoint.
