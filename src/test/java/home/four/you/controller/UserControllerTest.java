@@ -2,6 +2,7 @@ package home.four.you.controller;
 
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.dto.CreateUserResponseDto;
+import home.four.you.model.dto.UserDetailsDto;
 import home.four.you.model.entity.User;
 import home.four.you.service.UserService;
 import org.assertj.core.api.Assertions;
@@ -13,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.convert.ConversionService;
 
+import static home.four.you.TestUtil.generateId;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +50,21 @@ class UserControllerTest {
 
         var result = controller.createUser(dto);
 
-        Assertions.assertThat(result).isEqualTo(responseDto);
+        assertThat(result).isEqualTo(responseDto);
+    }
+
+    @Test
+    @DisplayName("Get details - ok")
+    void getDetails_ok() {
+        Long id = generateId();
+        var user = mock(User.class);
+        var dto = mock(UserDetailsDto.class);
+
+        when(userService.findById(id)).thenReturn(user);
+        when(conversionService.convert(user, UserDetailsDto.class)).thenReturn(dto);
+
+        var result = controller.details(id);
+
+        assertThat(result).isEqualTo(dto);
     }
 }

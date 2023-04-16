@@ -2,7 +2,7 @@ package home.four.you.service.impl;
 
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
-import home.four.you.repository.UserRepository;
+import home.four.you.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,11 @@ class CustomUserDetailsServiceTest {
     CustomUserDetailsService service;
 
     @Mock
-    UserRepository userRepository;
+    UserService userService;
 
     @BeforeEach
     void setUp() {
-        service = new CustomUserDetailsService(userRepository);
+        service = new CustomUserDetailsService(userService);
     }
 
     @Test
@@ -42,7 +42,7 @@ class CustomUserDetailsServiceTest {
         String email = make();
         var user = mock(User.class);
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userService.findByEmail(email)).thenReturn(Optional.of(user));
         when(user.getRole()).thenReturn(new Role());
 
         var result = service.loadUserByUsername(email);
@@ -62,7 +62,7 @@ class CustomUserDetailsServiceTest {
     void loadUserByUsername_exceptionThrownUserNotFound() {
         String email = make();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(userService.findByEmail(email)).thenReturn(Optional.empty());
 
         assertThrows(UsernameNotFoundException.class, () -> service.loadUserByUsername(email));
     }

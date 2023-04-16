@@ -51,10 +51,11 @@ public class HttpBasedTest {
     protected static final String APPLICATION_JSON = "application/json";
 
     protected static final String ADS_URI = "/ads";
-    protected static final String AD_URI = "/ads/{id}";
+    protected static final String AD_URI = ADS_URI + "/{id}";
     protected static final String ADS_LATEST_URI = ADS_URI + "/latest";
 
     protected static final String USERS_URI = "/users";
+    protected static final String USER_URI = USERS_URI + "/{id}";
 
     @Autowired
     protected AdRepository adRepository;

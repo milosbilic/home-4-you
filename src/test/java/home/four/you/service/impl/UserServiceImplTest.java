@@ -1,6 +1,7 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
@@ -20,6 +21,9 @@ import java.util.Optional;
 
 import static home.four.you.TestUtil.generateId;
 import static home.four.you.exception.ErrorCode.BAD_REQUEST;
+import static home.four.you.exception.ErrorCode.NOT_FOUND;
+import static home.four.you.exception.ErrorMessage.RESOURCE_NOT_FOUND;
+import static home.four.you.exception.ErrorMessage.USER_EXISTS;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -111,7 +115,34 @@ class UserServiceImplTest {
 
         assertAll(
                 () -> assertThat(ex.getCode()).isEqualTo(BAD_REQUEST),
-                () -> assertThat(ex.getMessage()).isEqualTo("User already exists!")
+                () -> assertThat(ex.getMessage()).isEqualTo(USER_EXISTS)
         );
+    }
+
+    @Test
+    @DisplayName("Find by ID - not found")
+    void findById_notFound() {
+        Long id = generateId();
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        var ex = assertThrows(ResourceNotFoundException.class, () -> service.findById(id));
+
+        assertAll(
+                () -> assertThat(ex.getCode()).isEqualTo(NOT_FOUND),
+                () -> assertThat(ex.getMessage()).isEqualTo(RESOURCE_NOT_FOUND)
+        );
+    }
+
+    @Test
+    @DisplayName("Find by ID - ok")
+    void findById_ok() {
+        Long id = generateId();
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        var result = service.findById(id);
+
+        assertThat(result).isEqualTo(user);
     }
 }

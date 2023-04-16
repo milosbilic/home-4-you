@@ -11,7 +11,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 public class TestUtil {
 
     public static Long generateId() {
-        return new SplittableRandom().nextLong(0, 1_001);
+        return new SplittableRandom().nextLong(0, 1_00001);
     }
 
     public static String truncateInstant(Instant instant) {
