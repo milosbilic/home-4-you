@@ -1,5 +1,6 @@
 package home.four.you.configuration;
 
+import home.four.you.security.RestAuthenticationEntryPoint;
 import home.four.you.security.TokenAuthenticationFilter;
 import home.four.you.security.auth.OAuth2AuthenticationFailureHandler;
 import home.four.you.security.auth.OAuth2AuthenticationSuccessHandler;
@@ -50,7 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(POST, "/users").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecurity -> httpSecurity.sessionCreationPolicy(STATELESS))
-                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(UNAUTHORIZED)))
+                .exceptionHandling(e -> e.authenticationEntryPoint(new RestAuthenticationEntryPoint()))
                 .formLogin().disable()
                 .httpBasic().disable()
                 .oauth2Login(oauth2 -> oauth2

@@ -78,10 +78,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         log.info("Finding user {}", id);
 
-        return userRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.info("Deleting user {}", id);
+
+        userRepository.deleteById(id);
     }
 }

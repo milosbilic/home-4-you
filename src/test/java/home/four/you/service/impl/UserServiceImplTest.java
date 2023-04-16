@@ -120,21 +120,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Find by ID - not found")
-    void findById_notFound() {
-        Long id = generateId();
-
-        when(userRepository.findById(id)).thenReturn(Optional.empty());
-
-        var ex = assertThrows(ResourceNotFoundException.class, () -> service.findById(id));
-
-        assertAll(
-                () -> assertThat(ex.getCode()).isEqualTo(NOT_FOUND),
-                () -> assertThat(ex.getMessage()).isEqualTo(RESOURCE_NOT_FOUND)
-        );
-    }
-
-    @Test
     @DisplayName("Find by ID - ok")
     void findById_ok() {
         Long id = generateId();
@@ -143,6 +128,16 @@ class UserServiceImplTest {
 
         var result = service.findById(id);
 
-        assertThat(result).isEqualTo(user);
+        assertThat(result).hasValue(user);
+    }
+
+    @Test
+    @DisplayName("Delete - ok")
+    void delete_ok() {
+        Long id = generateId();
+
+        service.delete(id);
+
+        verify(userRepository, times(1)).deleteById(id);
     }
 }

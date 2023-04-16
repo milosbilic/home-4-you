@@ -126,7 +126,7 @@ public class HttpBasedTest {
         return createUser(ROLE_ADMIN);
     }
 
-    private User createUser(AuthorityRole role) {
+    protected User createUser(AuthorityRole role) {
         return userRepository.save(new User()
                 .setEmail(generateRandomEmail())
                 .setFirstName(make())

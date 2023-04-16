@@ -1,15 +1,18 @@
 package home.four.you.controller;
 
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.dto.CreateUserResponseDto;
 import home.four.you.model.dto.UserDetailsDto;
 import home.four.you.model.entity.User;
+import home.four.you.security.auth.authorization.permission.CanDeleteUser;
 import home.four.you.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +47,18 @@ public class UserController {
     public UserDetailsDto details(@PathVariable Long id) {
         log.info("Getting details for user {}", id);
 
-        var user = userService.findById(id);
+        var user = userService.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
 
         return conversionService.convert(user, UserDetailsDto.class);
+    }
+
+    @DeleteMapping("{id}")
+    @CanDeleteUser
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        log.info("Deleting user {}", id);
+
+        userService.delete(id);
     }
 }

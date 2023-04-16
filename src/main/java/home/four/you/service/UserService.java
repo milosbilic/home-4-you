@@ -47,7 +47,14 @@ public interface UserService {
      * Finds user by provided ID.
      *
      * @param id User ID.
-     * @return Matching user.
+     * @return Matching user, or empty {@link Optional}.
      */
-    User findById(Long id);
+    Optional<User> findById(Long id);
+
+    /**
+     * Deletes user by provided ID.
+     *
+     * @param id User ID.
+     */
+    void delete(Long id);
 }
