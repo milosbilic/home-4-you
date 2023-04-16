@@ -1,6 +1,7 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
+import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static home.four.you.exception.ErrorMessage.USER_EXISTS;
 import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_USER;
 
 /**
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
         log.info("Creating user [{}]", dto);
 
         if (userRepository.existsByEmail(dto.email())) {
-            throw new BadRequestException("User already exists!");
+            throw new BadRequestException(USER_EXISTS);
         }
 
         var user = new User()
@@ -73,5 +75,13 @@ public class UserServiceImpl implements UserService {
                 .setRole(roleService.findByName(dto.role()));
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User findById(Long id) {
+        log.info("Finding user {}", id);
+
+        return userRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }

@@ -37,7 +37,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                                                                          WebRequest request) {
         log.info("Handling resource not found exception {}", ex.getMessage());
 
-        var response = new ErrorResponse(ex.getCode(), ex.getCode().name());
+        var response = new ErrorResponse(ex.getCode(), ex.getMessage());
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)

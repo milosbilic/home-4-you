@@ -42,4 +42,12 @@ public interface UserService {
      * @return Created user.
      */
     User createUser(CreateUserRequestDto dto);
+
+    /**
+     * Finds user by provided ID.
+     *
+     * @param id User ID.
+     * @return Matching user.
+     */
+    User findById(Long id);
 }

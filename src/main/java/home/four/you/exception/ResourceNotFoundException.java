@@ -14,6 +14,6 @@ public class ResourceNotFoundException extends Home4YouException {
 	private static final long serialVersionUID = 3346530278343930771L;
 
 	public ResourceNotFoundException() {
-		super(NOT_FOUND);
+		super(NOT_FOUND, ErrorMessage.RESOURCE_NOT_FOUND);
 	}
 }

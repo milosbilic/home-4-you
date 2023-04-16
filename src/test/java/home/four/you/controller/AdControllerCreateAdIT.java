@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static home.four.you.TestUtil.generateId;
+import static home.four.you.exception.ErrorMessage.LOCATION_NOT_FOUND;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.http.HttpStatus.*;
@@ -52,7 +53,7 @@ class AdControllerCreateAdIT extends HttpBasedTest {
                 .then()
                 .statusCode(BAD_REQUEST.value())
                 .body("code", equalTo(ErrorCode.BAD_REQUEST.name()))
-                .body("message", equalTo("Location not found."));
+                .body("message", equalTo(LOCATION_NOT_FOUND));
     }
 
     @Test

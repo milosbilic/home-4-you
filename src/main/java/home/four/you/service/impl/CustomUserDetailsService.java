@@ -2,6 +2,7 @@ package home.four.you.service.impl;
 
 import home.four.you.repository.UserRepository;
 import home.four.you.security.UserPrincipal;
+import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,13 +19,13 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Fetching user with email {}", username);
 
-        return userRepository.findByEmail(username)
+        return userService.findByEmail(username)
                 .map(user -> new UserPrincipal()
                         .setId(user.getId())
                         .setEmail(user.getEmail())

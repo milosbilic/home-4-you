@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static home.four.you.exception.ErrorCode.VALIDATION_ERROR;
+import static home.four.you.exception.ErrorMessage.INVALID_EMAIL;
+import static home.four.you.exception.ErrorMessage.USER_EXISTS;
 import static io.restassured.RestAssured.given;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -58,7 +60,7 @@ public class UserControllerCreateUserIT extends HttpBasedTest {
                 .body("message", equalTo(VALIDATION_ERROR.name()))
                 .rootPath("details")
                 .body("field", containsInAnyOrder("email"))
-                .body("defaultMessage", containsInAnyOrder("must be a well-formed email address"));
+                .body("defaultMessage", containsInAnyOrder(INVALID_EMAIL));
     }
 
     @Test
@@ -96,7 +98,7 @@ public class UserControllerCreateUserIT extends HttpBasedTest {
                 .post(url(USERS_URI))
                 .then()
                 .statusCode(BAD_REQUEST.value())
-                .body("message", equalTo("User already exists!"));
+                .body("message", equalTo(USER_EXISTS));
     }
 
     @Test

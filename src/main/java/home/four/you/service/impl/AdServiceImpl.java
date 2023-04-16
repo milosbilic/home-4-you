@@ -25,6 +25,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import static home.four.you.exception.ErrorMessage.LOCATION_NOT_FOUND;
+
 /**
  * Implementation of {@link AdService}.
  */
@@ -44,7 +46,7 @@ public class AdServiceImpl implements AdService {
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
-                .orElseThrow(() -> new BadRequestException("Location not found."));
+                .orElseThrow(() -> new BadRequestException(LOCATION_NOT_FOUND));
 
         var newAd = new Ad()
                 .setTitle(dto.title())
@@ -61,7 +63,6 @@ public class AdServiceImpl implements AdService {
                 .setNumberOfRooms(propertyDto.numberOfRooms())
                 .setBooked(propertyDto.booked())
                 .setEquipment(propertyDto.equipment());
-
 
         setPropertyType(property, propertyDto);
         newAd.setProperty(property);
