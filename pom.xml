@@ -173,6 +173,7 @@
                         <exclude>**/*Mapper.class/</exclude>
                         <exclude>**/*MapperImpl.class/</exclude>
                         <exclude>**/*Converter.class/</exclude>
+                        <exclude>**/*TokenController.class/</exclude>
                         <exclude>**/*Principal.class</exclude>
                         <exclude>**/*TokenAuthenticationFilter.class</exclude>
                         <exclude>**/*CustomOAuth2UserService.class</exclude>

@@ -3,14 +3,19 @@ package home.four.you.controller;
 import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.dto.CreateUserResponseDto;
+import home.four.you.model.dto.UserBriefDetailsDto;
 import home.four.you.model.dto.UserDetailsDto;
 import home.four.you.model.entity.User;
 import home.four.you.security.auth.authorization.permission.CanDeleteUser;
+import home.four.you.security.auth.authorization.permission.IsAdmin;
 import home.four.you.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,5 +65,14 @@ public class UserController {
         log.info("Deleting user {}", id);
 
         userService.delete(id);
+    }
+
+    @GetMapping
+    @IsAdmin
+    public Page<UserBriefDetailsDto> getAllUsers(@PageableDefault Pageable pageable) {
+        log.info("Getting all users");
+
+        return userService.findAll(pageable)
+                .map(user -> conversionService.convert(user, UserBriefDetailsDto.class));
     }
 }

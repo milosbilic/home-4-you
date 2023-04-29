@@ -3,6 +3,7 @@ package home.four.you.controller;
 import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.dto.CreateUserResponseDto;
+import home.four.you.model.dto.UserBriefDetailsDto;
 import home.four.you.model.dto.UserDetailsDto;
 import home.four.you.model.entity.User;
 import home.four.you.service.UserService;
@@ -13,7 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 import static home.four.you.TestUtil.generateId;
@@ -22,10 +26,7 @@ import static home.four.you.exception.ErrorMessage.RESOURCE_NOT_FOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for {@link UserController}.
@@ -99,5 +100,21 @@ class UserControllerTest {
         controller.deleteUser(id);
 
         verify(userService, times(1)).delete(id);
+    }
+
+    @Test
+    @DisplayName("Get all users - ok")
+    void getAllUsers_ok() {
+        var pageable = mock(Pageable.class);
+        var user = mock(User.class);
+        PageImpl<User> users = new PageImpl<>(List.of(user));
+        var dto = mock(UserBriefDetailsDto.class);
+
+        when(userService.findAll(pageable)).thenReturn(users);
+        when(conversionService.convert(user, UserBriefDetailsDto.class)).thenReturn(dto);
+
+        var result = controller.getAllUsers(pageable);
+
+        assertThat(result).isEqualTo(new PageImpl<>(List.of(dto)));
     }
 }

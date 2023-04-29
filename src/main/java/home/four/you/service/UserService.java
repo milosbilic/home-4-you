@@ -3,6 +3,8 @@ package home.four.you.service;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.User;
 import home.four.you.security.auth.GoogleUserInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -57,4 +59,12 @@ public interface UserService {
      * @param id User ID.
      */
     void delete(Long id);
+
+    /**
+     * Finds all users and returns a selected page.
+     *
+     * @param pageable Pageable.
+     * @return Page of users.
+     */
+    Page<User> findAll(Pageable pageable);
 }

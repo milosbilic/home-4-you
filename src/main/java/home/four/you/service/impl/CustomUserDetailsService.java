@@ -1,6 +1,5 @@
 package home.four.you.service.impl;
 
-import home.four.you.repository.UserRepository;
 import home.four.you.security.UserPrincipal;
 import home.four.you.service.UserService;
 import lombok.RequiredArgsConstructor;

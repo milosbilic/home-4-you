@@ -1,6 +1,7 @@
 package home.four.you.mapper;
 
 import home.four.you.model.dto.CreateUserResponseDto;
+import home.four.you.model.dto.UserBriefDetailsDto;
 import home.four.you.model.dto.UserDetailsDto;
 import home.four.you.model.entity.User;
 import org.mapstruct.Mapper;
@@ -29,4 +30,11 @@ public interface UserMapper {
      * @return Mapped details DTO.
      */
     UserDetailsDto mapToDetailsDto(User user);
+
+    /**
+     * Maps user entity to {@link UserBriefDetailsDto}.
+     * @param user User entity.
+     * @return Mapped details DTO.
+     */
+    UserBriefDetailsDto mapToBriefDetailsDto(User user);
 }

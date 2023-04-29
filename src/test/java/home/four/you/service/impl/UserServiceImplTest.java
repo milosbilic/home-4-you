@@ -1,7 +1,6 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.Role;
 import home.four.you.model.entity.User;
@@ -16,23 +15,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 import static home.four.you.TestUtil.generateId;
 import static home.four.you.exception.ErrorCode.BAD_REQUEST;
-import static home.four.you.exception.ErrorCode.NOT_FOUND;
-import static home.four.you.exception.ErrorMessage.RESOURCE_NOT_FOUND;
 import static home.four.you.exception.ErrorMessage.USER_EXISTS;
 import static net.bytebuddy.utility.RandomString.make;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for {@link UserServiceImpl}.
@@ -139,5 +135,18 @@ class UserServiceImplTest {
         service.delete(id);
 
         verify(userRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Find all - ok")
+    void findAll_ok() {
+        var pageable = mock(Pageable.class);
+        PageImpl<User> users = new PageImpl<>(List.of(user));
+
+        when(userRepository.findAll(pageable)).thenReturn(users);
+
+        var result = service.findAll(pageable);
+
+        assertThat(result).isEqualTo(users);
     }
 }
