@@ -62,9 +62,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         var uri = request.getRequestURI();
 
         return uri.equals("/")
-                || requestMatches(GET, "/ads", request)
-                || requestMatches(POST, "/users", request)
-                || requestMatches(GET, "/users/", request)
+                || requestMatches(GET, "/api/ads", request)
+                || requestMatches(POST, "/api/users", request)
+                || requestMatches(GET, "/api/users/", request)
                 || uri.startsWith("/token")
                 || uri.startsWith("/v3/api-docs")
                 || uri.startsWith("/swagger");

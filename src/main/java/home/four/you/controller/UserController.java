@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * REST controller used for {@link User} resource API operations.
  */
 @RestController
-@RequestMapping("users")
+@RequestMapping("api/users")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {

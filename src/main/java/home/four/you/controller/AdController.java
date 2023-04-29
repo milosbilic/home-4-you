@@ -35,7 +35,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping(value = "ads")
+@RequestMapping(value = "api/ads")
 public class AdController {
 
     private final AdService adService;
