@@ -67,4 +67,6 @@ public interface UserService {
      * @return Page of users.
      */
     Page<User> findAll(Pageable pageable);
+
+    Optional<User> findByEmailAndPassword(String email, String password);
 }

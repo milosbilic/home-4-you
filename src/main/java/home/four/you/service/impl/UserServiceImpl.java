@@ -1,7 +1,6 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
-import home.four.you.exception.ResourceNotFoundException;
 import home.four.you.model.dto.CreateUserRequestDto;
 import home.four.you.model.entity.User;
 import home.four.you.repository.UserRepository;
@@ -12,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User getById(Long id) {
@@ -72,8 +73,8 @@ public class UserServiceImpl implements UserService {
                 .setEmail(dto.email())
                 .setFirstName(dto.firstName())
                 .setLastName(dto.lastName())
-                .setPassword(dto.password())
-                .setPhone(dto.phone())
+                .setPassword(passwordEncoder.encode(dto.password()))
+                .setPhone(dto.phone()) //TODO Drop unique constraint?
                 .setRole(roleService.findByName(dto.role()));
 
         return userRepository.save(user);
@@ -87,6 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         log.info("Deleting user {}", id);
 
@@ -98,5 +100,12 @@ public class UserServiceImpl implements UserService {
         log.info("Finding all users for page {}", pageable.getPageNumber());
 
         return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        log.info("Finding by user with email {}", email);
+
+        return userRepository.findByEmailAndPassword(email, password);
     }
 }

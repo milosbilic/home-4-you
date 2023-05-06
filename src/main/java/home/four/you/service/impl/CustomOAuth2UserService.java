@@ -1,6 +1,5 @@
 package home.four.you.service.impl;
 
-import home.four.you.model.entity.User;
 import home.four.you.security.UserOAuth2Principal;
 import home.four.you.security.auth.GoogleUserInfo;
 import home.four.you.service.UserService;

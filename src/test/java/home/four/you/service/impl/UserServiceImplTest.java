@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,9 @@ class UserServiceImplTest {
     RoleService roleService;
 
     @Mock
+    PasswordEncoder passwordEncoder;
+
+    @Mock
     User user;
 
     @Mock
@@ -52,7 +56,7 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        service = new UserServiceImpl(userRepository, roleService);
+        service = new UserServiceImpl(userRepository, roleService, passwordEncoder);
     }
 
     @Test
