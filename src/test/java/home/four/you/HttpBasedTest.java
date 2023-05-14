@@ -57,6 +57,7 @@ public class HttpBasedTest {
 
     protected static final String USERS_URI = API_PREFIX + "/users";
     protected static final String USER_URI = USERS_URI + "/{id}";
+    protected static final String LOGIN_URI = "/auth/login";
 
     @Autowired
     protected AdRepository adRepository;
@@ -180,6 +181,13 @@ public class HttpBasedTest {
                         .put(WASHING_MACHINE.toString()));
     }
 
+    protected JSONObject createUserJSON(String email, String password) throws JSONException {
+        return createUserJSON()
+                .put("email", email)
+                .put("password", password)
+                .put("repeatedPassword", password);
+    }
+
     protected JSONObject createUserJSON() throws JSONException {
         var password = make();
         return new JSONObject()
@@ -190,6 +198,16 @@ public class HttpBasedTest {
                 .put("repeatedPassword", password)
                 .put("phone", make())
                 .put("role", ROLE_USER.toString());
+    }
+
+    protected JSONObject createLoginRequestJSON(String email, String password) throws JSONException {
+        return new JSONObject()
+                .put("email", email)
+                .put("password", password);
+    }
+
+    protected JSONObject createLoginRequestJSON() throws JSONException {
+        return createLoginRequestJSON(make(), make());
     }
 
     protected String generateRandomEmail() {

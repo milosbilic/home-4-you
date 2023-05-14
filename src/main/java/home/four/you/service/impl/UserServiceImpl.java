@@ -101,11 +101,4 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findAll(pageable);
     }
-
-    @Override
-    public Optional<User> findByEmailAndPassword(String email, String password) {
-        log.info("Finding by user with email {}", email);
-
-        return userRepository.findByEmailAndPassword(email, password);
-    }
 }

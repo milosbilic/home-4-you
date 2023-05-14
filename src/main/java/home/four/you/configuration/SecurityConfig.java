@@ -1,5 +1,6 @@
 package home.four.you.configuration;
 
+import home.four.you.configuration.domain.CorsProperties;
 import home.four.you.security.RestAuthenticationEntryPoint;
 import home.four.you.security.TokenAuthenticationFilter;
 import home.four.you.security.auth.OAuth2AuthenticationFailureHandler;
@@ -14,6 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.OPTIONS;
@@ -33,6 +39,7 @@ public class SecurityConfig {
     private final OAuth2AuthenticationFailureHandler failureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
+    private final CorsProperties corsProperties;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -62,7 +69,21 @@ public class SecurityConfig {
                         .failureHandler(failureHandler)
                         .userInfoEndpoint().userService(customOAuth2UserService))
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        var configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(corsProperties.getAllowedOrigins());
+        configuration.setAllowedMethods(corsProperties.getAllowedMethods());
+        configuration.setAllowedHeaders(corsProperties.getAllowedHeaders());
+        configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(List.of("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

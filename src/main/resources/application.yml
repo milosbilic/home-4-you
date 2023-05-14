@@ -39,10 +39,12 @@ home-4-you:
     jwtSecret: aG9tZV80X3lvdV9zZWNyZXRfa2V5
     expirationTime: 864000000
   cors:
-    allowed-origins: "*"
+    allowed-origins:
+      - http://localhost:8080
     allowed-headers:
-      - Authorization
-      - Content-Type
+      - authorization
+      - content-type
+      - x-auth-token
     allowed-methods:
       - GET
       - PUT

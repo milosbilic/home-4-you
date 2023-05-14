@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * CORS configuration properties.
  */
@@ -12,9 +14,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class CorsProperties {
 
-    private String[] allowedOrigins;
+    private List<String> allowedOrigins;
 
-    private String[] allowedHeaders;
+    private List<String> allowedHeaders;
 
-    private String[] allowedMethods;
+    private List<String> allowedMethods;
 }
