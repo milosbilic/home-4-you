@@ -26,18 +26,18 @@ git clone https://github.com/your-username/home-4-you-api.git
 cd home-4-you-api
 ```
 
-3. Build the project using Maven:
-
-```shell
-mvn clean install
-```
-
-4. Start the services using Docker Compose:
+3. Start the services using Docker Compose:
 ```shell
 docker-compose up
 ```
 
 This command will start all the necessary dependencies (such as databases) defined in the `docker-compose.yml` file.
+
+4. Build the project using Maven:
+
+```shell
+mvn clean install
+```
 
 5. Start the application with the following command:
 ```shell
