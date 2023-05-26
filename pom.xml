@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>home.4.you</groupId>
-    <artifactId>home-4-you</artifactId>
+    <artifactId>home-4-you-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
