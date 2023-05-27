@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateUserResponseDto createUser(@Valid @RequestBody CreateUserRequestDto dto) {
-        log.info("Creating user [{}]", dto);
+        log.debug("Creating user [{}]", dto);
 
         var user = userService.createUser(dto);
 
@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public UserDetailsDto details(@PathVariable Long id) {
-        log.info("Getting details for user {}", id);
+        log.debug("Getting details for user {}", id);
 
         var user = userService.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -62,7 +62,7 @@ public class UserController {
     @CanDeleteUser
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
-        log.info("Deleting user {}", id);
+        log.debug("Deleting user {}", id);
 
         userService.delete(id);
     }
@@ -70,7 +70,7 @@ public class UserController {
     @GetMapping
     @IsAdmin
     public Page<UserBriefDetailsDto> getAllUsers(@PageableDefault Pageable pageable) {
-        log.info("Getting all users");
+        log.debug("Getting all users");
 
         return userService.findAll(pageable)
                 .map(user -> conversionService.convert(user, UserBriefDetailsDto.class));

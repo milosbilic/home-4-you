@@ -34,7 +34,7 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
                                  Serializable targetId,
                                  String targetType,
                                  Object permission) {
-        log.info("Checking caller [{}] permission for target [{}] and privilege [{}]",
+        log.debug("Checking caller [{}] permission for target [{}] and privilege [{}]",
                 authentication.getName(), targetType, permission);
 
         var privilege = AuthorityPrivilege.valueOf(permission.toString());
@@ -44,7 +44,7 @@ public class ResourcePermissionEvaluator implements PermissionEvaluator {
                 .map(resourceCaller -> handler.handle(resourceCaller, targetId, privilege))
                 .orElse(false);
 
-        log.info("Ownership resolved to : {}", hasOwnership);
+        log.debug("Ownership resolved to : {}", hasOwnership);
         return hasOwnership;
     }
 

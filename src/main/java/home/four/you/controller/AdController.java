@@ -45,7 +45,7 @@ public class AdController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreateAdResponseDto createAd(@RequestBody @Valid CreateAdRequestDto dto,
                                         @CurrentUser UserPrincipal caller) {
-        log.info("Creating ad [{}]", dto);
+        log.debug("Creating ad [{}]", dto);
 
         var ad = adService.createAd(dto, caller);
 
@@ -54,7 +54,7 @@ public class AdController {
 
     @GetMapping
     public Page<AdBriefDetailsDto> findAll(@PageableDefault Pageable pageable) {
-        log.info("Finding ads");
+        log.debug("Finding ads");
 
         return adService.findAll(pageable)
                 .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
@@ -62,7 +62,7 @@ public class AdController {
 
     @GetMapping("{id}")
     public AdDetailsDto getDetails(@PathVariable Long id) {
-        log.info("Finding ad with id {}", id);
+        log.debug("Finding ad with id {}", id);
 
         var ad = adService.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -74,14 +74,14 @@ public class AdController {
     @CanDeleteAd
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        log.info("Deleting ad {}", id);
+        log.debug("Deleting ad {}", id);
 
         adService.delete(id);
     }
 
     @GetMapping("latest")
     public List<AdBriefDetailsDto> getLatest() {
-        log.info("Getting latest ads");
+        log.debug("Getting latest ads");
 
         return adService.findLatest().stream()
                 .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class))

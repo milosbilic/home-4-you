@@ -22,7 +22,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        log.info("Authentication failed: {}.", exception.getMessage());
+        log.debug("Authentication failed: {}.", exception.getMessage());
 
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
     }

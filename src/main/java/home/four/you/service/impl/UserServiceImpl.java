@@ -34,14 +34,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        log.info("Getting user reference by id {}", id);
+        log.debug("Getting user reference by id {}", id);
 
         return userRepository.getReferenceById(id);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        log.info("Finding user with email {}", email);
+        log.debug("Finding user with email {}", email);
 
         return userRepository.findByEmail(email);
     }
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(GoogleUserInfo googleUserInfo) {
-        log.info("Creating user {}", googleUserInfo.getEmail());
+        log.debug("Creating user {}", googleUserInfo.getEmail());
 
         var user = new User()
                 .setEmail(googleUserInfo.getEmail())
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(CreateUserRequestDto dto) {
-        log.info("Creating user [{}]", dto);
+        log.debug("Creating user [{}]", dto);
 
         if (userRepository.existsByEmail(dto.email())) {
             throw new BadRequestException(USER_EXISTS);
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        log.info("Finding user {}", id);
+        log.debug("Finding user {}", id);
 
         return userRepository.findById(id);
     }
@@ -90,14 +90,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delete(Long id) {
-        log.info("Deleting user {}", id);
+        log.debug("Deleting user {}", id);
 
         userRepository.deleteById(id);
     }
 
     @Override
     public Page<User> findAll(Pageable pageable) {
-        log.info("Finding all users for page {}", pageable.getPageNumber());
+        log.debug("Finding all users for page {}", pageable.getPageNumber());
 
         return userRepository.findAll(pageable);
     }

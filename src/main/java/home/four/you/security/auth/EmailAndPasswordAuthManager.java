@@ -24,7 +24,7 @@ public class EmailAndPasswordAuthManager {
     private final PasswordEncoder passwordEncoder;
 
     public String authenticate(LoginRequestDto loginRequest) {
-        log.info("Authenticating user {}", loginRequest.email());
+        log.debug("Authenticating user {}", loginRequest.email());
 
         var user = userService.findByEmail(loginRequest.email())
                 .orElseThrow(() -> new AccessDeniedException(ACCESS_DENIED));

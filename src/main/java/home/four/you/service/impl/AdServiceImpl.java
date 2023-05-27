@@ -42,7 +42,7 @@ public class AdServiceImpl implements AdService {
     @Override
     @Transactional
     public Ad createAd(CreateAdRequestDto dto, UserPrincipal caller) {
-        log.info("Creating ad [{}]", dto);
+        log.debug("Creating ad [{}]", dto);
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
@@ -72,14 +72,14 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public Page<Ad> findAll(Pageable pageable) {
-        log.info("Finding all ads...");
+        log.debug("Finding all ads...");
 
         return adRepository.findAll(pageable);
     }
 
     @Override
     public Optional<Ad> findById(Long id) {
-        log.info("Finding ad with id {}", id);
+        log.debug("Finding ad with id {}", id);
 
         return adRepository.findById(id);
     }
@@ -87,14 +87,14 @@ public class AdServiceImpl implements AdService {
     @Override
     @Transactional
     public void delete(Long id) {
-        log.info("Deleting ad {}", id);
+        log.debug("Deleting ad {}", id);
 
         adRepository.deleteById(id);
     }
 
     @Override
     public List<Ad> findLatest() {
-        log.info("Finding latest ads...");
+        log.debug("Finding latest ads...");
 
         return adRepository.findTop3ByOrderByCreatedAtDesc();
     }

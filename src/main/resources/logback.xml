@@ -24,7 +24,7 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="home-4-you" level="debug" additivity="false">
+    <logger name="home.four.you" level="debug" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>

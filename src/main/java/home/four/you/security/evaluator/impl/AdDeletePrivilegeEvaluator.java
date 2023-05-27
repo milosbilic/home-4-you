@@ -30,7 +30,7 @@ public class AdDeletePrivilegeEvaluator implements PrivilegeEvaluator {
 
     @Override
     public boolean evaluate(UserPrincipal caller, Serializable resourceId) throws ResourceNotFoundException {
-        log.info("Evaluating AD_DELETE privilege for caller {} and resource {}", caller.getEmail(), resourceId);
+        log.debug("Evaluating AD_DELETE privilege for caller {} and resource {}", caller.getEmail(), resourceId);
 
         var ad = adService.findById((Long) resourceId)
                 .orElseThrow(ResourceNotFoundException::new);
