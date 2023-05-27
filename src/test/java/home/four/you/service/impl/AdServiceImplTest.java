@@ -1,6 +1,7 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
+import home.four.you.model.dto.AdSearchFilter;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateApartmentDto;
 import home.four.you.model.dto.CreateHouseDto;
@@ -21,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -142,11 +145,12 @@ class AdServiceImplTest {
     @DisplayName("Find all")
     void findAll() {
         var pageable = mock(Pageable.class);
+        var filter = mock(AdSearchFilter.class);
         PageImpl<Ad> ads = new PageImpl<>(List.of(ad));
 
-        when(service.findAll(pageable)).thenReturn(ads);
+        when(adRepository.findAll(any(Specification.class), eq(pageable))).thenReturn(ads);
 
-        var result = service.findAll(pageable);
+        var result = service.search(filter, pageable);
 
         assertThat(result).isEqualTo(ads);
         verifyNoMoreInteractions(adRepository);

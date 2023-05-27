@@ -1,8 +1,10 @@
 package home.four.you.controller;
 
 import home.four.you.exception.ResourceNotFoundException;
+import home.four.you.model.PropertyType;
 import home.four.you.model.dto.AdBriefDetailsDto;
 import home.four.you.model.dto.AdDetailsDto;
+import home.four.you.model.dto.AdSearchFilter;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,14 +55,6 @@ public class AdController {
         return conversionService.convert(ad, CreateAdResponseDto.class);
     }
 
-    @GetMapping
-    public Page<AdBriefDetailsDto> findAll(@PageableDefault Pageable pageable) {
-        log.debug("Finding ads");
-
-        return adService.findAll(pageable)
-                .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
-    }
-
     @GetMapping("{id}")
     public AdDetailsDto getDetails(@PathVariable Long id) {
         log.debug("Finding ad with id {}", id);
@@ -86,6 +81,32 @@ public class AdController {
         return adService.findLatest().stream()
                 .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class))
                 .toList();
+    }
+
+    @GetMapping("search")
+    public Page<AdBriefDetailsDto> search(@RequestParam(required = false) Ad.Type type,
+                                          @RequestParam(required = false) Integer minPrice,
+                                          @RequestParam(required = false) Integer maxPrice,
+                                          @RequestParam(required = false) PropertyType propertyType,
+                                          @RequestParam(required = false) Integer minArea,
+                                          @RequestParam(required = false) Integer maxArea,
+                                          @RequestParam(required = false) Integer minNumberOfRooms,
+                                          @RequestParam(required = false) Integer maxNumberOfRooms,
+                                          @PageableDefault Pageable pageable) {
+    log.debug("Searching ads... page {}", pageable.getPageNumber());
+
+        var filter = new AdSearchFilter(
+                type,
+                minPrice,
+                maxPrice,
+                propertyType,
+                minArea,
+                maxArea,
+                minNumberOfRooms,
+                maxNumberOfRooms);
+
+        return adService.search(filter, pageable)
+                .map(ad -> conversionService.convert(ad, AdBriefDetailsDto.class));
     }
 
 }

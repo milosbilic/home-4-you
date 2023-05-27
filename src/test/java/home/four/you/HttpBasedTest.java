@@ -1,6 +1,10 @@
 package home.four.you;
 
-import home.four.you.model.entity.*;
+import home.four.you.model.entity.Ad;
+import home.four.you.model.entity.House;
+import home.four.you.model.entity.Location;
+import home.four.you.model.entity.Property;
+import home.four.you.model.entity.User;
 import home.four.you.repository.AdRepository;
 import home.four.you.repository.LocationRepository;
 import home.four.you.repository.RoleRepository;
@@ -23,13 +27,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import static home.four.you.TestUtil.generateId;
 import static home.four.you.model.entity.Ad.Type.SALE;
-import static home.four.you.model.entity.Equipment.*;
+import static home.four.you.model.entity.Equipment.BALCONY;
+import static home.four.you.model.entity.Equipment.FREEZER;
+import static home.four.you.model.entity.Equipment.FRIDGE;
+import static home.four.you.model.entity.Equipment.TV;
+import static home.four.you.model.entity.Equipment.WASHING_MACHINE;
 import static home.four.you.model.entity.Property.HeatType.WOOD;
 import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_ADMIN;
 import static home.four.you.security.auth.authorization.AuthorityRole.ROLE_USER;
@@ -44,8 +50,9 @@ public class HttpBasedTest {
     int port;
 
     static {
-        RestAssuredConfig.config().getLogConfig()
-                .enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.ALL);
+        RestAssuredConfig.config().
+            getLogConfig()
+            .enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.ALL);
     }
 
     protected static final String APPLICATION_JSON = "application/json";
@@ -54,6 +61,7 @@ public class HttpBasedTest {
     protected static final String ADS_URI = API_PREFIX + "/ads";
     protected static final String AD_URI = ADS_URI + "/{id}";
     protected static final String ADS_LATEST_URI = ADS_URI + "/latest";
+    protected static final String ADS_SEARCH_URI = ADS_URI + "/search";
 
     protected static final String USERS_URI = API_PREFIX + "/users";
     protected static final String USER_URI = USERS_URI + "/{id}";
@@ -96,28 +104,28 @@ public class HttpBasedTest {
 
     protected Ad createRandomAd() {
         return adRepository.save(new Ad()
-                .setTitle(make())
-                .setDescription(make())
-                .setType(SALE)
-                .setExpirationDate(Instant.now().plus(90, ChronoUnit.DAYS))
-                .setPrice(generateId().intValue())
-                .setOwner(createRegularUser())
-                .setProperty(new Property()
-                        .setEquipment(Set.of(TV, BALCONY, FREEZER, FRIDGE))
-                        .setBooked(true)
-                        .setHeatType(Property.HeatType.GAS)
-                        .setArea(generateId().intValue())
-                        .setNumberOfRooms(3.5)
-                        .setLocation(createLocation())
-                        .setHouse(new House()
-                                .setCourtyardArea(generateId().intValue())
-                                .setNumberOfFloors(3))));
+            .setTitle(make())
+            .setDescription(make())
+            .setType(SALE)
+            .setExpirationDate(Instant.now().plus(90, ChronoUnit.DAYS))
+            .setPrice(generateId().intValue())
+            .setOwner(createRegularUser())
+            .setProperty(new Property()
+                .setEquipment(Set.of(TV, BALCONY, FREEZER, FRIDGE))
+                .setBooked(true)
+                .setHeatType(Property.HeatType.GAS)
+                .setArea(generateId().intValue())
+                .setNumberOfRooms(3.5)
+                .setLocation(createLocation())
+                .setHouse(new House()
+                    .setCourtyardArea(generateId().intValue())
+                    .setNumberOfFloors(3))));
     }
 
     private Location createLocation() {
         return locationRepository.save(new Location()
-                .setName(make())
-                .setZipCode(make()));
+            .setName(make())
+            .setZipCode(make()));
     }
 
     protected User createRegularUser() {
@@ -130,80 +138,80 @@ public class HttpBasedTest {
 
     protected User createUser(AuthorityRole role) {
         return userRepository.save(new User()
-                .setEmail(generateRandomEmail())
-                .setFirstName(make())
-                .setLastName(make())
-                .setPassword(make())
-                .setPhone(make())
-                .setRole(roleRepository.findByName(role)));
+            .setEmail(generateRandomEmail())
+            .setFirstName(make())
+            .setLastName(make())
+            .setPassword(make())
+            .setPhone(make())
+            .setRole(roleRepository.findByName(role)));
     }
 
     protected JSONObject createHouseAdJSON() throws JSONException {
         return createAdWithoutProperty()
-                .put("property", houseJSON());
+            .put("property", houseJSON());
     }
 
     protected JSONObject createApartmentAdJSON() throws JSONException {
         return createAdWithoutProperty()
-                .put("property", apartmentJSON());
+            .put("property", apartmentJSON());
     }
 
     private JSONObject createAdWithoutProperty() throws JSONException {
         return new JSONObject()
-                .put("type", SALE.toString())
-                .put("title", make())
-                .put("description", make())
-                .put("price", generateId());
+            .put("type", SALE.toString())
+            .put("title", make())
+            .put("description", make())
+            .put("price", generateId());
     }
 
     private JSONObject houseJSON() throws JSONException {
         return propertyJSON()
-                .put("house", new JSONObject()
-                        .put("numberOfFloors", 2)
-                        .put("courtyardArea", generateId()));
+            .put("house", new JSONObject()
+                .put("numberOfFloors", 2)
+                .put("courtyardArea", generateId()));
     }
 
     private JSONObject apartmentJSON() throws JSONException {
         return propertyJSON()
-                .put("apartment", new JSONObject()
-                        .put("floor", 2));
+            .put("apartment", new JSONObject()
+                .put("floor", 2));
     }
 
     private JSONObject propertyJSON() throws JSONException {
         return new JSONObject()
-                .put("heatType", WOOD.toString())
-                .put("locationId", 2)
-                .put("area", generateId())
-                .put("numberOfRooms", generateId())
-                .put("booked", true)
-                .put("equipment", new JSONArray()
-                        .put(TV.toString())
-                        .put(WASHING_MACHINE.toString()));
+            .put("heatType", WOOD.toString())
+            .put("locationId", 2)
+            .put("area", generateId())
+            .put("numberOfRooms", generateId())
+            .put("booked", true)
+            .put("equipment", new JSONArray()
+                .put(TV.toString())
+                .put(WASHING_MACHINE.toString()));
     }
 
     protected JSONObject createUserJSON(String email, String password) throws JSONException {
         return createUserJSON()
-                .put("email", email)
-                .put("password", password)
-                .put("repeatedPassword", password);
+            .put("email", email)
+            .put("password", password)
+            .put("repeatedPassword", password);
     }
 
     protected JSONObject createUserJSON() throws JSONException {
         var password = make();
         return new JSONObject()
-                .put("email", generateRandomEmail())
-                .put("firstName", make())
-                .put("lastName", make())
-                .put("password", password)
-                .put("repeatedPassword", password)
-                .put("phone", make())
-                .put("role", ROLE_USER.toString());
+            .put("email", generateRandomEmail())
+            .put("firstName", make())
+            .put("lastName", make())
+            .put("password", password)
+            .put("repeatedPassword", password)
+            .put("phone", make())
+            .put("role", ROLE_USER.toString());
     }
 
     protected JSONObject createLoginRequestJSON(String email, String password) throws JSONException {
         return new JSONObject()
-                .put("email", email)
-                .put("password", password);
+            .put("email", email)
+            .put("password", password);
     }
 
     protected JSONObject createLoginRequestJSON() throws JSONException {

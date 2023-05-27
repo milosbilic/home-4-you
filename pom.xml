@@ -167,6 +167,7 @@
                         <exclude>**/Home4YouApplication.class</exclude>
                         <exclude>**/configuration/</exclude>
                         <exclude>**/exception/</exclude>
+                        <exclude>**/repository/</exclude>
                         <exclude>**/filter/</exclude>
                         <exclude>**/dto/</exclude>
                         <exclude>**/entity/</exclude>
@@ -177,7 +178,6 @@
                         <exclude>**/*Principal.class</exclude>
                         <exclude>**/*TokenAuthenticationFilter.class</exclude>
                         <exclude>**/*CustomOAuth2UserService.class</exclude>
-                        <exclude>**/*RepositoryCustomImpl.class/</exclude>
                     </excludes>
                 </configuration>
                 <executions>

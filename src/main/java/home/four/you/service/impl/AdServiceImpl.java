@@ -1,7 +1,7 @@
 package home.four.you.service.impl;
 
 import home.four.you.exception.BadRequestException;
-import home.four.you.exception.ResourceNotFoundException;
+import home.four.you.model.dto.AdSearchFilter;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreatePropertyRequestDto;
 import home.four.you.model.entity.Ad;
@@ -26,6 +26,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static home.four.you.exception.ErrorMessage.LOCATION_NOT_FOUND;
+import static home.four.you.repository.AdRepository.Specs.byAreaGreaterThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byAreaLessThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byNumberOfRoomsGreaterThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byNumberOfRoomsLessThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byPriceGreaterThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byPriceLessThanOrEqual;
+import static home.four.you.repository.AdRepository.Specs.byPropertyType;
+import static home.four.you.repository.AdRepository.Specs.byType;
 
 /**
  * Implementation of {@link AdService}.
@@ -46,23 +54,23 @@ public class AdServiceImpl implements AdService {
 
         var propertyDto = dto.property();
         var location = locationService.findById(propertyDto.locationId())
-                .orElseThrow(() -> new BadRequestException(LOCATION_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(LOCATION_NOT_FOUND));
 
         var newAd = new Ad()
-                .setTitle(dto.title())
-                .setDescription(dto.description())
-                .setType(dto.type())
-                .setPrice(dto.price())
-                .setExpirationDate(calculateExpirationDate())
-                .setOwner(userService.getById(caller.getId()));
+            .setTitle(dto.title())
+            .setDescription(dto.description())
+            .setType(dto.type())
+            .setPrice(dto.price())
+            .setExpirationDate(calculateExpirationDate())
+            .setOwner(userService.getById(caller.getId()));
 
         var property = new Property()
-                .setArea(propertyDto.area())
-                .setLocation(location)
-                .setHeatType(propertyDto.heatType())
-                .setNumberOfRooms(propertyDto.numberOfRooms())
-                .setBooked(propertyDto.booked())
-                .setEquipment(propertyDto.equipment());
+            .setArea(propertyDto.area())
+            .setLocation(location)
+            .setHeatType(propertyDto.heatType())
+            .setNumberOfRooms(propertyDto.numberOfRooms())
+            .setBooked(propertyDto.booked())
+            .setEquipment(propertyDto.equipment());
 
         setPropertyType(property, propertyDto);
         newAd.setProperty(property);
@@ -71,10 +79,18 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Page<Ad> findAll(Pageable pageable) {
-        log.debug("Finding all ads...");
+    public Page<Ad> search(AdSearchFilter filter, Pageable pageable) {
+        log.debug("Searching ads by filter [{}], page {}", filter, pageable.getPageNumber());
 
-        return adRepository.findAll(pageable);
+        return adRepository.findAll(byType(filter.type())
+                .and(byPriceGreaterThanOrEqual(filter.minPrice()))
+                .and(byPriceLessThanOrEqual(filter.maxPrice()))
+                .and(byPropertyType(filter.propertyType()))
+                .and(byAreaGreaterThanOrEqual(filter.minArea()))
+                .and(byAreaLessThanOrEqual(filter.maxArea()))
+                .and(byNumberOfRoomsGreaterThanOrEqual(filter.minNumberOfRooms()))
+                .and(byNumberOfRoomsLessThanOrEqual(filter.maxNumberOfRooms())),
+            pageable);
     }
 
     @Override
@@ -108,11 +124,11 @@ public class AdServiceImpl implements AdService {
     private void setPropertyType(Property property, CreatePropertyRequestDto propertyDto) {
         if (propertyDto.house() != null) {
             property.setHouse(new House()
-                    .setNumberOfFloors(propertyDto.house().numberOfFloors())
-                    .setCourtyardArea(propertyDto.house().courtyardArea()));
+                .setNumberOfFloors(propertyDto.house().numberOfFloors())
+                .setCourtyardArea(propertyDto.house().courtyardArea()));
         } else {
             property.setApartment(new Apartment()
-                    .setFloor(propertyDto.apartment().floor()));
+                .setFloor(propertyDto.apartment().floor()));
         }
     }
 }

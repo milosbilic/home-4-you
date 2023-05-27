@@ -1,7 +1,9 @@
 package home.four.you.controller;
 
+import home.four.you.model.PropertyType;
 import home.four.you.model.dto.AdBriefDetailsDto;
 import home.four.you.model.dto.AdDetailsDto;
+import home.four.you.model.dto.AdSearchFilter;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.dto.CreateAdResponseDto;
 import home.four.you.model.entity.Ad;
@@ -63,16 +65,24 @@ class AdControllerTest {
     }
 
     @Test
-    @DisplayName("Find all")
-    void findAll() {
+    @DisplayName("Search")
+    void search() {
         var pageable = mock(Pageable.class);
         var dto = mock(AdBriefDetailsDto.class);
         var page = new PageImpl<>(List.of(ad));
 
-        when(adService.findAll(pageable)).thenReturn(page);
+        when(adService.search(any(), eq(pageable))).thenReturn(page);
         when(conversionService.convert(ad, AdBriefDetailsDto.class)).thenReturn(dto);
 
-        var result = controller.findAll(pageable);
+        var result = controller.search(Ad.Type.RENT,
+            generateId().intValue(),
+            generateId().intValue(),
+            PropertyType.HOUSE,
+            generateId().intValue(),
+            generateId().intValue(),
+            generateId().intValue(),
+            generateId().intValue(),
+            pageable);
 
         assertThat(result).isEqualTo(new PageImpl<>(List.of(dto)));
     }

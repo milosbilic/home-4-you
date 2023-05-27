@@ -1,5 +1,7 @@
 package home.four.you.service;
 
+import home.four.you.model.dto.AdBriefDetailsDto;
+import home.four.you.model.dto.AdSearchFilter;
 import home.four.you.model.dto.CreateAdRequestDto;
 import home.four.you.model.entity.Ad;
 import home.four.you.security.UserPrincipal;
@@ -13,13 +15,6 @@ import java.util.Optional;
  * Service for {@link Ad} entity related operations.
  */
 public interface AdService {
-
-    /**
-     * Finds all ads.
-     *
-     * @return List of all ads.
-     */
-    Page<Ad> findAll(Pageable pageable);
 
     /**
      * Finds an ad by provided ID.
@@ -51,4 +46,13 @@ public interface AdService {
      * @return Created ad.
      */
     Ad createAd(CreateAdRequestDto dto, UserPrincipal caller);
+
+    /**
+     * Searches ads with specified filter and paging.
+     *
+     * @param filter Ad search filter.
+     * @param pageable Pageable.
+     * @return Page of matching ads.
+     */
+    Page<Ad> search(AdSearchFilter filter, Pageable pageable);
 }

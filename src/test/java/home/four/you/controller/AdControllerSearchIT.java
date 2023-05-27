@@ -1,6 +1,8 @@
 package home.four.you.controller;
 
 import home.four.you.HttpBasedTest;
+import home.four.you.model.PropertyType;
+import home.four.you.model.entity.Ad;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
@@ -9,10 +11,11 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
- * Integration tests for {@link AdController#findAll(Pageable)}.
+ * Integration tests for {@link AdController
+ * #search(Ad.Type, Integer, Integer, PropertyType, Integer, Integer, Integer, Integer, Pageable)} (Pageable)}.
  */
-@DisplayName("Find all ads")
-class AdControllerFindAllIT extends HttpBasedTest {
+@DisplayName("Search")
+class AdControllerSearchIT extends HttpBasedTest {
 
     @Test
     @DisplayName("Ok - unauthenticated")
@@ -20,7 +23,7 @@ class AdControllerFindAllIT extends HttpBasedTest {
         given()
                 .headers(defaultHeaders())
                 .when()
-                .get(url(ADS_URI))
+                .get(url(ADS_SEARCH_URI))
                 .then()
                 .statusCode(OK.value());
     }
@@ -31,7 +34,7 @@ class AdControllerFindAllIT extends HttpBasedTest {
         given()
                 .headers(authenticatedHeaders(createRegularUser()))
                 .when()
-                .get(url(ADS_URI))
+                .get(url(ADS_SEARCH_URI))
                 .then()
                 .statusCode(OK.value());
     }
