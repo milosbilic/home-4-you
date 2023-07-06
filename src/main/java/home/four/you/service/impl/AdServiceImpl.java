@@ -34,6 +34,7 @@ import static home.four.you.repository.AdRepository.Specs.byPriceGreaterThanOrEq
 import static home.four.you.repository.AdRepository.Specs.byPriceLessThanOrEqual;
 import static home.four.you.repository.AdRepository.Specs.byPropertyType;
 import static home.four.you.repository.AdRepository.Specs.byType;
+import static java.util.Optional.ofNullable;
 
 /**
  * Implementation of {@link AdService}.
@@ -122,13 +123,11 @@ public class AdServiceImpl implements AdService {
     }
 
     private void setPropertyType(Property property, CreatePropertyRequestDto propertyDto) {
-        if (propertyDto.house() != null) {
-            property.setHouse(new House()
-                .setNumberOfFloors(propertyDto.house().numberOfFloors())
-                .setCourtyardArea(propertyDto.house().courtyardArea()));
-        } else {
-            property.setApartment(new Apartment()
-                .setFloor(propertyDto.apartment().floor()));
-        }
+        ofNullable(propertyDto.house())
+            .ifPresentOrElse(houseDto -> property
+                    .setHouse(new House()
+                        .setNumberOfFloors(houseDto.numberOfFloors())
+                        .setCourtyardArea(houseDto.courtyardArea())),
+                () -> property.setApartment(new Apartment().setFloor(propertyDto.apartment().floor())));
     }
 }
