@@ -6,7 +6,7 @@ This repository contains the source code and documentation for the Home 4 You AP
 
 To run the application, ensure that the following prerequisites are met:
 
-- Java 17 or later is installed on your machine.
+- Java 20 or later is installed on your machine.
 - Maven 3.9.0 or later is installed.
 - Docker and Docker Compose are installed.
 
