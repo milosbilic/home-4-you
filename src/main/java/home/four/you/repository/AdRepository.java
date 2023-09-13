@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.time.Instant;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
@@ -100,4 +101,11 @@ public interface AdRepository extends JpaRepository<Ad, Long>, JpaSpecificationE
      * @return Page of all ads.
      */
     Page<Ad> findAll(Pageable pageable);
+
+    /**
+     * Finds all ads with expiration date before the provided date and time.
+     * @param instant Instant.
+     * @return List of matching ads.
+     */
+    List<Ad> findAllByExpirationDateBefore(Instant instant);
 }

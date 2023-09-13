@@ -41,6 +41,7 @@ home-4-you:
   cors:
     allowed-origins:
       - http://localhost:8080
+      - http://localhost:8000
     allowed-headers:
       - authorization
       - content-type

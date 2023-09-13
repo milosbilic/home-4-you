@@ -1,6 +1,6 @@
 # Home 4 You API
 
-This repository contains the source code and documentation for the Home 4 You API, a Java 17 Spring Boot 3 application.
+This repository contains the source code and documentation for the Home 4 You API, a Java 20 Spring Boot 3 application.
 
 ## Requirements
 

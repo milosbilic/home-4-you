@@ -55,4 +55,9 @@ public interface AdService {
      * @return Page of matching ads.
      */
     Page<Ad> search(AdSearchFilter filter, Pageable pageable);
+
+    /**
+     * Marks outdated ads as expired.
+     */
+    void markOutdatedAsExpired();
 }

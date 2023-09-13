@@ -95,6 +95,17 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
+    public void markOutdatedAsExpired() {
+        log.debug("Marking outdated ads as expired");
+
+        List<Ad> expiredAds = adRepository.findAllByExpirationDateBefore(Instant.now()).stream()
+            .map(ad -> ad.setExpired(true))
+            .toList();
+
+        adRepository.saveAll(expiredAds);
+    }
+
+    @Override
     public Optional<Ad> findById(Long id) {
         log.debug("Finding ad with id {}", id);
 

@@ -60,6 +60,9 @@ public class Ad {
     @Temporal(TemporalType.TIMESTAMP)
     private Instant expirationDate;
 
+    @Column
+    private Boolean expired = false;
+
     @OneToOne(mappedBy = "ad", cascade = CascadeType.ALL)
     private Property property;
 
