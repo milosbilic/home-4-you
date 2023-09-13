@@ -190,4 +190,15 @@ class AdServiceImplTest {
 
         assertThat(result).isEqualTo(ads);
     }
+
+    @Test
+    @DisplayName("Mark as expired")
+    void markAsExpired() {
+        when(adRepository.findAllByExpirationDateBefore(any())).thenReturn(List.of(ad));
+        when(ad.setExpired(true)).thenReturn(ad);
+
+        service.markOutdatedAsExpired();
+
+        verify(adRepository, times(1)).saveAll(List.of(ad));
+    }
 }
