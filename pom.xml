@@ -14,24 +14,25 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>20</java.version>
-        <spring-boot.version>3.0.0</spring-boot.version>
+        <java.version>21</java.version>
+        <spring-boot.version>3.1.5</spring-boot.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
-        <lombok.version>1.18.24</lombok.version>
-        <maven.version>3.8.6</maven.version>
+        <lombok.version>1.18.30</lombok.version>
+        <maven.version>3.9.1</maven.version>
         <swagger-version>3.0.0</swagger-version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <surefire.version>3.1.2</surefire.version>
         <jjwt.version>0.9.1</jjwt.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <springdoc.version>2.1.0</springdoc.version>
+        <mockito-inline.version>5.2.0</mockito-inline.version>
     </properties>
 
     <dependencies>
@@ -99,6 +100,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
+            <version>${mockito-inline.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -113,7 +115,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
